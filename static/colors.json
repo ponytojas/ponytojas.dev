@@ -1,0 +1,99 @@
+[
+  {
+    "color": "#EABD7D",
+    "name": "Brown"
+  },
+  {
+    "color": "#FFDB30",
+    "name": "Yellow"
+  },
+  {
+    "color": "#FFB300",
+    "name": "Amber"
+  },
+  {
+    "color": "#E79723",
+    "name": "Dark Amber"
+  },
+  {
+    "color": "#EF6C00",
+    "name": "Orange"
+  },
+  {
+    "color": "#FFAFA2",
+    "name": "Pink Orange"
+  },
+  {
+    "color": "#FF6D70",
+    "name": "Living Coral"
+  },
+  {
+    "color": "#FF0509",
+    "name": "Red"
+  },
+  {
+    "color": "#E20D36",
+    "name": "Magenta"
+  },
+  {
+    "color": "#F6546A",
+    "name": "Rose Pink"
+  },
+  {
+    "color": "#A75764",
+    "name": "Puce"
+  },
+  {
+    "color": "#F1B0F2",
+    "name": "Light Pink"
+  },
+
+  {
+    "color": "#813BF6",
+    "name": "Purple"
+  },
+  {
+    "color": "#0D2481",
+    "name": "Indigo"
+  },
+  {
+    "color": "#4fc3f7",
+    "name": "Light Blue"
+  },
+  {
+    "color": "#2196F3",
+    "name": "Blue"
+  },
+  {
+    "color": "#1B97AD",
+    "name": "Marine Blue"
+  },
+  {
+    "color": "#009688",
+    "name": "Teal"
+  },
+  {
+    "color": "#A5D620",
+    "name": "Lime"
+  },
+  {
+    "color": "#005744",
+    "name": "Green"
+  },
+  {
+    "color": "#000000",
+    "name": "Black"
+  },
+  {
+    "color": "#484855",
+    "name": "Dark Grey"
+  },
+  {
+    "color": "#f0f0f0",
+    "name": "NotSoWhite"
+  },
+  {
+    "color": "#fafafa",
+    "name": "White"
+  }
+]
