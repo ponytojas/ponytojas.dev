@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-transparent">
     <div class="flex flex-row mt-6">
       <nuxt-link to="/">
         <span class="ml-10 text-xl">
@@ -22,7 +22,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-  background-color: #fafafa;
+  background-color: #f9f9f9;
 }
 
 *,

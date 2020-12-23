@@ -29,7 +29,7 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ['@nuxtjs/toast'],
+  modules: ['@nuxtjs/toast', '@nuxt/content'],
 
   toast: {
     position: 'bottom-center',
