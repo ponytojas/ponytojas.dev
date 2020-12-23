@@ -12,12 +12,18 @@
         <input
           class="border p-2 rounded-lg"
           v-model="number"
-          placeholder="número del décimo"
+          placeholder="Número del décimo"
         />
       </div>
       <div class="flex flex-row self-center mb-6">
         <NuxtLink :to="{ name: 'CheckLottery', params: { number: number } }">
           <button
+            @keyup.enter="
+              this.router.push({
+                name: 'CheckLottery',
+                params: { number: number },
+              })
+            "
             class="text-white hover:text-white hover:bg-red-700 bg-red-500 font-bold py-2 px-4 rounded-lg button"
           >
             ¡Comprueba tu suerte!
