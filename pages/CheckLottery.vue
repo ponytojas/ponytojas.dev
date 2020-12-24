@@ -9,7 +9,7 @@
         ¡Enhorabuena! Tu número ha sido premiado
       </p>
             <p class="text-3xl mb-4" v-if="!this.mensaje">
-        Lo sentimos, este número no ha sido premiado
+        Lo sentimos, este número no ha sido premiado.
       </p>
       <p v-if="this.mensaje" class="prose lg:prose-xl" v-html="mensaje"></p>
       <p v-if="!this.mensaje">Revisa tu número y sino, no intentes usar el número de otra persona</p>
