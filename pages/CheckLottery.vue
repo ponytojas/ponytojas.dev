@@ -13,6 +13,8 @@
       </p>
       <p v-if="this.mensaje" class="prose lg:prose-xl" v-html="mensaje"></p>
       <p v-if="!this.mensaje">Revisa tu número y sino, no intentes usar el número de otra persona</p>
+      <img v-if="this.$route.params.number == '72897'" class="w-full h-full" src='~assets/familia.jpg'/>
+      <img v-if="this.$route.params.number == '21518'" class="w-auto mx-auto h-96" src='~/assets/sirena.png' />
     </div>
   </div>
 </template>
