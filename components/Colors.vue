@@ -1,12 +1,12 @@
 <template>
-  <div class="border w-80 color-card justify-items-center bg-white" @click="copy()">
+  <div class="border w-72 color-card justify-items-center bg-white rounded-md" @click="copy()">
     <div
-      class="w-11/12 h-4/6 mx-auto mt-4"
+      class="w-11/12 h-3/5 mx-auto mt-4"
       :style="{ 'background-color': color }"
     ></div>
     <div class="flex flex-col">
       <p class="mx-4 mt-4 text-2xl font-semibold">{{ this.name }}</p>
-      <p class="mx-4 mt-6 text-xl font-light">{{ this.color }}</p>
+      <p class="mx-4 mt-4 mb-2 text-xl font-light">{{ this.color }}</p>
     </div>
   </div>
 </template>
@@ -42,7 +42,7 @@ export default {
 
 <style>
 .color-card {
-  height: 450px;
+  height: 375px;
 }
 
 .color-card {
