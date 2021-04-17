@@ -31,26 +31,36 @@
         <div class="hidden md:block">
           <ul class="flex space-x-8 text-xl">
             <li>
-              <a class="gradient-text-color-1" href="#">Projects</a>
+              <nuxt-link class="gradient-text-color-1" to="projects"
+                >Projects</nuxt-link
+              >
             </li>
             <li>
-              <a class="gradient-text-color-2" href="#">About me</a>
+              <nuxt-link class="gradient-text-color-2" to="about"
+                >About me</nuxt-link
+              >
             </li>
             <li>
-              <a class="gradient-text-color-3" href="#">Contact</a>
+              <nuxt-link class="gradient-text-color-3" to="other"
+                >Other stuff</nuxt-link
+              >
             </li>
           </ul>
         </div>
         <transition name="slide-fade-background">
-        <div
-          class="z-10 fixed inset-0 transition-opacity"
-          v-if="showSideMenu"
-        >
-          <div tabindex="0" class="absolute inset-0 bg-black opacity-30"></div>
-        </div>
+          <div
+            class="z-10 fixed inset-0 transition-opacity"
+            v-if="showSideMenu"
+          >
+            <div
+              tabindex="0"
+              class="absolute inset-0 bg-black opacity-30"
+            ></div>
+          </div>
         </transition>
         <transition name="slide-fade">
-          <aside v-if="showSideMenu"
+          <aside
+            v-if="showSideMenu"
             class="p-5 open-transition transform top-0 rounded-bl-lg shadow right-0 w-auto bg-white fixed pb-20 pl-12 h-auto overflow-auto ease-in-out transition-all duration-500 z-30 translate-x-0"
           >
             <div class="close mb-10">
@@ -78,24 +88,24 @@
             >
             <ul class="divide-y text-right">
               <li>
-                <a
-                  href="#"
+                <nuxt-link
+                  to="projects"
                   class="my-4 text-xl inline-block gradient-text-color-1"
-                  >Projects</a
+                  >Projects</nuxt-link
                 >
               </li>
               <li>
-                <a
-                  href="#"
+                <nuxt-link
+                  to="about"
                   class="my-4 text-xl inline-block gradient-text-color-2"
-                  >About me</a
+                  >About me</nuxt-link
                 >
               </li>
               <li>
-                <a
-                  href="#"
-                  class="my-4 text-xl inline-block gradient-text-color-3"
-                  >Contact</a
+                <nuxt-link
+                  to="other"
+                  class="my-4 text-xl inline-block gradient-text-color-2"
+                  >Other stuff</nuxt-link
                 >
               </li>
               <li></li>
@@ -161,10 +171,10 @@ html {
 }
 
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 .slide-fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
@@ -173,10 +183,10 @@ html {
 }
 
 .slide-fade-background-enter-active {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 .slide-fade-background-leave-active {
-  transition: all .3s cubic-bezier(1.5, 0.5, 0.8, 1.0);
+  transition: all 0.3s cubic-bezier(1.5, 0.5, 0.8, 1);
 }
 .slide-fade-background-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
@@ -213,6 +223,16 @@ html {
   transition: color 0.2s ease-in-out;
 }
 
+.gradient-text-color-4 {
+  background: linear-gradient(to right, #e4d0ff, #f1b0f2, #6d287b, #0d2481);
+  background-size: 200% 200%;
+  animation: rainbow 2s ease-in-out infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: rgba(0, 0, 0, 1);
+  transition: color 0.2s ease-in-out;
+}
+
 .gradient-text-color-1:hover {
   color: rgba(0, 0, 0, 0);
 }
@@ -222,6 +242,10 @@ html {
 }
 
 .gradient-text-color-3:hover {
+  color: rgba(0, 0, 0, 0);
+}
+
+.gradient-text-color-4:hover {
   color: rgba(0, 0, 0, 0);
 }
 
