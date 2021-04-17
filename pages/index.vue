@@ -18,7 +18,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  transition: 'fade'
+}
 </script>
 
 <style>
@@ -65,6 +67,9 @@ export default {}
     font-size: 2rem;
   }
 }
+
+.fade-enter-active, .fade-leave-active { transition: opacity .3s; }
+  .fade-enter, .fade-leave-active { opacity: 0; }
 
 .links {
   padding-top: 15px;

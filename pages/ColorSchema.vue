@@ -19,6 +19,7 @@
 <script>
 import colors from '../static/colors.json'
 export default {
+  transition: 'fade',
   data() {
     return {
       colors: [],
