@@ -41,64 +41,67 @@
             </li>
           </ul>
         </div>
+        <transition name="slide-fade-background">
         <div
           class="z-10 fixed inset-0 transition-opacity"
-          :class="{ hidden: !showSideMenu }"
+          v-if="showSideMenu"
         >
-          <div tabindex="0" class="absolute inset-0 bg-black opacity-50"></div>
+          <div tabindex="0" class="absolute inset-0 bg-black opacity-30"></div>
         </div>
-        <aside
-          class="p-5 transform top-0 left-0 w-64 bg-white fixed h-full overflow-auto ease-in-out transition-all duration-300 z-30 translate-x-0"
-          :class="{ hidden: !showSideMenu }"
-        >
-          <div class="close">
-            <button
-              class="absolute top-0 right-0 mt-4 mr-4"
-              @click="showSideMenu = !showSideMenu"
-            >
-              <svg
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-          </div>
-          <span class="flex w-full items-center p-4 border-b">
-            <span class="text-gray-800 text-2xl text-center">
-              Daniel Villalobos</span
-            ></span
+        </transition>
+        <transition name="slide-fade">
+          <aside v-if="showSideMenu"
+            class="p-5 open-transition transform top-0 rounded-bl-lg shadow right-0 w-auto bg-white fixed pb-20 pl-12 h-auto overflow-auto ease-in-out transition-all duration-500 z-30 translate-x-0"
           >
-          <ul class="divide-y font-sans">
-            <li>
-              <nuxt-link to="/" class="my-4 inline-block"
-                >{{ this.$route.path }}: $ > cd ~/<span class="blinking"
-                  >_</span
-                ></nuxt-link
+            <div class="close mb-10">
+              <button
+                class="absolute top-0 right-0 mt-7 mr-7"
+                @click="showSideMenu = !showSideMenu"
               >
-            </li>
-            <li>
-              <a href="#" class="my-4 inline-block gradient-text-color-1"
-                >Projects</a
-              >
-            </li>
-            <li>
-              <a href="#" class="my-4 inline-block gradient-text-color-2"
-                >About me</a
-              >
-            </li>
-            <li>
-              <a href="#" class="my-4 inline-block gradient-text-color-3"
-                >Contact</a
-              >
-            </li>
-          </ul>
-        </aside>
+                <svg
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <span class="flex w-full items-center p-4 border-b">
+              <span class="text-gray-600 text-3xl text-center">
+                Daniel Villalobos</span
+              ></span
+            >
+            <ul class="divide-y text-right">
+              <li>
+                <a
+                  href="#"
+                  class="my-4 text-xl inline-block gradient-text-color-1"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="my-4 text-xl inline-block gradient-text-color-2"
+                  >About me</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="my-4 text-xl inline-block gradient-text-color-3"
+                  >Contact</a
+                >
+              </li>
+              <li></li>
+            </ul>
+          </aside>
+        </transition>
       </div>
     </nav>
     <Nuxt class="pt-24 md:mt-0" />
@@ -155,6 +158,29 @@ html {
   100% {
     color: #e20d36;
   }
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(200%);
+  opacity: 0;
+}
+
+.slide-fade-background-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-background-leave-active {
+  transition: all .3s cubic-bezier(1.5, 0.5, 0.8, 1.0);
+}
+.slide-fade-background-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 
 .gradient-text-color-1 {
