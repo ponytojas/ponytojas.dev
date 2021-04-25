@@ -1,12 +1,12 @@
 <template>
   <div>
     <nav
-      class="fixed md:relative bg-white md:bg-transparent shadow-md md:shadow-none z-50 w-full p-6"
+      class="fixed md:relative bg-white md:bg-transparent shadow-md md:shadow-none z-50 w-full p-6 overscroll-x-hidden"
     >
       <div class="flex items-center justify-between">
         <div>
           <nuxt-link to="/">
-            <span class="ml-10 text-xl">
+            <span class="ml-0 md:ml-10 text-xl">
               {{ this.$route.path }}: $ > cd ~/<span class="blinking"
                 >_</span
               ></span
@@ -114,7 +114,7 @@
         </transition>
       </div>
     </nav>
-    <Nuxt class="pt-24 md:mt-0" />
+      <Nuxt class="pt-24 md:mt-0 " />
   </div>
 </template>
 
