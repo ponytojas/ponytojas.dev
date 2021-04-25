@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav
-      class="fixed md:relative bg-white md:bg-transparent shadow-md md:shadow-none z-50 w-full p-6 overscroll-x-hidden"
+      class="sticky md:relative bg-white md:bg-transparent shadow-md md:shadow-none z-50 w-full p-6 overscroll-x-hidden"
     >
       <div class="flex items-center justify-between">
         <div>
@@ -114,7 +114,7 @@
         </transition>
       </div>
     </nav>
-      <Nuxt class="pt-24 md:mt-0 " />
+      <Nuxt class="pt-10 md:mt-0 " />
   </div>
 </template>
 
@@ -125,6 +125,11 @@ export default {
       showSideMenu: false,
     }
   },
+  watch: {
+      $route() {
+        this.showSideMenu = false;
+      },
+    },
 }
 </script>
 
@@ -139,7 +144,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-  background-color: #f9f9f9;
+  background-color: #f6f6f6;
 }
 
 *,
