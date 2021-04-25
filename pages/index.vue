@@ -1,9 +1,10 @@
 <template>
-  <div class="container">
-    <div class="mt-20 md:mt-0">
+  <div class="container max-h-screen">
+    <div class="mt-20 md:mt-0 z-10">
       <div class="px-2 md:px-0">
         <span class="text-gray-600 font-thin title"
-          >Hi there<span style="color: #FF6D70">!</span> I'm <span class="font-normal">Daniel Villalobos</span></span
+          >Hi there<span style="color: #ff6d70">!</span> I'm
+          <span class="font-normal">Daniel Villalobos</span></span
         >
       </div>
       <div class="p-4 md:p-6">
@@ -14,16 +15,70 @@
         </p>
       </div>
     </div>
+
+    <div class="shape-blob"></div>
   </div>
 </template>
 
 <script>
 export default {
-  transition: 'fade'
+  transition: 'fade',
 }
 </script>
 
 <style>
+.shape-blob {
+  background: #90d8cc;
+  height: 500px;
+  width: 500px;
+  left: -200px;
+  top: -150px;
+  transform: rotate(-180deg);
+  animation: transform 30s ease-in-out infinite both alternate,
+    movement_two 60s ease-in-out infinite both;
+  opacity: 0.4;
+  position: absolute;
+}
+
+@keyframes transform {
+  0%,
+  100% {
+    border-radius: 33% 67% 70% 30% / 30% 30% 70% 70%;
+  }
+  20% {
+    border-radius: 37% 63% 51% 49% / 37% 65% 35% 63%;
+  }
+  40% {
+    border-radius: 36% 64% 64% 36% / 64% 48% 52% 36%;
+  }
+  60% {
+    border-radius: 37% 63% 51% 49% / 30% 30% 70% 70%;
+  }
+  80% {
+    border-radius: 40% 60% 42% 58% / 41% 51% 49% 59%;
+  }
+}
+
+@keyframes movement_one {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: translate(50%, 20%) rotateY(10deg) scale(1.2);
+  }
+}
+
+@keyframes movement_two {
+  0%,
+  500% {
+    transform: none;
+  }
+  50% {
+    transform: translate(50%, 20%) rotate(-200deg) scale(1.2);
+  }
+}
+
 .container {
   margin: 0 auto;
   min-height: auto;
@@ -35,12 +90,7 @@ export default {
 
 .title-gradient-text {
   text-decoration: line-through;
-  background: linear-gradient(
-    to right,
-    #4fc3f7,
-    #6ed477,
-    #6ED477
-  );
+  background: linear-gradient(to right, #4fc3f7, #6ed477, #6ed477);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -68,8 +118,14 @@ export default {
   }
 }
 
-.fade-enter-active, .fade-leave-active { transition: opacity .3s; }
-  .fade-enter, .fade-leave-active { opacity: 0; }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
 
 .links {
   padding-top: 15px;
