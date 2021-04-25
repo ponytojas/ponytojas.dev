@@ -1,9 +1,9 @@
 <template>
   <div class="container max-h-screen">
-    <div class="mt-20 md:mt-0 z-10">
+    <div class="mt-20 md:mt-0 z-10 my-auto h-full">
       <div class="px-2 md:px-0">
         <span class="text-gray-600 font-thin title"
-          >Hi there<span style="color: #ff6d70">!</span> I'm
+          >Hi there<span style="color: #4fc3f7">!</span> I'm
           <span class="font-normal">Daniel Villalobos</span></span
         >
       </div>
@@ -28,7 +28,7 @@ export default {
 
 <style>
 .shape-blob {
-  background: #90d8cc;
+  background: #FFDB30;
   height: 500px;
   width: 500px;
   left: -200px;
@@ -90,7 +90,7 @@ export default {
 
 .title-gradient-text {
   text-decoration: line-through;
-  background: linear-gradient(to right, #4fc3f7, #6ed477, #6ed477);
+  background: linear-gradient(to right, #FFAFA2, #FF6D70, #F6546A);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
