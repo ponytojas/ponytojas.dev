@@ -106,7 +106,7 @@
        <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
       >
-      Shortly we will launch a very special twitter account, and probably a python bot will be added in order to create automatic twitters.
+      Shortly we will launch a very special twitter account, and probably a python bot will be added in order to create automatic tweets.
       <br />
       Also, maybe an RSS or a mobile application.
       <br />
