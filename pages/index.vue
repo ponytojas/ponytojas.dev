@@ -15,8 +15,9 @@
         </p>
       </div>
     </div>
-
-    <div class="shape-blob"></div>
+<div class="blobs overflow-hidden opacity-20">
+  <div class="blob"></div>
+</div>
   </div>
 </template>
 
@@ -27,56 +28,59 @@ export default {
 </script>
 
 <style>
-.shape-blob {
-  background: #FFDB30;
-  height: 500px;
-  width: 500px;
-  left: -200px;
-  top: -150px;
-  transform: rotate(-180deg);
-  animation: transform 30s ease-in-out infinite both alternate,
-    movement_two 60s ease-in-out infinite both;
-  opacity: 0.4;
-  position: absolute;
+.blobs {
+	 width: 250px;
+	 height: 200px;
+	 margin: 0 auto;
+	 position: absolute;
+	 left: 30%;
+	 top: 38%;
+	 margin-left: -150px;
+	 margin-top: -150px;
+	 border-radius: 100%;
+	 -webkit-animation: myturn linear 50s infinite;
+	 -moz-animation: myturn linear 50s infinite;
 }
-
-@keyframes transform {
-  0%,
-  100% {
-    border-radius: 33% 67% 70% 30% / 30% 30% 70% 70%;
-  }
-  20% {
-    border-radius: 37% 63% 51% 49% / 37% 65% 35% 63%;
-  }
-  40% {
-    border-radius: 36% 64% 64% 36% / 64% 48% 52% 36%;
-  }
-  60% {
-    border-radius: 37% 63% 51% 49% / 30% 30% 70% 70%;
-  }
-  80% {
-    border-radius: 40% 60% 42% 58% / 41% 51% 49% 59%;
-  }
+ .blobs:after {
+	 content: '';
+	 height: 10px;
+	 width: 10px;
+	 border-radius: 50%;
+	 position: relative;
+	 display: block;
 }
-
-@keyframes movement_one {
-  0%,
-  100% {
-    transform: none;
-  }
-  50% {
-    transform: translate(50%, 20%) rotateY(10deg) scale(1.2);
-  }
+ .blob:nth-child(1) {
+	 top: -10px;
+	 left: -10px;
+	 width: 250px;
+	 height: 260px;
+	 background: #FFDB30;
+	 border-radius: 100%;
+	 -webkit-animation: mytopdown linear 40s infinite;
+	 -moz-animation: mytopdown linear 40s infinite;
+	 animation: mytopdown linear 40s infinite;
 }
-
-@keyframes movement_two {
-  0%,
-  500% {
-    transform: none;
-  }
-  50% {
-    transform: translate(50%, 20%) rotate(-200deg) scale(1.2);
-  }
+ @keyframes mytopdown {
+	 0% {
+		 top: 0px;
+		 transform: rotate(0deg) scale(1);
+	}
+	 50% {
+		 top: 15px;
+		 transform: rotate(180deg) scale(1.24);
+	}
+	 100% {
+		 top: 0px;
+		 transform: rotate(360deg) scale(1);
+	}
+}
+ @-webkit-keyframes myturn {
+	 0% {
+		 -webkit-transform: rotate(0deg) skewX(0deg);
+	}
+	 100% {
+		 -webkit-transform: rotate(-360deg) skewX(0deg);
+	}
 }
 
 .container {
