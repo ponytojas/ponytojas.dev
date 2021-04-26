@@ -1,110 +1,109 @@
 <template>
   <div class="container flex flex-col flex-wrap pb-10">
-    <p class="text-6xl mb-10 font-normal text-red-400">About me</p>
+    <p class="text-6xl mb-10 font-normal text-blue-400">enClase</p>
     <div
       class="h-auto w-full md:w-10/12 lg:w-8/12 bg-transparent mb-10 md:bg-white shadow-none md:shadow rounded-none md:rounded-xl p-6 md:p-10"
     >
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-semibold mb-4"
       >
-        🤔 Who I am?
+        🤔 What is enClase?
       </p>
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
       >
-        Spanish Information Systems Engineer halfway between Madrid and
-        Valencia.
+        During 2020, the Polytechnic School of Alcalá decided to develop an
+        application that could control capacity and face-to-face attendance to
+        class during the Covid-19 pandemic
         <br />
-        Also, I'm a computer and consumer electronics enthusiast.
-
-        <br /><br />
-        Preparing for my master's degree in Software Systems Engineering and
-        Technology, while I move from home and trying to learn something new
-        everyday.
+        As the system progressed, it was mutating to adapt to a system that
+        manages the attendance of students to any subject
+        <br />
       </p>
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-semibold mt-10 mb-4"
       >
-        🧰 What are your favorite technologies?
+        🔨 How does enClase works?
       </p>
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
       >
-        I prefer Front to Back, but I've done both.
-        <br />
-        I've to choose which languages and technologies I prefer would be:
+        enClase is a Fullstack PWA based on:
       </p>
-
       <ul
         class="ml-10 mt-4 text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light list-disc"
       >
-        <li>
-          <a
-            href="https://vuejs.org/"
-            target="_blank"
-            class="text-blue-400 underline"
-            >Vue.js</a
-          >
-          as web front framework
-        </li>
-        <li>
+        <li class="mb-3">
           <a
             href="https://nodejs.org/"
             target="_blank"
             class="text-blue-400 underline"
             >Node.js</a
           >
-          for quick backend prototyping
-        </li>
-        <li>
-          <a
-            href="https://www.python.org/"
-            target="_blank"
-            class="text-blue-400 underline"
-            >Python</a
-          >
-          for the everyday scripting
+          as backend
         </li>
         <li class="mb-3">
+          Built with
+          <a
+            href="https://vuejs.org/"
+            target="_blank"
+            class="text-blue-400 underline"
+            >Vue.js</a
+          >
+        </li>
+        <li class="mb-3">
+          With
           <a
             href="https://www.postgresql.org/"
             target="_blank"
             class="text-blue-400 underline"
             >PostgreSQL</a
           >
-          always on my team
+          as DataBase
+        </li>
+        <li class="mb-3">
+          Running on
+          <a
+            href="https://www.docker.com/"
+            target="_blank"
+            class="text-blue-400 underline"
+            >Docker</a
+          >
+          and Docker Compose
         </li>
       </ul>
-      <p
-        class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
-      >
-        In addition to the above, I also work with Java, Kotlin, Swift, PHP,
-        C++, Matlab....
-      </p>
+
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-semibold mt-10 mb-4"
       >
-        🔬 Any technology interests to learn about?
+        🔬 Some tech related things about it?
       </p>
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
       >
-        I'm looking to start with mobile development with SwiftUI and Jetpack
-        Compose.
+        It supports i18n thanks to
+        <a
+          href="https://kazupon.github.io/vue-i18n/"
+          target="_blank"
+          class="text-blue-400 underline"
+          >Vue-i18n</a
+        >. In order to work as a PWA, HTTPS is mandatory, and was a really interesting
+        thing learn how to redirect traffic to it through different docker
+        containers with nginx and only having the 80/443 port opened.
         <br />
-        Also, I intend to do things with Erlang or Elixir in the near future.
+        The school's cybersecurity group assisted in improving protection and attacks
       </p>
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-semibold mt-10 mb-4"
       >
-        🔮 Any upcoming projects?
+        🔮 What could be seen in the future?
       </p>
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
       >
-        Soon I will start helping in a research line on technology applied to
-        medicine, helping in the technical part of the data analysis by two
-        biologists.
+        We're integreting it with the University SSO to make it even more secure.
+        <br />
+        And, who knows what else? Maybe a native app with biometric, NFC and QR scanner? Time will tell
       </p>
     </div>
   </div>

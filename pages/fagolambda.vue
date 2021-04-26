@@ -63,7 +63,9 @@
             target="_blank"
             class="text-blue-400 underline"
             >Gridsome</a
-          > based on  <a
+          >
+          based on
+          <a
             href="https://vuejs.org/"
             target="_blank"
             class="text-blue-400 underline"
@@ -72,50 +74,48 @@
         </li>
       </ul>
 
-       <p
+      <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-semibold mt-10 mb-4"
       >
         🚀 And the work flow?
       </p>
-       <p
-        class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
-      >
 
-       <ul
+      <ul
         class="ml-10 mt-4 text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light list-decimal"
       >
         <li class="mb-3">
-        A new article is posted on the Wordpress CMS (we don't use the WP front for anything, just as CMS).
+          A new article is posted on the Wordpress CMS (we don't use the WP
+          front for anything, just as CMS).
         </li>
-       <li class="mb-3">
-        Netlify recives a trigger to start the build
+        <li class="mb-3">Netlify recives a trigger to start the build</li>
+        <li class="mb-3">It gets the latest code sources from Github</li>
+        <li class="mb-3">
+          All pages are generated (or get from cache) as static files that are
+          serverd
         </li>
-         <li class="mb-3">
-             It gets the latest code sources from Github
-         </li>
-         <li class="mb-3">
-            All pages are generated (or get from cache) as static files that are serverd 
-         </li>
-       </ul>
-      </p>
-       <p
+      </ul>
+
+      <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-semibold mt-10 mb-4"
       >
         🔮 What could be seen in the future?
       </p>
-       <p
+      <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
       >
-      Shortly we will launch a very special twitter account, and probably a python bot will be added in order to create automatic tweets.
-      <br />
-      Also, maybe an RSS or a mobile application.
-      <br />
-      We will see!
-       </p>
-       
-       <button class="w-auto mt-8 rounded mx-auto text-white px-4 py-2 hover:bg-green-600 bg-green-400">
-      <nuxt-link to="https://fagolambda.com/">Visit Fagolambda!</nuxt-link>
-    </button>
+        Shortly we will launch a very special twitter account, and probably a
+        python bot will be added in order to create automatic tweets.
+        <br />
+        Also, maybe an RSS or a mobile application.
+        <br />
+        We will see!
+      </p>
+
+      <button
+        class="w-auto mt-8 rounded mx-auto text-white px-4 py-2 hover:bg-green-600 bg-green-400"
+      >
+        <a href="https://fagolambda.com/" target="_blank">Visit Fagolambda!</a>
+      </button>
     </div>
   </div>
 </template>
