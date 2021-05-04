@@ -30,7 +30,9 @@
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
       >
-        I prefer Front to Back, but I've done both.
+        I prefer Front to Back, but I've done both. Aslo, I consider myself as a
+        good professional and connoisseur of the elearning world in specific edX
+        <br />
         <br />
         I've to choose which languages and technologies I prefer would be:
       </p>
@@ -47,7 +49,40 @@
           >
           as web front framework
         </li>
-        <li>
+        <ul
+          class="ml-10 mb-4 mt-4 text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light list-disc"
+        >
+          <li class="mb-2">
+            I'm really familiar with
+            <a
+              href="https://nuxtjs.org/"
+              target="_blank"
+              class="text-blue-400 underline"
+              >NuxtJS</a
+            >
+            for SSR and Static Sites
+          </li>
+          <li class="mb-2">
+            Also, I hve done several personal projects with
+            <a
+              href="https://gridsome.org/"
+              target="_blank"
+              class="text-blue-400 underline"
+              >Gridsome</a
+            >
+            for Static Sites
+          </li>
+          <li class="mb-2">
+            Last but not least, I've done some projects with
+            <a
+              href="https://cli.vuejs.org/core-plugins/pwa.html"
+              target="_blank"
+              class="text-blue-400 underline"
+              >Vue PWA</a
+            >
+          </li>
+        </ul>
+        <li class="mb-2">
           <a
             href="https://nodejs.org/"
             target="_blank"
@@ -56,7 +91,7 @@
           >
           for quick backend prototyping
         </li>
-        <li>
+        <li class="mb-2">
           <a
             href="https://www.python.org/"
             target="_blank"
@@ -64,6 +99,16 @@
             >Python</a
           >
           for the everyday scripting
+        </li>
+        <li class="mb-2">
+          I've been working with
+          <a
+            href="https://www.edx.org/"
+            target="_blank"
+            class="text-blue-400 underline"
+            >edX</a
+          >
+          for two years, doing maintenance and development
         </li>
         <li class="mb-3">
           <a
@@ -79,7 +124,7 @@
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light"
       >
         In addition to the above, I also work with Java, Kotlin, Swift, PHP,
-        C++, Matlab....
+        C++, Matlab, MySQL, MongoDB....
       </p>
       <p
         class="text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-semibold mt-10 mb-4"
