@@ -151,6 +151,12 @@
         medicine, helping in the technical part of the data analysis by two
         biologists.
       </p>
+      <br>
+        <button
+      class="w-auto mt-8 rounded mx-auto text-white px-6 py-3 transition-all duration-200 bg-red-400 hover:bg-red-600 shadow hover:shadow-xl"
+    >
+      <a class="font-semibold" href="mailto:daniel.villalobosdel@gmail.com">Mail to me!</a>
+    </button>
     </div>
   </div>
 </template>
