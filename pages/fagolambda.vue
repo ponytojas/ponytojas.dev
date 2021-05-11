@@ -40,10 +40,10 @@
       >
         <li class="mb-3">
           <a
-            href="https://www.wordpress.org"
+            href="https://www.netlifycms.org/"
             target="_blank"
             class="text-blue-400 underline"
-            >WordPress</a
+            >Netlify CMS</a
           >
           as CMS
         </li>
@@ -83,12 +83,14 @@
       <ul
         class="ml-10 mt-4 text-lg md:text-xl lg:text-2xl text-gray-900 text-justify font-light list-decimal"
       >
+        <li class="mb-3">A new article is posted on the CMS.</li>
         <li class="mb-3">
-          A new article is posted on the Wordpress CMS (we don't use the WP
-          front for anything, just as CMS).
+          A pull request is made on Github with the new article
         </li>
         <li class="mb-3">Netlify recives a trigger to start the build</li>
-        <li class="mb-3">It gets the latest code sources from Github</li>
+        <li class="mb-3">
+          It gets the latest code sources and article Markdown files from Github
+        </li>
         <li class="mb-3">
           All pages are generated (or get from cache) as static files that are
           serverd
