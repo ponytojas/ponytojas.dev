@@ -3,15 +3,19 @@
     class="border rounded-lg bg-white card shadow flex flex-col"
     style="width: 350px; height: 350px"
   >
-    <img :src="require(`~/assets/${image}`)" class="rounded-t-lg" />
+    <img
+      loading="lazy"
+      :src="require(`~/assets/${image}`)"
+      class="rounded-t-lg"
+    />
     <p class="mt-4 text-4xl text-gray-900">{{ name }}</p>
 
-    <button
-      class="w-6/12 mt-8 rounded mx-auto text-white px-4 py-2"
+    <nuxt-link
       :class="[lightColor, darkColor]"
+      class="w-6/12 mt-8 rounded mx-auto text-white px-4 py-2"
+      :to="link"
+      >Check more</nuxt-link
     >
-      <nuxt-link :to="link">Check more</nuxt-link>
-    </button>
   </div>
 </template>
 
@@ -22,8 +26,8 @@ export default {
     link: String,
     image: String,
     lightColor: String,
-    darkColor: String
-  },  
+    darkColor: String,
+  },
 }
 </script>
 
