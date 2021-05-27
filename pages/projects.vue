@@ -18,6 +18,9 @@
 <script>
 export default {
   transition: 'fade',
+  components: {
+    ProjectCard: () => import("../components/Project-Card"),
+  },
   data() {
     return {
       projects: [
@@ -25,7 +28,7 @@ export default {
           id: 1,
           name: 'ColorSchema',
           link: '/colorschema',
-          image: 'colorschema.png',
+          image: 'colorschema-min.png',
           lightColor: 'bg-red-400',
           darkColor: 'hover:bg-red-600',
         },
@@ -33,7 +36,7 @@ export default {
           id: 2,
           name: 'fagolambda',
           link: '/fagolambda',
-          image: 'fagolambda.png',
+          image: 'fagolambda-min.png',
           lightColor: 'bg-green-400',
           darkColor: 'hover:bg-green-600',
         },
@@ -41,7 +44,7 @@ export default {
           id: 3,
           name: 'enClase',
           link: '/enclase',
-          image: 'enclase.png',
+          image: 'enclase-min.png',
           lightColor: '#4fc3f7',
           lightColor: 'bg-blue-400',
           darkColor: 'hover:bg-blue-600',
