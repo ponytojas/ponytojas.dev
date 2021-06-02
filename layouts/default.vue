@@ -40,11 +40,6 @@
                 >About me</nuxt-link
               >
             </li>
-            <li>
-              <nuxt-link class="gradient-text-color-3" to="other"
-                >Other stuff</nuxt-link
-              >
-            </li>
           </ul>
         </div>
         <transition name="slide-fade-background">
@@ -101,14 +96,6 @@
                   >About me</nuxt-link
                 >
               </li>
-              <li>
-                <nuxt-link
-                  to="other"
-                  class="my-4 text-xl inline-block gradient-text-color-2"
-                  >Other stuff</nuxt-link
-                >
-              </li>
-              <li></li>
             </ul>
           </aside>
         </transition>
