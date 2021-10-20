@@ -4,6 +4,10 @@
     "name": "Sand"
   },
   {
+    "color": "#fbebd7",
+    "name": "SandOrange"
+  },
+  {
     "color": "#EABD7D",
     "name": "Light Brown"
   },
@@ -92,6 +96,10 @@
     "name": "Indigo"
   },
   {
+    "color": "#e1f9ff",
+    "name": "SomeBlue"
+  },
+  {
     "color": "#B2DDFD",
     "name": "Clear Blue"
   },
@@ -110,6 +118,10 @@
   {
     "color": "#009688",
     "name": "Teal"
+  },
+  {
+    "color": "#f3f2de",
+    "name": "BitGreen"
   },
   {
     "color": "#90D8CC",
@@ -142,6 +154,14 @@
   {
     "color": "#f0f0f0",
     "name": "NotSoWhite"
+  },
+  {
+    "color": "#f7f6f4",
+    "name": "BitGray"
+  },
+  {
+    "color": "#fdede6",
+    "name": "NotPink"
   },
   {
     "color": "#CBB2AB",
