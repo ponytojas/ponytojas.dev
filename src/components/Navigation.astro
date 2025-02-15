@@ -1,0 +1,71 @@
+<nav>
+  <!-- Mobile Navigation: Fixed at the top on small screens -->
+  <div
+    class="md:hidden fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow z-20"
+  >
+    <ul class="flex justify-around p-4">
+      <li>
+        <a
+          href="/"
+          class="transition-colors hover:text-blue-500"
+          view-transition-name="nav-home"
+        >
+          Home
+        </a>
+      </li>
+      <li>
+        <a
+          href="#about"
+          class="transition-colors hover:text-blue-500"
+          view-transition-name="nav-about"
+        >
+          About
+        </a>
+      </li>
+      <li>
+        <a
+          href="/projects"
+          class="transition-colors hover:text-blue-500"
+          view-transition-name="nav-projects"
+        >
+          Projects
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Desktop Navigation: Static on the left on medium+ screens -->
+  <div
+    class="hidden md:block fixed left-0 top-0 bottom-0 w-48 pt-[10em] pl-[5em] h-full"
+  >
+    <ul class="flex flex-col space-y-4">
+      <li>
+        <a
+          href="/"
+          class="transition-colors hover:text-blue-500"
+          view-transition-name="nav-home"
+        >
+          Home
+        </a>
+      </li>
+      <li>
+        <a
+          href="#about"
+          class="transition-colors hover:text-blue-500"
+          view-transition-name="nav-about"
+        >
+          About
+        </a>
+      </li>
+      <li>
+        <a
+          href="/projects"
+          class="transition-colors hover:text-blue-500"
+          view-transition-name="nav-projects"
+        >
+          Projects
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

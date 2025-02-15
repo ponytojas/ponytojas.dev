@@ -1,0 +1,8 @@
+[
+  {
+    "title": "Evaluating V2X Communications in the CARLA Simulator for a Collaborative Planning Use Case",
+    "url": "https://ieeexplore.ieee.org/abstract/document/10796909",
+    "date": "December 2024",
+    "description": "This research explores the implementation of V2X communication in the CARLA simulation platform using a ROS module and an infrastructure server with MQTT. A collaborative planning system enables real-time route recalculations based on alerts from infrastructure and vehicles. Evaluations of A* and Dijkstra algorithms show that A* performs better on small maps, while Dijkstra is more efficient on larger ones. The results confirm the system’s effectiveness, providing a solid foundation for future advancements in autonomous driving and traffic management."
+  }
+]

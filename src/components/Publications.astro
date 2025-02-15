@@ -1,0 +1,70 @@
+---
+import publicationData from "@data/publications.json";
+---
+
+<section class="relative w-full max-w-3xl pt-[5em]" id="publications">
+  <h2 class="text-4xl font-bold mb-8">Publications</h2>
+  <div class="border-l-2 border-[#17171c] dark:border-[#fafaee] relative">
+    {
+      publicationData.map((pub, index) => (
+        <div
+          class=" relative mb-8 pl-8 flex flex-col"
+          data-index-publication={index}
+        >
+          <div class="flex flex-row align-middle justify-between">
+            <a
+              class="toggle-publication flex flex-row align-middle justify-between w-full cursor-pointer"
+              data-index-publication={index}
+            >
+              <p class="text-lg font-semibold">
+                <span>{pub.title}</span>
+              </p>
+              <svg
+                class="arrow-expand transition-transform duration-500 ease-in-out ml-6"
+                data-index-publication={index}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </a>
+          </div>
+
+          <p class="text-gray-500 text-sm">{pub.date}</p>
+          <article
+            id={`pub-${index}`}
+            class={`hidden mt-2 transition-all duration-500 ease-in-out text-wrap prose dark:prose-invert`}
+          >
+            <p>{pub.description}</p>
+            <a href={pub.url} target="_blank" class="underline mt-2">
+              Check out
+            </a>
+          </article>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script is:inline>
+  document.querySelectorAll(".toggle-publication").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const index = btn.dataset.indexPublication;
+      const content = document.getElementById(`pub-${index}`);
+      const arrow = btn.querySelector(".arrow-expand");
+
+      if (content) {
+        content.classList.toggle("hidden");
+        arrow.classList.toggle("rotate-180"); // Toggle rotation class
+      }
+    });
+  });
+</script>
+<style></style>

@@ -1,0 +1,37 @@
+---
+import ThemeToggle from "@components/ThemeToggle.astro";
+
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/fonts/inter/inter.css" />
+    <meta name="generator" content={Astro.generator} /><title>
+      Daniel Villalobos - ponytojas
+    </title></head
+  >
+</html>
+<body class="relative min-h-screen">
+  <div class="absolute top-5 right-5 z-10">
+    <ThemeToggle />
+  </div>
+
+  <!-- Main content area with offset for navigation -->
+  <main class="pt-16 md:pt-0 pb-[10rem]">
+    <slot />
+  </main>
+</body>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

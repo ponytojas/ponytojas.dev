@@ -1,0 +1,83 @@
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: "Bumbbled";
+  src: url("/fonts/Bumbbled.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lumen";
+  src: url("/fonts/Lumen.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  font-family: 'Inter', sans-serif;
+}
+
+/* @supports (font-variation-settings: normal) {
+  :root {
+    font-family: 'Inter var', sans-serif;
+  }
+} */
+
+
+:root {
+  --line-bg: #9ca3af;
+  /* Gray */
+  --line-fg: white;
+  /* White */
+}
+
+.dark {
+  --line-bg: #ebebeb;
+  /* Light color */
+  --line-fg: #17171c;
+  /* Dark color */
+}
+
+html.dark {
+  background-color: #17171c;
+  color: #fafaee;
+}
+
+html {
+  background-color: #fafaee;
+  color: #17171c;
+  scroll-behavior: smooth;
+}
+
+.dark .nav-links a {
+  color: #fafaee;
+}
+
+
+::view-transition-group(root) {
+  animation-timing-function: var(--expo-out);
+}
+
+::view-transition-new(root) {
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="blur"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="0" cy="0" r="18" fill="white" filter="url(%23blur)"/></svg>') top left / 0 no-repeat;
+  mask-origin: content-box;
+  animation: scale 1s;
+  transform-origin: top left;
+}
+
+::view-transition-old(root),
+.dark::view-transition-old(root) {
+  animation: scale 1s;
+  transform-origin: top left;
+  z-index: -1;
+}
+
+@keyframes scale {
+  to {
+    mask-size: 350vmax;
+  }
+}

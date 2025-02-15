@@ -1,0 +1,122 @@
+[
+  {
+    "title": "Senior Software Engineer",
+    "company": "Lumibit Digital",
+    "color": "#DA0D3A",
+    "companyUrl": "https://lumibit.io/",
+    "date": "2024 - Present",
+    "technologies": [
+      "React",
+      "NodeJS",
+      "BullMQ",
+      "PostgreSQL",
+      "MongoDB",
+      "Mongoose",
+      "GraphQL",
+      "Redis",
+      "TypeScript"
+    ],
+    "description": "Developed systems and applications to support engineers within a comprehensive development platform for a major German automotive company. Implemented automated pipelines, scheduled tasks, and adapted complex systems to enhance usability and efficiency. Focused on optimizing workflows and improving engineering processes through software solutions."
+  },
+  {
+    "title": "Senior Software Engineer",
+    "company": "Etra I+D",
+    "color": "#001b93",
+    "companyUrl": "https://www.grupoetra.com/",
+    "date": "2023 - 2024",
+    "technologies": [
+      "Go",
+      "Flutter",
+      "NATS",
+      "MongoDB",
+      "K8S",
+      "MeteorJS",
+      "React",
+      "MUI",
+      "NodeJS",
+      "Deck.GL",
+      "Kepler.GL",
+      "LoRa",
+      "ESP32"
+    ],
+    "description": "Contributed to the UPPER European project by developing a new public transport management and visualization app, leveraging digital twin technology and advanced data analysis. Additionally, played a key technical leadership role in the UNCHAIN European project, focused on optimizing last-mile logistics services. Specialized in research and innovation projects, driving the development of cutting-edge mobility solutions."
+  },
+  {
+    "title": "Full Stack Developer",
+    "company": "Bounsel",
+    "color": "#4c20d0",
+    "companyUrl": "hhttps://www.bounsel.com/es/",
+    "date": "2022 - 2023",
+    "technologies": [
+      "JavaScript",
+      "Nuxt",
+      "Vue",
+      "PostgreSQL"
+    ],
+    "description": "Contributed to a fast-paced startup focused on a document sharing and completion platform. Led the migration of core application components from Vue to a Nuxt 3 monorepo, improving maintainability and scalability. Played a key role in enhancing the platform’s performance and architecture."
+  },
+  {
+    "title": "Full Stack Developer",
+    "company": "ThermoHuman",
+    "color": "#f96332",
+    "companyUrl": "https://thermohuman.com/es",
+    "date": "2021 - 2022",
+    "technologies": [
+      "JavaScript",
+      "React",
+      "PHP",
+      "MySQL",
+      "LAMP",
+      "Bash",
+      "Python",
+      "Puppeteer",
+      "Jest",
+      "PHPUnit"
+    ],
+    "description": "Developed and maintained applications within a LAMP environment, leveraging React for frontend development. Improved software usability, enhanced user interfaces, and introduced new product features. Automated workflows with Python and Bash scripts while ensuring code quality through PHPUnit, Jest, React Testing, and Puppeteer. Actively participated in code reviews to maintain best practices and improve team collaboration."
+  },
+  {
+    "title": "Full Stack Developer",
+    "company": "Anova IT Consulting",
+    "color": "#f57c00",
+    "companyUrl": "https://www.anovagroup.es/",
+    "date": "2019 - 2021",
+    "technologies": [
+      "PHP",
+      "NodeJS",
+      "WordPress",
+      "Drupal",
+      "Joomla",
+      "React Native",
+      "PostgreSQL",
+      "Nuxt",
+      "Bash",
+      "Python"
+    ],
+    "description": "Designed and developed custom web environments using PHP, NodeJS, and modern frameworks. Built IoT solutions with SSR-based Nuxt applications and PostgreSQL, while also developing hybrid mobile apps with React Native. Automated workflows with Bash and Python scripting, contributed to CMS maintenance (WordPress, Drupal, Joomla), and played an active role in mentoring interns. Additionally, participated in technical decision-making, client requirement gathering, and proposal preparation for bids and contracts."
+  },
+  {
+    "title": "Mobile Application Developer",
+    "company": "Candispe",
+    "color": "#f57c00",
+    "companyUrl": "https://www.candispe.com/",
+    "date": "2019",
+    "technologies": [
+      "React Native",
+      "PostgreSQL"
+    ],
+    "description": "Developed a mobile application for fuel transport operators, enabling them to complete checklists for loading and unloading procedures, track pending tasks, and manage work shifts efficiently. Focused on improving operational safety and compliance through digital automation."
+  },
+  {
+    "title": "AI researcher",
+    "company": "Narrativa",
+    "companyUrl": "https://www.narrativa.com/",
+    "date": "2017 - 2019",
+    "technologies": [
+      "Python",
+      "Tensorflow",
+      "Matlab"
+    ],
+    "description": "Contributed to the development of data-to-text models for automated sports journalism, transforming match data into structured football summaries. Designed and implemented automation scripts to streamline the summary generation process, integrating official match schedules for seamless data retrieval."
+  }
+]
