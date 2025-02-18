@@ -95,7 +95,6 @@ import experienceData from "@data/experience.json";
     link.addEventListener("mouseover", (e) => {
       const index = link.dataset.index;
       e.preventDefault();
-      debugger;
       const card = document.getElementById(`exp-link-${index}`);
       if (card) {
         card.style.opacity = 1;
@@ -105,7 +104,6 @@ import experienceData from "@data/experience.json";
     link.addEventListener("mouseout", (e) => {
       const index = link.dataset.index;
       e.preventDefault();
-      debugger;
       const card = document.getElementById(`exp-link-${index}`);
       if (card) {
         card.style.opacity = 0;
