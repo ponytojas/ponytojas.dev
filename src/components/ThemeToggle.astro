@@ -21,6 +21,21 @@
     background: none;
     cursor: pointer;
   }
+  #themeToggle {
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  #themeToggle:hover {
+    transform: rotate(15deg);
+  }
+
+  #themeToggle:active {
+    transform: rotate(0deg) scale(0.9);
+  }
+
   .sun {
     fill: #17171c;
   }
