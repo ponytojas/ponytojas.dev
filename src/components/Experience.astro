@@ -1,4 +1,6 @@
 ---
+import { LinkPreview } from "astro-embed";
+
 import experienceData from "@data/experience.json";
 ---
 
@@ -40,7 +42,7 @@ import experienceData from "@data/experience.json";
           <p class="text-gray-500 text-sm">{exp.date}</p>
           <article
             id={`exp-${index}`}
-            class={`hidden mt-2 transition-all duration-500 ease-in-out text-wrap prose dark:prose-invert`}
+            class="mt-2 transition-all duration-500 ease-in-out text-wrap prose dark:prose-invert"
           >
             <p>{exp.description}</p>
             <span class="text-thin text-sm italic text-gray-600">
@@ -48,14 +50,39 @@ import experienceData from "@data/experience.json";
             </span>
             <br />
             <br />
-            <a
-              href={exp.companyUrl}
-              target="_blank"
-              class="underline mt-2"
-              style={`color: ${exp.color}`}
-            >
-              Check out the company
-            </a>
+
+            <div class="company-link-container relative inline-block">
+              <a
+                href={exp.companyUrl}
+                data-index={index}
+                target="_blank"
+                class="company-link underline mt-2 decoration-dotted underline-offset-8"
+                style={`color: ${exp.color}`}
+              >
+                <span class="flex flex-row items-center">
+                  Check out the company
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="ml-2"
+                  >
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17 17 7" />
+                  </svg>
+                </span>
+              </a>
+
+              <div class="link-preview-card absolute" id={`exp-link-${index}`}>
+                <LinkPreview id={exp.companyUrl} />
+              </div>
+            </div>
           </article>
         </div>
       ))
@@ -64,6 +91,29 @@ import experienceData from "@data/experience.json";
 </section>
 
 <script is:inline>
+  document.querySelectorAll(".company-link").forEach((link) => {
+    link.addEventListener("mouseover", (e) => {
+      const index = link.dataset.index;
+      e.preventDefault();
+      debugger;
+      const card = document.getElementById(`exp-link-${index}`);
+      if (card) {
+        card.style.opacity = 1;
+        card.style.transform = "translateY(0)";
+      }
+    });
+    link.addEventListener("mouseout", (e) => {
+      const index = link.dataset.index;
+      e.preventDefault();
+      debugger;
+      const card = document.getElementById(`exp-link-${index}`);
+      if (card) {
+        card.style.opacity = 0;
+        card.style.transform = "translateY(5px)";
+      }
+    });
+  });
+
   document.querySelectorAll(".toggle-experience").forEach((btn) => {
     btn.addEventListener("click", () => {
       const index = btn.dataset.index;
@@ -71,10 +121,38 @@ import experienceData from "@data/experience.json";
       const arrow = btn.querySelector(".arrow-expand");
 
       if (content) {
-        content.classList.toggle("hidden");
-        arrow.classList.toggle("rotate-180"); // Toggle rotation class
+        if (!content.classList.contains("expanded")) {
+          content.style.overflow = "hidden";
+        }
+
+        content.classList.toggle("expanded");
+        arrow.classList.toggle("rotate-180");
+
+        if (content.classList.contains("expanded")) {
+          content.addEventListener(
+            "transitionend",
+            () => {
+              content.style.overflow = "visible";
+            },
+            { once: true }
+          );
+        } else {
+          content.style.overflow = "hidden";
+        }
       }
     });
   });
 </script>
-<style></style>
+<style>
+  article {
+    opacity: 0;
+    height: 0;
+    transition: height 0.5s ease-in-out;
+    interpolate-size: allow-keywords;
+  }
+
+  article.expanded {
+    opacity: 1;
+    height: auto;
+  }
+</style>
