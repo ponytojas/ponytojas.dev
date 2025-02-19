@@ -1,0 +1,73 @@
+---
+title: "U-TWIN"
+---
+
+The development of **U-TWIN** was carried out as part of the European Commission's <a href="https://www.upperprojecteu.eu/" target="_blank" rel="noopener noreferrer">**UPPER project**</a> while working at <a href="https://www.grupoetra.com/" target="_blank" rel="noopener noreferrer">**ETRA I+D**</a>. This project aimed to create a powerful tool for visualizing geospatial data related to public transportation and multimodal mobility.
+
+### Key Features
+
+U-TWIN provided a comprehensive view of transportation networks, allowing users to visualize:
+
+- **Public transport lines and stops**
+- **Real-time vehicle positions** for buses, trams, and other modes of transport
+- **Shared bike station status**, including available bikes and docks
+- **Traffic service levels** and live road alerts, such as accidents or closures
+
+Over time, additional urban data layers were incorporated, such as:
+
+- **City zoning and administrative boundaries**
+- **Locations of key services**, including hospitals and schools
+- **Road networks**
+- **Early-stage geospatial analysis**, focusing on **accessibility indices**
+
+### Functionalities
+
+The platform also offered **search and geolocation features**, enabling users to quickly locate specific transport stops or points of interest. For instance, searching for a **specific bus stop** would automatically move the map to that location.
+
+Additional functionalities included:
+
+- Viewing **all stops along a transport line**
+- Identifying **routes passing through a given stop**
+- Filtering and interacting with various datasets in real time
+
+### Technology Stack
+
+U-TWIN was developed using <a href="https://react.dev/)" target="_blank" rel="noopener noreferrer">**React**</a>, running on <a href="https://www.meteor.com/)" target="_blank" rel="noopener noreferrer">**Meteor**</a>. The frontend utilized <a href="https://mui.com/)" target="_blank" rel="noopener noreferrer">**MUI**</a> for UI components and <a href="https://deck.gl/)" target="_blank" rel="noopener noreferrer">**Deck.GL**</a> for geospatial visualization.
+
+On the backend, <a href="https://www.mongodb.com/)" target="_blank" rel="noopener noreferrer">**MongoDB**</a> was chosen due to its seamless integration with Meteor.
+
+- **Database management**
+- **ETL pipelines** for data extraction, transformation, and loading from multiple sources
+- **Historical data storage and processing** for analytical insights
+
+### Accessibility Index
+
+To enhance **U-TWIN**'s analytical and visualization capabilities—and as a preparatory step for a complementary tool developed within the project—I designed what we referred to as **Accessibility Index**.
+
+While similar approaches exist in numerous GIS applications, our methodology was conceived from the ground up through brainstorming and iterative development. The primary goal was to assess the **distribution of essential services** across urban areas, providing a clear picture of how well key facilities were positioned relative to the population.
+
+1. **City Boundaries & Hexagonal Grid**  
+   The first step involved delineating the city’s boundary. Since there was no universal approach applicable to all the cities analyzed, we typically extracted district or neighborhood geometries from <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer">**OpenStreetMap (OSM)**</a> and merged them into a single urban boundary. This area was then divided into **hexagonal cells** of **125-meter radius**—a spatial partitioning approach that provided a structured yet granular representation of the city. _(At the time, I was unaware of <a href="http://uber.com/en-ES/blog/h3/" target="_blank" rel="noopener noreferrer">**Uber's H3**</a> hexagonal indexing system, which would have been an ideal alternative.)_
+
+2. **Service Point Identification**  
+   We identified key urban services, such as **hospitals, universities, schools, and industrial zones**, again leveraging **OSM** as a comprehensive data source. Each service type was geocoded and mapped accordingly.
+
+3. **Proximity & Travel Time Calculation**  
+   For each **hexagon centroid**, we determined the **nearest service** of each category. Using <a href="https://project-osrm.org/" target="_blank" rel="noopener noreferrer">**Open Source Routing Machine (OSRM)**</a>, we then calculated the estimated travel time to these services across three different modes of transport:
+
+   - **Walking**
+   - **Cycling**
+   - **Driving**
+
+4. **Scoring System & Visualization**  
+   To quantify accessibility, we developed a **scoring model**:
+
+   - If a service was **contained within** or **touched** the hexagon, it received **100 points**.
+   - For every additional **two minutes of travel time**, **one point was deducted** from the score.
+
+   These thresholds were not arbitrary; they were based on the **average walking speed** and various **urban studies** that define the perception of accessibility.
+
+5. **Geospatial Representation**  
+   Finally, the accessibility scores were visualized on the **U-TWIN** map, using a **color-coded gradient** to represent different levels of accessibility. This provided a **clear, intuitive overview** of service distribution and ease of access, helping urban planners, researchers, and policymakers identify gaps in infrastructure and mobility planning.
+
+---

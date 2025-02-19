@@ -1,0 +1,60 @@
+---
+import { Image, getImage } from "astro:assets";
+
+interface Props {
+  imageFolder: string;
+}
+
+const { imageFolder } = Astro.props;
+const images = import.meta.glob("/src/assets/images/utwin/*");
+const imagePaths = Object.keys(images).filter((imagePath) => {
+  return imagePath.includes(`/assets/images/${imageFolder}/`);
+});
+---
+
+<div
+  id="gallery"
+  class="container mx-auto px-2 pb-2 grid grid-cols-2 md:grid-cols-3 gap-4"
+>
+  {
+    imagePaths.map(async (imagePath) => {
+      let image = images[imagePath]();
+      let optimizedImage = await getImage({
+        src: image,
+        width: 1200,
+      });
+
+      return (
+        <a
+          href={optimizedImage.src}
+          data-pswp-width={optimizedImage.attributes.width}
+          data-pswp-height={optimizedImage.attributes.height}
+          target="_blank"
+          class="overflow-hidden rounded-md"
+        >
+          <Image
+            src={image}
+            alt={"altText"}
+            height={125}
+            class={
+              "object-cover w-full transition duration-300 ease-in-out aspect-[3/2]"
+            }
+          />
+        </a>
+      );
+    })
+  }
+</div>
+
+<script>
+  import PhotoSwipeLightbox from "photoswipe/lightbox";
+  import "photoswipe/style.css";
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: "#gallery",
+    children: "a",
+    pswpModule: () => import("photoswipe"),
+  });
+
+  lightbox.init();
+</script>
