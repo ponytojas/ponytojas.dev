@@ -3,26 +3,30 @@ import IndexPopover from "@components/IndexPopover.astro";
 import Layout from "@layouts/Layout.astro";
 import Experience from "@components/Experience.astro";
 import Publications from "@components/Publications.astro";
+import Projects from "@components/Projects.astro";
+import { ClientRouter } from "astro:transitions";
 ---
 
 <!-- 
   For accessibility, we use <main> to identify the primary content area.
   We also add "aria-hidden" for the decorative big text so it doesn't get announced by screen readers.
 -->
-<Layout>
-  <IndexPopover
-    links={[
-      { href: "#experience", label: "Experience" },
-      { href: "#publications", label: "Publications" },
-    ]}
-  />
-  <main class="relative flex flex-col items-center justify-center p-4">
-    <section
-      class="relative z-10 max-w-screen md:max-w-2xl mx-auto text-center mt-[25vh]"
-    >
-      <h2 class="text-7xl mb-4 text-current">
-        <span
-          class="inline-block
+<html>
+  <Layout>
+    <IndexPopover
+      links={[
+        { href: "#experience", label: "Experience" },
+        { href: "#publications", label: "Publications" },
+        { href: "#projects", label: "Projects" },
+      ]}
+    />
+    <main class="relative flex flex-col items-center justify-center p-4">
+      <section
+        class="relative z-10 max-w-screen md:max-w-2xl mx-auto text-center mt-[5vh] md:mt-[25vh]"
+      >
+        <h2 class="text-7xl mb-4 text-current font-extralight">
+          <span
+            class="inline-block
            pl-[0.05em]
                 overflow-visible
                 text-transparent
@@ -34,23 +38,62 @@ import Publications from "@components/Publications.astro";
               to-[#34aadc]
               font-[Bumbbled]
               leading-none"
-          >hello</span
-        >, I'm Daniel Villalobos
-      </h2>
-      <p class="text-lg text-current font-light">
-        Spaniard Software Engineer building neat things on the web.
-      </p>
-    </section>
-    <Experience />
-    <Publications />
-  </main>
-</Layout>
-
-<script is:inline>
-  const toggleExpand = (id) => {
-    const content = document.getElementById(`exp-${id}`);
-    if (content) {
-      content.classList.toggle("hidden");
-    }
-  };
-</script>
+            >hello</span
+          >, I'm Daniel Villalobos
+        </h2>
+        <p class="text-lg text-current font-light">
+          Spaniard Software Engineer building neat things on the web.
+        </p>
+        <div class="flex flex-row justify-center gap-8 mt-4">
+          <a
+            href="https://www.linkedin.com/in/ponytojas/"
+            target="_blank"
+            class="flex flex-col w-auto h-auto rounded-xl bg-[#0a63bc] hover:bg-[#042649] p-3 cursor-pointer shadow-md hover:shadow-2xl transition-all ease-in-out"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fafafa"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-linkedin"
+              ><path
+                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+              ></path><rect width="4" height="12" x="2" y="9"></rect><circle
+                cx="4"
+                cy="4"
+                r="2"></circle></svg
+            >
+          </a>
+          <a
+            href="mailto:daniel.villalobosdel@icloud.com?subject=Let's%20talk&body=I've%20access%20from%20your%20personal%20website%20and%20want%20to%20talk%20with%20you!"
+            target="_blank"
+            class="flex flex-col w-auto h-auto rounded-xl bg-[#eb4034] hover:bg-[#74120b] p-3 cursor-pointer shadow-md hover:shadow-2xl transition-all ease-in-out"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fafafa"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-mail"
+              ><rect width="20" height="16" x="2" y="4" rx="2"></rect><path
+                d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg
+            >
+          </a>
+        </div>
+      </section>
+      <Experience />
+      <Publications />
+      <Projects />
+    </main>
+  </Layout>
+</html>
