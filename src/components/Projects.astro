@@ -1,0 +1,149 @@
+---
+import projectsData from "@data/projects.json";
+import { LinkPreview } from "astro-embed";
+---
+
+<section class="relative w-full max-w-3xl pt-[5em]" id="projects">
+  <h2 class="text-4xl font-bold mb-8">Projects</h2>
+  <div class="border-l-2 border-[#17171c] dark:border-[#fafaee] relative">
+    {
+      projectsData.map((project, index) => (
+        <div
+          class=" relative mb-8 pl-8 flex flex-col"
+          data-index-project={index}
+        >
+          <div
+            class="toggle-project flex flex-row w-full align-middle justify-between z-10"
+            data-index-project={index}
+          >
+            <a class=" flex flex-row align-middle justify-between w-full cursor-pointer">
+              <p class="text-lg font-semibold">
+                <span>{project.title}</span>
+              </p>
+              <svg
+                class="arrow-expand transition-transform duration-500 ease-in-out ml-6"
+                data-index-project={index}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </a>
+          </div>
+
+          <p class="text-gray-500 text-sm">{project.type}</p>
+          <article
+            id={`project-${index}`}
+            class={`mt-2 transition-all duration-500 ease-in-out text-wrap prose dark:prose-invert`}
+          >
+            <p>{project.description}</p>
+            <div class="relative inline-block">
+              <a
+                href={project.url}
+                data-index-project={index}
+                class="project-link underline mt-2 decoration-dotted underline-offset-8"
+              >
+                <span class="flex flex-row items-center">
+                  Read more
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="ml-2"
+                  >
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17 17 7" />
+                  </svg>
+                </span>
+              </a>
+              <div
+                class="link-preview-card absolute"
+                id={`project-link-${index}`}
+              >
+                <LinkPreview id={project.url} />
+              </div>
+            </div>
+          </article>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script is:inline>
+  document.querySelectorAll(".project-link").forEach((link) => {
+    link.addEventListener("mouseover", (e) => {
+      const index = link.dataset.indexProject;
+      e.preventDefault();
+      const card = document.getElementById(`project-link-${index}`);
+      if (card) {
+        card.style.opacity = 1;
+        card.style.transform = "translateY(0)";
+      }
+    });
+    link.addEventListener("mouseout", (e) => {
+      const index = link.dataset.indexProject;
+      e.preventDefault();
+      const card = document.getElementById(`project-link-${index}`);
+      if (card) {
+        card.style.opacity = 0;
+        card.style.transform = "translateY(5px)";
+      }
+    });
+  });
+
+  document.querySelectorAll(".toggle-project").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const index = btn.dataset.indexProject;
+      const content = document.getElementById(`project-${index}`);
+      const arrow = btn.querySelector(".arrow-expand");
+
+      if (content) {
+        if (!content.classList.contains("expanded")) {
+          content.style.overflow = "hidden";
+        }
+
+        content.classList.toggle("expanded");
+        arrow.classList.toggle("rotate-180");
+
+        if (content.classList.contains("expanded")) {
+          content.addEventListener(
+            "transitionend",
+            () => {
+              content.style.overflow = "visible";
+            },
+            { once: true }
+          );
+        } else {
+          content.style.overflow = "hidden";
+        }
+      }
+    });
+  });
+</script>
+<style>
+  article {
+    opacity: 0;
+    height: 0;
+    transition: height 0.5s ease-in-out;
+    interpolate-size: allow-keywords;
+  }
+
+  article.expanded {
+    opacity: 1;
+    height: auto;
+  }
+</style>

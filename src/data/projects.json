@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Color Schema",
+    "url": "/colorSchema",
+    "type": "Personal project",
+    "description": "A fast and intuitive tool for generating and managing custom color palettes. Easily extract colors, copy them in various formats (HEX, RGB, HSL), and download or export selections as JSON or JavaScript. The tool also features an automatic generator that creates a 5-color palette based on a single selection. Perfect for designers and developers looking for quick and seamless color management."
+  },
+  {
+    "title": "LabTools",
+    "url": "/labtools",
+    "type": "Professional project",
+    "description": "Originally developed for the Neural Circuits Lab at UV, this tool streamlines inventory management by tracking available stock and suppliers. It later evolved into a comprehensive system integrating real-time monitoring and analytics for refrigeration units across different racks. Designed to ensure compliance with established protocols and safeguard animal welfare, this solution provides clear insights and automated tracking for laboratory operations."
+  },
+  {
+    "title": "U-TWIN",
+    "url": "/utwin",
+    "type": "Company job related",
+    "description": "Part of the European Commission's UPPER project, this initiative focuses on developing a multimodal public transport digital twin. It integrates data from various sources and services, providing a comprehensive and dynamic representation of urban mobility. The system aims to enhance transportation planning, optimize operations, and improve the overall user experience through real-time insights and predictive analytics."
+  },
+  {
+    "title": "U-NEED",
+    "url": "/uneed",
+    "type": "Company job related",
+    "description": "As part of the European Commission’s UPPER project, this tool provides an intuitive system for visualizing historical geospatial data and analytics. Designed for public transport operators, it simplifies data exploration to support service optimization and quality improvement. By offering clear insights and actionable analytics, the platform helps decision-makers enhance efficiency and passenger experience."
+  }
+]
