@@ -11,21 +11,22 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/fonts/inter/inter.css" />
+
     <meta name="generator" content={Astro.generator} /><title>
       Daniel Villalobos - ponytojas
-    </title></head
-  >
-</html>
-<body class="relative min-h-screen">
-  <div class="absolute top-5 right-5 z-10">
-    <ThemeToggle />
-  </div>
+    </title>
+  </head>
+  <body class="relative min-h-screen">
+    <div class="absolute top-5 right-5 z-10">
+      <ThemeToggle />
+    </div>
 
-  <!-- Main content area with offset for navigation -->
-  <main class="pt-16 md:pt-0 pb-[10rem]">
-    <slot />
-  </main>
-</body>
+    <!-- Main content area with offset for navigation -->
+    <main class="pt-16 md:pt-0 pb-[10rem]">
+      <slot />
+    </main>
+  </body>
+</html>
 
 <style>
   html,
