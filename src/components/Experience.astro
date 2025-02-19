@@ -4,17 +4,20 @@ import { LinkPreview } from "astro-embed";
 import experienceData from "@data/experience.json";
 ---
 
-<section class="relative w-full max-w-3xl pt-[15em]" id="experience">
+<section
+  class="relative w-full max-w-3xl pt-[5em] md:pt-[15em]"
+  id="experience"
+>
   <h2 class="text-4xl font-bold mb-8">Experience</h2>
   <div class="border-l-2 border-[#17171c] dark:border-[#fafaee] relative">
     {
       experienceData.map((exp, index) => (
-        <div class=" relative mb-8 pl-8 flex flex-col" data-index={index}>
-          <div class="flex flex-row align-middle justify-between">
-            <a
-              class="toggle-experience flex flex-row align-middle justify-between w-full cursor-pointer"
-              data-index={index}
-            >
+        <div class="relative mb-8 pl-8 flex flex-col" data-index={index}>
+          <div
+            class="toggle-experience flex flex-row w-full align-middle justify-between"
+            data-index={index}
+          >
+            <a class=" flex flex-row align-middle justify-between w-full cursor-pointer">
               <p class="text-lg font-semibold">
                 <span>{exp.title}</span> -{" "}
                 <span style={`color: ${exp.color}`} class="font-semibold">

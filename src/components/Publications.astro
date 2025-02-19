@@ -12,11 +12,11 @@ import { LinkPreview } from "astro-embed";
           class=" relative mb-8 pl-8 flex flex-col"
           data-index-publication={index}
         >
-          <div class="flex flex-row align-middle justify-between">
-            <a
-              class="toggle-publication flex flex-row align-middle justify-between w-full cursor-pointer"
-              data-index-publication={index}
-            >
+          <div
+            class="toggle-publication flex flex-row w-full align-middle justify-between z-10"
+            data-index-publication={index}
+          >
+            <a class="flex flex-row align-middle justify-between w-full cursor-pointer">
               <p class="text-lg font-semibold">
                 <span>{pub.title}</span>
               </p>
@@ -70,7 +70,10 @@ import { LinkPreview } from "astro-embed";
                   </svg>
                 </span>
               </a>
-              <div class="link-preview-card absolute" id={`pub-link-${index}`}>
+              <div
+                class="link-preview-card absolute hidden"
+                id={`pub-link-${index}`}
+              >
                 <LinkPreview id={pub.url} />
               </div>
             </div>
@@ -88,6 +91,7 @@ import { LinkPreview } from "astro-embed";
       e.preventDefault();
       const card = document.getElementById(`pub-link-${index}`);
       if (card) {
+        card.classList.toggle("hidden");
         card.style.opacity = 1;
         card.style.transform = "translateY(0)";
       }
@@ -99,6 +103,7 @@ import { LinkPreview } from "astro-embed";
       if (card) {
         card.style.opacity = 0;
         card.style.transform = "translateY(5px)";
+        card.classList.toggle("hidden");
       }
     });
   });
