@@ -6,7 +6,7 @@ interface Props {
 }
 
 const { imageFolder } = Astro.props;
-const images = import.meta.glob("/src/assets/images/utwin/*");
+const images = import.meta.glob("/src/assets/images/*/*");
 const imagePaths = Object.keys(images).filter((imagePath) => {
   return imagePath.includes(`/assets/images/${imageFolder}/`);
 });
