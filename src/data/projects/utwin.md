@@ -1,5 +1,5 @@
 ---
-title: "U-TWIN"
+title: "U-TWIN // Daniel Villalobos"
 ---
 
 The development of **U-TWIN** was carried out as part of the European Commission's <a href="https://www.upperprojecteu.eu/" target="_blank" rel="noopener noreferrer">**UPPER project**</a> while working at <a href="https://www.grupoetra.com/" target="_blank" rel="noopener noreferrer">**ETRA I+D**</a>. This project aimed to create a powerful tool for visualizing geospatial data related to public transportation and multimodal mobility.
