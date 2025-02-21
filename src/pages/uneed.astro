@@ -1,0 +1,44 @@
+---
+import IndexPopover from "@components/IndexPopover.astro";
+import PhotoSwipe from "@components/PhotoSwipe.astro";
+import Layout from "@layouts/Layout.astro";
+
+import * as uneed from "@data/projects/uneed.md";
+
+const Content = uneed.default;
+---
+
+<html lang="en">
+  <title>{uneed.frontmatter.title}</title>
+  <meta property="og:title" content="U-TWIN - Daniel Villalobos" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/images/uneed.png" />
+  <meta property="og:image:alt" content="U-TWIN project description page" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <body>
+    <Layout>
+      <IndexPopover
+        links={[
+          { href: "/", label: "Back to home" },
+          { href: "/utwin", label: "U-TWIN" },
+          { href: "/labtools", label: "LabTools" },
+          { href: "/colorSchema", label: "Color Schema" },
+        ]}
+      />
+      <main class="relative flex flex-col items-center justify-center p-4">
+        <section
+          class="relative z-10 max-w-screen md:max-w-2xl mx-auto text-center mt-[5vh] md:mt-[25vh]"
+        >
+          <h2 class="text-7xl text-current font-extralight mb-10">U-NEED</h2>
+        </section>
+        <section class="prose dark:prose-invert text-left">
+          <Content />
+        </section>
+        <section class="prose mt-10">
+          <PhotoSwipe imageFolder="uneed" />
+        </section>
+      </main>
+    </Layout>
+  </body>
+</html>
