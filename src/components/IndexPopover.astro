@@ -6,100 +6,106 @@ const { links = [] } = Astro.props;
 ---
 
 <div
-  class="flex fixed bottom-8 w-screen justify-center z-50"
+  class="fixed bottom-8 w-screen flex justify-center z-50"
   data-alignment="center"
 >
-  <!-- Container for button + popover -->
-  <div class="relative flex flex-row w-screen justify-center">
-    <!-- Button (trigger) -->
-    <button
-      type="button"
-      class="trigger w-auto h-11 flex items-center justify-start gap-2 px-2 rounded-full cursor-pointer transition-colors duration-200
-      bg-[#17171c] dark:bg-[#fafaee] text-[#fafaee] dark:text-[#17171c] shadow-lg hover:bg-[#17171c]/[0.9] hover:text-[#fafaee] dark:hover:bg-[#fafaee]/[0.8] dark:hover:text-[#17171c]"
+  <!-- Container for button + menu -->
+  <div class="menu-container relative">
+    <!-- Floating Menu Button/Container -->
+    <div
+      id="floatingMenu"
+      class="relative bg-[#17171c] dark:bg-[#fafaee] rounded-full shadow-lg flex flex-col transition-all duration-300 overflow-hidden"
+      style="width: 120px; height: 44px;"
     >
-      <div class="flex items-center gap-4 flex-1">
-        <!-- 3 lines in an SVG, each has:
-             - A gray "background" line, fully drawn
-             - A white "foreground" line, drawn from left->right as you scroll
-        -->
-        <svg
-          class="w-10 h-8"
-          viewBox="0 0 100 50"
-          fill="none"
-          stroke-linecap="round"
+      <!-- Button Header (always visible) -->
+      <div
+        class="flex items-center justify-center px-3 py-2 cursor-pointer h-[44px] min-h-[44px]"
+        id="menuToggle"
+      >
+        <div class="flex items-center mr-2">
+          <!-- Progress SVG -->
+          <svg
+            class="w-8 h-8"
+            viewBox="0 0 100 50"
+            fill="none"
+            stroke-linecap="round"
+          >
+            <!-- LINE 1 -->
+            <line
+              x1="10"
+              y1="10"
+              x2="50"
+              y2="10"
+              stroke="var(--line-bg)"
+              stroke-width="8"
+              stroke-dasharray="50"
+              stroke-dashoffset="0"></line>
+            <line
+              x1="10"
+              y1="10"
+              x2="50"
+              y2="10"
+              stroke="var(--line-fg)"
+              stroke-width="8"
+              stroke-dasharray="50"
+              stroke-dashoffset="50"
+              class="progress-line"></line>
+
+            <!-- LINE 2 -->
+            <line
+              x1="10"
+              y1="25"
+              x2="65"
+              y2="25"
+              stroke="var(--line-bg)"
+              stroke-width="8"
+              stroke-dasharray="65"
+              stroke-dashoffset="0"></line>
+            <line
+              x1="10"
+              y1="25"
+              x2="65"
+              y2="25"
+              stroke="var(--line-fg)"
+              stroke-width="8"
+              stroke-dasharray="65"
+              stroke-dashoffset="65"
+              class="progress-line"></line>
+
+            <!-- LINE 3 -->
+            <line
+              x1="10"
+              y1="40"
+              x2="40"
+              y2="40"
+              stroke="var(--line-bg)"
+              stroke-width="8"
+              stroke-dasharray="40"
+              stroke-dashoffset="0"></line>
+            <line
+              x1="10"
+              y1="40"
+              x2="40"
+              y2="40"
+              stroke="var(--line-fg)"
+              stroke-width="8"
+              stroke-dasharray="40"
+              stroke-dashoffset="40"
+              class="progress-line"></line>
+          </svg>
+        </div>
+
+        <span
+          class="flex items-center gap-1 text-sm font-medium text-[#fafaee] dark:text-[#17171c]"
         >
-          <!-- LINE 1 -->
-          <line
-            x1="10"
-            y1="10"
-            x2="50"
-            y2="10"
-            stroke="var(--line-bg)"
-            stroke-width="8"
-            stroke-dasharray="50"
-            stroke-dashoffset="0"></line>
-          <line
-            x1="10"
-            y1="10"
-            x2="50"
-            y2="10"
-            stroke="var(--line-fg)"
-            stroke-width="8"
-            stroke-dasharray="50"
-            stroke-dashoffset="50"
-            class="progress-line"></line>
-
-          <!-- LINE 2 -->
-          <line
-            x1="10"
-            y1="25"
-            x2="65"
-            y2="25"
-            stroke="var(--line-bg)"
-            stroke-width="8"
-            stroke-dasharray="65"
-            stroke-dashoffset="0"></line>
-          <line
-            x1="10"
-            y1="25"
-            x2="65"
-            y2="25"
-            stroke="var(--line-fg)"
-            stroke-width="8"
-            stroke-dasharray="65"
-            stroke-dashoffset="65"
-            class="progress-line"></line>
-
-          <!-- LINE 3 -->
-          <line
-            x1="10"
-            y1="40"
-            x2="40"
-            y2="40"
-            stroke="var(--line-bg)"
-            stroke-width="8"
-            stroke-dasharray="40"
-            stroke-dashoffset="0"></line>
-          <line
-            x1="10"
-            y1="40"
-            x2="40"
-            y2="40"
-            stroke="var(--line-fg)"
-            stroke-width="8"
-            stroke-dasharray="40"
-            stroke-dashoffset="40"
-            class="progress-line"></line>
-        </svg>
-
-        <span class="flex items-center gap-1 text-sm font-medium">
           Index
           <svg
-            class="w-4 h-4"
+            class="w-4 h-4 transform transition-transform duration-300"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
             viewBox="0 0 24 24"
+            id="arrow-icon"
           >
             <path
               stroke-linecap="round"
@@ -108,24 +114,19 @@ const { links = [] } = Astro.props;
           </svg>
         </span>
       </div>
-    </button>
 
-    <!-- Popover -->
-    <div
-      id="indexPopover"
-      class="popover
-             absolute bottom-12 left-1/2 -translate-x-1/2
-             w-64 rounded-md bg-[#17171c] dark:bg-[#fafaee] text-[#fafaee] dark:text-[#17171c] p-4 shadow-lg
-             transition-all duration-200 ease-out
-             origin-bottom"
-    >
-      <ul class="space-y-2 text-sm">
+      <!-- Menu Items List -->
+      <ul
+        id="menuList"
+        class="menu-list opacity-0 max-h-0 overflow-hidden w-full px-4 space-y-3 text-sm text-[#fafaee] dark:text-[#17171c] transition-all duration-300"
+      >
         {
           links.map((link) => (
             <li>
               <a
                 href={link.href}
-                class="block hover:bg-gray-700 dark:hover:text-[#fafaee] px-2 py-1 rounded transition-colors"
+                class="block hover:bg-gray-700 dark:hover:bg-gray-200 dark:hover:text-[#17171c] px-2 py-1 rounded transition-colors"
+                data-menu-link
               >
                 {link.label}
               </a>
@@ -138,28 +139,52 @@ const { links = [] } = Astro.props;
 </div>
 
 <!-- Styles -->
-<style is:global>
-  /* Position the trigger */
-  .trigger {
-    position: fixed;
-    bottom: 2rem;
+<style>
+  /* Variables for the line colors */
+  :root {
+    --line-bg: rgba(150, 150, 150, 0.5);
+    --line-fg: white;
   }
 
-  /* Fallback styling for browsers without popover support */
-  #indexPopover {
-    display: none;
+  :root.dark {
+    --line-bg: rgba(100, 100, 100, 0.5);
+    --line-fg: #17171c;
   }
 
-  /* When we want the popover "open", we'll remove 'hidden' and handle transitions. */
-  .popover.show {
-    display: block; /* or inline-block, if you prefer */
-    opacity: 1; /* fade in */
-    transform: scale(1); /* pop in */
+  /* Menu styles */
+  .menu-container {
+    z-index: 50;
+  }
+
+  /* Active state for the chevron icon */
+  #arrow-icon.rotated {
+    transform: rotate(180deg);
+  }
+
+  /* Menu list items */
+  .menu-list {
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .menu-list.visible {
+    opacity: 1;
+    pointer-events: auto;
+    max-height: 500px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 </style>
 
 <!-- Client Script -->
 <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    floatingMenu.style.width = "120px";
+    floatingMenu.style.borderRadius = "22px";
+    floatingMenu.style.height = "44px"; // Ensure it's not "auto" initially
+    floatingMenu.style.transition = "all 0.3s ease"; // Explicitly set transition
+  });
+
   // SCROLL-BASED PROGRESS ANIMATION
   const progressLines = document.querySelectorAll(".progress-line");
 
@@ -191,61 +216,86 @@ const { links = [] } = Astro.props;
   window.addEventListener("scroll", updateScrollProgress, { passive: true });
   updateScrollProgress();
 
-  // POPOVER TOGGLING
-  const trigger = document.querySelector(".trigger");
-  const popover = document.getElementById("indexPopover");
-  const links = popover?.querySelectorAll("a");
-  let popoverOpen = false;
+  // MENU TOGGLING
+  const menuToggle = document.getElementById("menuToggle");
+  const floatingMenu = document.getElementById("floatingMenu");
+  const menuList = document.getElementById("menuList");
+  const arrowIcon = document.getElementById("arrow-icon");
+  const backdrop = document.getElementById("backdrop");
+  let isExpanded = false;
+  let expandedWidth = "240px"; // Store the expanded width
+  let expandedBorderRadius = "24px"; // Store the expanded border radius
 
-  function closePopover() {
-    if (popoverOpen) {
-      popoverOpen = false;
-      popover.classList.remove("show");
-      popover.addEventListener(
-        "transitionend",
-        function handler() {
-          popover.classList.add("hidden");
-          popover.style.display = "none";
-          popover.removeEventListener("transitionend", handler);
-        },
-        { once: true }
-      );
+  // Set initial dimensions for accurate transitions
+  document.addEventListener("DOMContentLoaded", () => {
+    // Force layout calculation to ensure styles are applied properly
+    floatingMenu.getBoundingClientRect();
+  });
+
+  function toggleMenu(expand) {
+    isExpanded = expand;
+
+    if (expand) {
+      floatingMenu.style.width = expandedWidth;
+      floatingMenu.style.borderRadius = expandedBorderRadius;
+      floatingMenu.style.height = "auto";
+
+      // Show menu items
+      menuList.classList.add("visible");
+      arrowIcon.classList.add("rotated");
+      backdrop.classList.remove("hidden");
+    } else {
+      // Collapse the menu
+      floatingMenu.style.width = "120px";
+      floatingMenu.style.minHeight = "44px";
+      floatingMenu.style.borderRadius = "22px";
+      menuList.classList.remove("visible");
+      arrowIcon.classList.remove("rotated");
+      backdrop.classList.add("hidden");
     }
   }
 
-  trigger?.addEventListener("click", (event) => {
-    event.stopPropagation(); // Prevent immediate closing from outside click
-    popoverOpen = !popoverOpen;
-
-    if (popover) {
-      if (popoverOpen) {
-        popover.classList.remove("hidden");
-        popover.style.display = "block";
-
-        requestAnimationFrame(() => {
-          popover.classList.add("show");
-        });
-      } else {
-        closePopover();
-      }
-    }
+  // Toggle menu when clicking the button
+  menuToggle?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleMenu(!isExpanded);
   });
 
-  // Close popover when clicking outside
-  document.addEventListener("click", (event) => {
-    if (
-      popoverOpen &&
-      !popover.contains(event.target) &&
-      !trigger.contains(event.target)
-    ) {
-      closePopover();
-    }
+  // Close menu when clicking the backdrop
+  backdrop?.addEventListener("click", () => {
+    toggleMenu(false);
   });
 
-  // Close popover when clicking on a list item
-  links.forEach((link) => {
-    link.addEventListener("click", () => {
-      closePopover();
+  // Fix link click handler
+  document.querySelectorAll("[data-menu-link]").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      // Stop event from bubbling to prevent immediate menu collapse
+      e.stopPropagation();
+
+      // Important: Stop propagation to document click handler
+      // that would close the menu before the link click is processed
+      e.stopImmediatePropagation();
+
+      // Let the navigation happen naturally
+      return true;
     });
+  });
+
+  // Close menu when clicking anywhere outside of menu links or the menu itself
+  document.addEventListener("click", (event) => {
+    const clickedElement = event.target;
+    const isMenuLink = clickedElement.closest("[data-menu-link]");
+    const isMenuElement = floatingMenu.contains(clickedElement);
+
+    if (isExpanded && !isMenuLink && !isMenuElement) {
+      toggleMenu(false);
+    }
+  });
+
+  // Close menu when pressing Escape
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && isExpanded) {
+      toggleMenu(false);
+    }
   });
 </script>
