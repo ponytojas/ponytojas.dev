@@ -3,7 +3,7 @@
     "title": "Color Schema",
     "url": "/colorSchema",
     "type": "Personal project",
-    "description": "A fast and intuitive tool for generating and managing custom color palettes. Easily extract colors, copy them in various formats (HEX, RGB, HSL), and download or export selections as JSON or JavaScript. The tool also features an automatic generator that creates a 5-color palette based on a single selection. Perfect for designers and developers looking for quick and seamless color management."
+    "description": "A collection of curated color palettes for designers and developers."
   },
   {
     "title": "LabTools",
