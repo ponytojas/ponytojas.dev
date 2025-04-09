@@ -17,6 +17,16 @@
   font-style: normal;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
 :root {
   font-family: 'Inter', sans-serif;
   --preview-bg: #17171c;
@@ -42,6 +52,9 @@ html {
   background-color: #fafaee;
   color: #17171c;
   scroll-behavior: smooth;
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .dark .nav-links a {
