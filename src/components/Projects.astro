@@ -69,12 +69,6 @@ import { LinkPreview } from "astro-embed";
                   </svg>
                 </span>
               </a>
-              <div
-                class="link-preview-card absolute"
-                id={`project-link-${index}`}
-              >
-                <LinkPreview id={project.url} />
-              </div>
             </div>
           </article>
         </div>
@@ -84,27 +78,6 @@ import { LinkPreview } from "astro-embed";
 </section>
 
 <script is:inline>
-  document.querySelectorAll(".project-link").forEach((link) => {
-    link.addEventListener("mouseover", (e) => {
-      const index = link.dataset.indexProject;
-      e.preventDefault();
-      const card = document.getElementById(`project-link-${index}`);
-      if (card) {
-        card.style.opacity = 1;
-        card.style.transform = "translateY(0)";
-      }
-    });
-    link.addEventListener("mouseout", (e) => {
-      const index = link.dataset.indexProject;
-      e.preventDefault();
-      const card = document.getElementById(`project-link-${index}`);
-      if (card) {
-        card.style.opacity = 0;
-        card.style.transform = "translateY(5px)";
-      }
-    });
-  });
-
   document.querySelectorAll(".toggle-project").forEach((btn) => {
     btn.addEventListener("click", () => {
       const index = btn.dataset.indexProject;
