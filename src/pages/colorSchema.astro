@@ -1,0 +1,243 @@
+---
+import IndexPopover from "@components/IndexPopover.astro";
+import palettes from "@data/colors/palettes.json";
+import Layout from "@layouts/Layout.astro";
+
+const copyIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-copy inline-block"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><path d="M16 4h2a2 2 0 0 1 2 2v4"/><path d="M21 14H11"/><path d="m15 10-4 4 4 4"/></svg>`;
+const checkIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check inline-block"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+---
+
+<Layout>
+  <IndexPopover
+    links={[
+      { href: "/", label: "Back to home" },
+      { href: "/utwin", label: "U-TWIN" },
+      { href: "/uneed", label: "U-NEED" },
+      { href: "/labtools", label: "LabTools" },
+    ]}
+  />
+
+  <main class="relative flex flex-col items-center justify-center p-4">
+    <section
+      class="relative z-10 w-full max-w-screen-md mx-auto text-center mt-[5vh] md:mt-[10vh] mb-8"
+    >
+      <div
+        id="palette-selector"
+        class="flex flex-row w-full flex-wrap gap-5 align-middle justify-center"
+      >
+        {
+          palettes.map((palette, idx) => (
+            <button
+              type="button"
+              class="palette-btn cursor-pointer rounded-xl border border-zinc-300 dark:border-zinc-700 p-4 text-left transition hover:shadow-lg hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 bg-white dark:bg-zinc-800 dark:text-white"
+              title={`Select ${palette.name}`}
+              data-palette-index={idx}
+            >
+              <div class="font-semibold">{palette.name}</div>
+              <div class="flex space-x-1 mt-2">
+                {palette.colors.slice(0, 5).map((color) => (
+                  <div
+                    class="w-6 h-6 rounded-full border border-zinc-300 dark:border-zinc-600"
+                    style={`background-color: ${color.hex};`}
+                    title={color.hex}
+                  />
+                ))}
+              </div>
+            </button>
+          ))
+        }
+      </div>
+      <pre
+        class="text-xs mt-2 italic"><sup>*</sup>Bentos are created randomly each time you select them</pre>
+    </section>
+
+    <section class="w-full max-w-screen-md mx-auto mt-8 mb-8">
+      <h3
+        id="selected-palette-name"
+        class="text-xl font-semibold mb-4 text-center dark:text-white"
+      >
+      </h3>
+      <div
+        id="color-display-area"
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3 grid-flow-row-dense"
+        style="grid-auto-rows: minmax(60px, auto);"
+        aria-live="polite"
+      >
+      </div>
+    </section>
+  </main>
+
+  <script define:vars={{ palettes, copyIconSvg, checkIconSvg }}>
+    const paletteSelector = document.getElementById("palette-selector");
+    const colorDisplayArea = document.getElementById("color-display-area");
+    const selectedPaletteNameEl = document.getElementById(
+      "selected-palette-name"
+    );
+
+    const SPAN_PROBABILITY = 0.4;
+    const MAX_SPAN_COLS = 2;
+    const MAX_SPAN_ROWS = 4;
+    const BASE_ROW_SPAN = 3;
+
+    function getTextColor(hexColor) {
+      const hex = hexColor.replace("#", "");
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      return luminance > 0.55 ? "text-black" : "text-white";
+    }
+
+    function hexToRgb(hex) {
+      hex = hex.replace("#", "");
+      if (hex.length === 3) {
+        hex = hex
+          .split("")
+          .map((char) => char + char)
+          .join("");
+      }
+      if (hex.length !== 6) {
+        return "rgb(0, 0, 0)"; // Return black for invalid hex
+      }
+      const bigint = parseInt(hex, 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function handleCopyClick(event) {
+      const target = event.currentTarget;
+      const valueToCopy = target.dataset.copyValue;
+      const iconContainer = target.querySelector(".copy-icon-container");
+
+      if (!valueToCopy || !iconContainer) return;
+
+      navigator.clipboard
+        .writeText(valueToCopy)
+        .then(() => {
+          const originalIcon = iconContainer.innerHTML;
+          iconContainer.innerHTML = checkIconSvg; // Show checkmark
+          target.classList.add("text-green-500"); // Optional: visual feedback
+
+          setTimeout(() => {
+            iconContainer.innerHTML = originalIcon; // Restore original icon
+            target.classList.remove("text-green-500");
+          }, 1500); // Restore after 1.5 seconds
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+          // Optionally show an error state to the user
+          const originalIcon = iconContainer.innerHTML;
+          iconContainer.innerHTML = "Error"; // Simple text error
+          iconContainer.classList.add("text-red-500");
+          setTimeout(() => {
+            iconContainer.innerHTML = originalIcon; // Restore original icon
+            iconContainer.classList.remove("text-red-500");
+          }, 2000);
+        });
+    }
+
+    paletteSelector.addEventListener("click", (event) => {
+      const button = event.target.closest(".palette-btn");
+      if (!button) return;
+
+      const paletteIndex = button.dataset.paletteIndex;
+      if (paletteIndex === undefined || paletteIndex === null) return;
+
+      const selectedPalette = palettes[parseInt(paletteIndex, 10)];
+      if (!selectedPalette) return;
+
+      colorDisplayArea.innerHTML = "";
+      selectedPaletteNameEl.textContent = selectedPalette.name;
+
+      if (!selectedPalette.colors || selectedPalette.colors.length === 0) {
+        const noColorsMsg = document.createElement("p");
+        noColorsMsg.textContent = "No colors defined for this palette.";
+        noColorsMsg.className =
+          "md:col-span-4 sm:col-span-3 col-span-2 text-center text-zinc-500 dark:text-zinc-400 py-4";
+        colorDisplayArea.appendChild(noColorsMsg);
+        return;
+      }
+
+      selectedPalette.colors.forEach((color) => {
+        const colorBox = document.createElement("div");
+        const textColorClass = getTextColor(color.hex);
+        const rgbValue = hexToRgb(color.hex);
+
+        let colSpan = 1;
+        let rowSpan = BASE_ROW_SPAN;
+
+        if (Math.random() < SPAN_PROBABILITY) {
+          const trySpanCols = Math.random() < 0.6;
+          const trySpanRows = Math.random() < 0.7;
+
+          if (trySpanCols) {
+            colSpan = Math.floor(Math.random() * MAX_SPAN_COLS) + 1;
+          }
+
+          if (trySpanRows) {
+            rowSpan =
+              Math.floor(Math.random() * (MAX_SPAN_ROWS - BASE_ROW_SPAN + 1)) +
+              BASE_ROW_SPAN;
+          }
+
+          if (colSpan === 1 && rowSpan === BASE_ROW_SPAN) {
+            if (Math.random() > 0.5 && MAX_SPAN_COLS > 1) {
+              colSpan = MAX_SPAN_COLS;
+            } else if (MAX_SPAN_ROWS > BASE_ROW_SPAN) {
+              rowSpan = BASE_ROW_SPAN + 1;
+            }
+          }
+        }
+
+        colorBox.className = `
+          relative
+          min-h-[${BASE_ROW_SPAN * 60}px] w-full rounded-lg border border-black/10 dark:border-white/10
+          shadow-sm transition-all duration-300 hover:shadow-md
+          ${textColorClass}
+        `;
+        colorBox.style.backgroundColor = color.hex;
+        colorBox.style.gridColumn = `span ${colSpan}`;
+        colorBox.style.gridRow = `span ${rowSpan}`;
+        colorBox.title = `${color.name} - ${color.hex} (Span: ${colSpan}x${rowSpan})`;
+
+        const infoBox = document.createElement("div");
+        infoBox.className = `
+          absolute top-0 left-0 p-2 m-1 rounded
+          text-[10px] leading-tight font-mono
+        `;
+
+        const nameEl = document.createElement("div");
+        nameEl.className = "font-sans font-semibold text-xl font-thin mb-1";
+        nameEl.textContent = color.name || "Untitled";
+
+        const hexLine = document.createElement("div");
+        hexLine.className = "flex items-center cursor-pointer copy-target";
+        hexLine.dataset.copyValue = color.hex;
+        hexLine.innerHTML = `
+          <span>${color.hex}</span>
+          <span class="copy-icon-container ml-1 opacity-70 hover:opacity-100">${copyIconSvg}</span>
+        `;
+        hexLine.addEventListener("click", handleCopyClick);
+
+        const rgbLine = document.createElement("div");
+        rgbLine.className =
+          "flex items-center cursor-pointer copy-target mt-0.5";
+        rgbLine.dataset.copyValue = rgbValue;
+        rgbLine.innerHTML = `
+          <span>${rgbValue}</span>
+          <span class="copy-icon-container ml-1 opacity-70 hover:opacity-100">${copyIconSvg}</span>
+        `;
+        rgbLine.addEventListener("click", handleCopyClick);
+
+        infoBox.appendChild(nameEl);
+        infoBox.appendChild(hexLine);
+        infoBox.appendChild(rgbLine);
+        colorBox.appendChild(infoBox);
+
+        colorDisplayArea.appendChild(colorBox);
+      });
+    });
+  </script>
+</Layout>
