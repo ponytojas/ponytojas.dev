@@ -169,8 +169,6 @@ const { links = [] } = Astro.props;
 <script is:inline>
   // Wrap everything in a function to avoid polluting global scope
   function setupIndexPopover() {
-    console.log("[IndexPopover] Setup function called.");
-
     // --- Get Elements ---
     const floatingMenu = document.getElementById("floatingMenu");
     const menuToggle = document.getElementById("menuToggle");
@@ -184,12 +182,8 @@ const { links = [] } = Astro.props;
       );
       return;
     }
-    console.log("[IndexPopover] floatingMenu element found.");
 
     // --- Select the SVG element first ---
-    console.log(
-      "[IndexPopover] Attempting to find 'svg' within floatingMenu..."
-    );
     const svgElement = floatingMenu.querySelector("svg");
 
     if (!svgElement) {
@@ -198,24 +192,13 @@ const { links = [] } = Astro.props;
       );
       return;
     }
-    console.log("[IndexPopover] SVG element found.");
 
     // --- Select progress lines using getElementsByTagName and filter ---
-    console.log(
-      "[IndexPopover] Attempting to find <line> elements within SVG using getElementsByTagName..."
-    );
     const allLines = svgElement.getElementsByTagName("line");
-    console.log(
-      `[IndexPopover] Found ${allLines.length} total <line> elements.`
-    );
 
     // Filter the HTMLCollection to get only those with data-length
-    // *** REMOVED TypeScript type annotation : SVGLineElement[] ***
     const progressLines = Array.from(allLines).filter((line) =>
       line.hasAttribute("data-length")
-    );
-    console.log(
-      `[IndexPopover] Filtered down to ${progressLines.length} lines with [data-length] attribute.`
     );
 
     // --- Check All Elements ---
@@ -232,17 +215,8 @@ const { links = [] } = Astro.props;
           progressLinesFound: progressLines.length, // Log filtered count
         }
       );
-      if (svgElement && progressLines.length !== 3) {
-        console.log(
-          "[IndexPopover] Current inner HTML of SVG:",
-          svgElement.innerHTML
-        );
-      }
       return; // Stop if elements are missing
     }
-    console.log(
-      "[IndexPopover] All elements including 3 progress lines found successfully."
-    );
 
     // --- State ---
     let isMenuExpanded = false;
@@ -303,7 +277,6 @@ const { links = [] } = Astro.props;
     }
 
     function handleScroll() {
-      console.log("[IndexPopover] Scroll event detected!");
       if (!isScrolling) {
         isScrolling = true;
         window.requestAnimationFrame(updateProgressLines);
@@ -314,24 +287,18 @@ const { links = [] } = Astro.props;
       const isScrollable =
         document.documentElement.scrollHeight >
         document.documentElement.clientHeight;
-      console.log(
-        `[IndexPopover] Checking scrollability: ${isScrollable ? "Yes" : "No"}`
-      );
+
       if (isScrollable && !scrollListenerActive) {
-        console.log("[IndexPopover] Attaching scroll listener to window.");
         window.addEventListener("scroll", handleScroll, { passive: true });
         scrollListenerActive = true;
         window.requestAnimationFrame(updateProgressLines);
       } else if (!isScrollable && scrollListenerActive) {
-        console.log("[IndexPopover] Detaching scroll listener from window.");
         window.removeEventListener("scroll", handleScroll);
         scrollListenerActive = false;
         window.requestAnimationFrame(updateProgressLines);
       } else if (isScrollable && scrollListenerActive) {
-        console.log("[IndexPopover] Scroll listener already active.");
         window.requestAnimationFrame(updateProgressLines);
       } else {
-        console.log("[IndexPopover] Not scrollable and listener not active.");
         window.requestAnimationFrame(updateProgressLines);
       }
     }
@@ -359,7 +326,6 @@ const { links = [] } = Astro.props;
     // --- End of Core Logic Functions ---
 
     // --- Event Listeners ---
-    console.log("[IndexPopover] Setting up event listeners...");
     menuToggle.addEventListener("click", (event) => {
       event.stopPropagation();
       toggleMenu(!isMenuExpanded);
@@ -382,40 +348,30 @@ const { links = [] } = Astro.props;
     window.addEventListener("resize", () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
-        console.log("[IndexPopover] Resize detected.");
         // This function re-checks scrollability and attaches the listener if needed
         checkScrollabilityAndManageListener();
       }, 250);
     });
-    console.log("[IndexPopover] Event listeners set up.");
 
     // --- Initial Setup ---
-    console.log("[IndexPopover] Performing initial style setup...");
     floatingMenu.style.width = collapsedWidth;
     floatingMenu.style.height = collapsedHeight;
     floatingMenu.style.borderRadius = collapsedBorderRadius;
 
     checkScrollabilityAndManageListener();
     window.requestAnimationFrame(updateProgressLines); // Initial update
-
-    console.log("[IndexPopover] Initialization complete.");
   } // End of setupIndexPopover function
 
   // --- Run Setup ---
   function runSetup() {
     // Keep a small delay
     const delay = 100;
-    console.log(
-      `[IndexPopover] Scheduling setup function with ${delay}ms delay.`
-    );
     setTimeout(setupIndexPopover, delay);
   }
 
   if (document.readyState === "loading") {
-    console.log("[IndexPopover] DOM not ready, waiting for DOMContentLoaded.");
     document.addEventListener("DOMContentLoaded", runSetup);
   } else {
-    console.log("[IndexPopover] DOM ready, running setup soon (setTimeout).");
     runSetup();
   }
 </script>
