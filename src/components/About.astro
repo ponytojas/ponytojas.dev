@@ -13,7 +13,10 @@ const bunnyImageImports = await Promise.all([
 const bunnyImageSrcs = bunnyImageImports.map((img) => img.default.src);
 ---
 
-<section class="relative w-full max-w-3xl pt-[5em] md:pt-[5em]" id="about">
+<section
+  class="relative w-full max-w-3xl pt-[5em] md:pt-[5em] mb-10"
+  id="about"
+>
   <h2 class="text-4xl font-bold mb-8">About me and this site</h2>
   <article class="flex flex-col gap-4 w-full">
     <p class="text-wrap prose dark:prose-invert">
