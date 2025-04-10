@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
-const bunnyImages = await Promise.all([
+const bunnyImageImports = await Promise.all([
   import("@assets/images/juno/photo1.webp"),
   import("@assets/images/juno/photo2.webp"),
   import("@assets/images/juno/photo3.webp"),
@@ -9,6 +9,8 @@ const bunnyImages = await Promise.all([
   import("@assets/images/juno/photo5.webp"),
   import("@assets/images/juno/photo6.webp"),
 ]);
+
+const bunnyImageSrcs = bunnyImageImports.map((img) => img.default.src);
 ---
 
 <section class="relative w-full max-w-3xl pt-[5em] md:pt-[5em]" id="about">
@@ -109,8 +111,10 @@ const bunnyImages = await Promise.all([
         <span
           class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-64 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg z-50 bunny-image-container"
           ><Image
-            src={bunnyImages[0].default}
+            src={bunnyImageImports[0].default}
             alt="Bunny"
+            loading="lazy"
+            decoding="async"
             class="rounded-lg w-full h-auto transition-opacity duration-300 ease-in-out"
           />
         </span>
@@ -167,43 +171,42 @@ const bunnyImages = await Promise.all([
   }
 </style>
 
-<script define:vars={{ bunnyImages: bunnyImages.map((img) => img.default.src) }}
->
+<script define:vars={{ bunnyImageSrcs }}>
+  const preloadImages = (urls) => {
+    urls.forEach((url) => {
+      const img = new window.Image(); // Use window.Image to avoid potential name conflicts
+      img.src = url;
+    });
+  };
+  preloadImages(bunnyImageSrcs);
+
   const initializeImageRotation = () => {
     const hoverTriggers = document.querySelectorAll(".hover-trigger");
 
     hoverTriggers.forEach((trigger) => {
       let rotationInterval = null;
       let currentIndex = 0;
+      const imageElement = trigger.querySelector("img");
 
-      const updateImage = async () => {
-        const imageElement = trigger.querySelector("img");
-        if (imageElement) {
-          // Fade out
-          imageElement.classList.add("fade-out");
+      if (!imageElement) return;
 
-          // Wait for fade out transition
-          await new Promise((resolve) => setTimeout(resolve, 300));
+      const updateImage = () => {
+        imageElement.classList.add("fade-out");
 
-          // Update image source
-          currentIndex = (currentIndex + 1) % bunnyImages.length;
-          imageElement.src = bunnyImages[currentIndex];
+        setTimeout(() => {
+          currentIndex = (currentIndex + 1) % bunnyImageSrcs.length;
+          imageElement.src = bunnyImageSrcs[currentIndex];
 
-          // Trigger reflow
-          imageElement.offsetHeight;
-
-          // Fade in
           imageElement.classList.remove("fade-out");
-        }
+        }, 300);
       };
 
       trigger.addEventListener("mouseenter", () => {
-        const imageElement = trigger.querySelector("img");
-        if (imageElement) {
-          currentIndex = 0;
-          imageElement.src = bunnyImages[currentIndex];
-          imageElement.classList.remove("fade-out");
-        }
+        currentIndex = 0;
+        imageElement.src = bunnyImageSrcs[currentIndex];
+        imageElement.classList.remove("fade-out");
+        if (rotationInterval) clearInterval(rotationInterval);
+
         rotationInterval = setInterval(updateImage, 3000);
       });
 
@@ -213,15 +216,19 @@ const bunnyImages = await Promise.all([
           rotationInterval = null;
         }
 
-        const imageElement = trigger.querySelector("img");
-        if (imageElement) {
+        imageElement.classList.add("fade-out");
+        setTimeout(() => {
           currentIndex = 0;
-          imageElement.src = bunnyImages[0];
+          imageElement.src = bunnyImageSrcs[0];
           imageElement.classList.remove("fade-out");
-        }
+        }, 300);
       });
     });
   };
 
-  initializeImageRotation();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeImageRotation);
+  } else {
+    initializeImageRotation();
+  }
 </script>
