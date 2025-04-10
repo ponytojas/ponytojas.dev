@@ -218,10 +218,10 @@ const { links = [] } = Astro.props;
 
   // MENU TOGGLING
   const menuToggle = document.getElementById("menuToggle");
-  const floatingMenu = document.getElementById("floatingMenu");
-  const menuList = document.getElementById("menuList");
-  const arrowIcon = document.getElementById("arrow-icon");
-  const backdrop = document.getElementById("backdrop");
+  const floatingMenu = document.getElementById("floatingMenu")!!;
+  const menuList = document.getElementById("menuList")!!;
+  const arrowIcon = document.getElementById("arrow-icon")!!;
+  const backdrop = document.getElementById("backdrop")!!;
   let isExpanded = false;
   let expandedWidth = "240px"; // Store the expanded width
   let expandedBorderRadius = "24px"; // Store the expanded border radius
@@ -232,7 +232,7 @@ const { links = [] } = Astro.props;
     floatingMenu.getBoundingClientRect();
   });
 
-  function toggleMenu(expand) {
+  function toggleMenu(expand: boolean) {
     isExpanded = expand;
 
     if (expand) {
