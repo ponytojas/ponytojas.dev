@@ -1,9 +1,13 @@
 ---
+import profileImage from "@assets/images/me/profile.webp";
+
+import About from "@components/About.astro";
 import Experience from "@components/Experience.astro";
 import IndexPopover from "@components/IndexPopover.astro";
 import Projects from "@components/Projects.astro";
 import Publications from "@components/Publications.astro";
 import Layout from "@layouts/Layout.astro";
+import { Image } from "astro:assets";
 ---
 
 <!-- 
@@ -16,9 +20,12 @@ import Layout from "@layouts/Layout.astro";
       { href: "#experience", label: "Experience" },
       { href: "#publications", label: "Publications" },
       { href: "#projects", label: "Projects" },
+      { href: "#about", label: "About" },
     ]}
   />
-  <main class="relative flex flex-col items-center justify-center p-4">
+  <main
+    class="relative flex flex-col items-center justify-center p-4 mb-25 md:mb-5"
+  >
     <section
       class="relative z-10 md:max-w-2xl mx-auto text-center mt-[5vh] md:mt-[25vh]"
     >
@@ -113,5 +120,16 @@ import Layout from "@layouts/Layout.astro";
     <Experience />
     <Publications />
     <Projects />
+    <About />
   </main>
+  <Image
+    class="absolute bottom-0 right-0 mt-10 md:mt-5"
+    src={profileImage}
+    alt="A drawing of me"
+    width={200}
+    height={200}
+    quality={100}
+    decoding="async"
+    loading="lazy"
+  />
 </Layout>
