@@ -1,4 +1,5 @@
 ---
+// src/components/IndexPopover.astro
 interface Props {
   links: Array<{ href: string; label: string }>;
 }
@@ -14,8 +15,8 @@ const { links = [] } = Astro.props;
     <!-- Floating Menu Button/Container -->
     <div
       id="floatingMenu"
-      class="relative bg-[#17171c] dark:bg-[#fafaee] rounded-full shadow-lg flex flex-col transition-all duration-300 overflow-hidden"
-      style="width: 120px; height: 44px;"
+      class="relative bg-[#17171c] dark:bg-[#fafaee] rounded-full shadow-lg flex flex-col transition-all duration-300 ease-in-out overflow-hidden"
+      style="width: 120px; height: 44px; border-radius: 22px;"
     >
       <!-- Button Header (always visible) -->
       <div
@@ -30,7 +31,7 @@ const { links = [] } = Astro.props;
             fill="none"
             stroke-linecap="round"
           >
-            <!-- LINE 1 -->
+            <!-- Background Lines (NO progress-line class) -->
             <line
               x1="10"
               y1="10"
@@ -38,60 +39,57 @@ const { links = [] } = Astro.props;
               y2="10"
               stroke="var(--line-bg)"
               stroke-width="8"
-              stroke-dasharray="50"
-              stroke-dashoffset="0"></line>
+              stroke-dasharray="40"></line>
             <line
+              x1="10"
+              y1="25"
+              x2="65"
+              y2="25"
+              stroke="var(--line-bg)"
+              stroke-width="8"
+              stroke-dasharray="55"></line>
+            <line
+              x1="10"
+              y1="40"
+              x2="40"
+              y2="40"
+              stroke="var(--line-bg)"
+              stroke-width="8"
+              stroke-dasharray="30"></line>
+            <!-- Foreground/Progress Lines (ONLY ONE class, plus data-length) -->
+            <line
+              class="progress-line"
               x1="10"
               y1="10"
               x2="50"
               y2="10"
-              stroke="var(--line-fg)"
-              stroke-width="8"
-              stroke-dasharray="50"
-              stroke-dashoffset="50"
-              class="progress-line"></line>
-
-            <!-- LINE 2 -->
-            <line
-              x1="10"
-              y1="25"
-              x2="65"
-              y2="25"
-              stroke="var(--line-bg)"
-              stroke-width="8"
-              stroke-dasharray="65"
-              stroke-dashoffset="0"></line>
-            <line
-              x1="10"
-              y1="25"
-              x2="65"
-              y2="25"
-              stroke="var(--line-fg)"
-              stroke-width="8"
-              stroke-dasharray="65"
-              stroke-dashoffset="65"
-              class="progress-line"></line>
-
-            <!-- LINE 3 -->
-            <line
-              x1="10"
-              y1="40"
-              x2="40"
-              y2="40"
-              stroke="var(--line-bg)"
-              stroke-width="8"
-              stroke-dasharray="40"
-              stroke-dashoffset="0"></line>
-            <line
-              x1="10"
-              y1="40"
-              x2="40"
-              y2="40"
               stroke="var(--line-fg)"
               stroke-width="8"
               stroke-dasharray="40"
               stroke-dashoffset="40"
-              class="progress-line"></line>
+              data-length="40"></line>
+            <line
+              class="progress-line"
+              x1="10"
+              y1="25"
+              x2="65"
+              y2="25"
+              stroke="var(--line-fg)"
+              stroke-width="8"
+              stroke-dasharray="55"
+              stroke-dashoffset="55"
+              data-length="55"></line>
+            <line
+              class="progress-line"
+              x1="10"
+              y1="40"
+              x2="40"
+              y2="40"
+              stroke="var(--line-fg)"
+              stroke-width="8"
+              stroke-dasharray="30"
+              stroke-dashoffset="30"
+              data-length="30"></line>
           </svg>
         </div>
 
@@ -100,17 +98,17 @@ const { links = [] } = Astro.props;
         >
           Index
           <svg
+            id="arrow-icon"
             class="w-4 h-4 transform transition-transform duration-300"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
             viewBox="0 0 24 24"
-            id="arrow-icon"
           >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
           </svg>
         </span>
       </div>
@@ -118,7 +116,7 @@ const { links = [] } = Astro.props;
       <!-- Menu Items List -->
       <ul
         id="menuList"
-        class="menu-list opacity-0 max-h-0 overflow-hidden w-full px-4 space-y-3 text-sm text-[#fafaee] dark:text-[#17171c] transition-all duration-300"
+        class="menu-list opacity-0 max-h-0 overflow-hidden w-full px-4 space-y-3 text-sm text-[#fafaee] dark:text-[#17171c] transition-all duration-300 ease-in-out"
       >
         {
           links.map((link) => (
@@ -140,162 +138,284 @@ const { links = [] } = Astro.props;
 
 <!-- Styles -->
 <style>
-  /* Variables for the line colors */
-  :root {
-    --line-bg: rgba(150, 150, 150, 0.5);
-    --line-fg: white;
-  }
-
-  :root.dark {
-    --line-bg: rgba(100, 100, 100, 0.5);
-    --line-fg: #17171c;
-  }
-
-  /* Menu styles */
+  /* Styles remain the same */
   .menu-container {
     z-index: 50;
   }
-
-  /* Active state for the chevron icon */
   #arrow-icon.rotated {
     transform: rotate(180deg);
   }
-
-  /* Menu list items */
   .menu-list {
-    transition: all 0.3s ease;
+    transition:
+      opacity 0.3s ease-in-out,
+      max-height 0.3s ease-in-out,
+      padding 0.3s ease-in-out;
     pointer-events: none;
   }
-
   .menu-list.visible {
     opacity: 1;
     pointer-events: auto;
     max-height: 500px;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     padding-bottom: 1rem;
+  }
+  /* Style the lines we intend to animate */
+  line[data-length] {
+    transition: stroke-dashoffset 0.1s linear;
   }
 </style>
 
 <!-- Client Script -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    floatingMenu.style.width = "120px";
-    floatingMenu.style.borderRadius = "22px";
-    floatingMenu.style.height = "44px"; // Ensure it's not "auto" initially
-    floatingMenu.style.transition = "all 0.3s ease"; // Explicitly set transition
-  });
+<script is:inline>
+  // Wrap everything in a function to avoid polluting global scope
+  function setupIndexPopover() {
+    console.log("[IndexPopover] Setup function called.");
 
-  // SCROLL-BASED PROGRESS ANIMATION
-  const progressLines = document.querySelectorAll(".progress-line");
+    // --- Get Elements ---
+    const floatingMenu = document.getElementById("floatingMenu");
+    const menuToggle = document.getElementById("menuToggle");
+    const menuList = document.getElementById("menuList");
+    const arrowIcon = document.getElementById("arrow-icon");
 
-  function lineFill(scrollP, start, end) {
-    if (scrollP <= start) return 0;
-    if (scrollP >= end) return 1;
-    return (scrollP - start) / (end - start);
-  }
-
-  function updateScrollProgress() {
-    const scrollTop = window.scrollY;
-    const docHeight =
-      document.documentElement.scrollHeight * 1.5 - window.innerHeight;
-    const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
-
-    progressLines.forEach((line, index) => {
-      const i = index % 3; // 3 progress lines per group
-      const dashLength = parseFloat(
-        line.getAttribute("stroke-dasharray") || "80"
+    // Check main container first
+    if (!floatingMenu) {
+      console.error(
+        "[IndexPopover] ERROR: floatingMenu element not found! Aborting."
       );
-      const start = i * 0.15;
-      const end = (i + 1) * 0.15;
-      const fraction = lineFill(scrollPercent, start, end);
-      const offset = dashLength * (1 - fraction);
-      line.style.strokeDashoffset = offset.toString();
+      return;
+    }
+    console.log("[IndexPopover] floatingMenu element found.");
+
+    // --- Select the SVG element first ---
+    console.log(
+      "[IndexPopover] Attempting to find 'svg' within floatingMenu..."
+    );
+    const svgElement = floatingMenu.querySelector("svg");
+
+    if (!svgElement) {
+      console.error(
+        "[IndexPopover] ERROR: SVG element not found within floatingMenu! Aborting."
+      );
+      return;
+    }
+    console.log("[IndexPopover] SVG element found.");
+
+    // --- Select progress lines using getElementsByTagName and filter ---
+    console.log(
+      "[IndexPopover] Attempting to find <line> elements within SVG using getElementsByTagName..."
+    );
+    const allLines = svgElement.getElementsByTagName("line");
+    console.log(
+      `[IndexPopover] Found ${allLines.length} total <line> elements.`
+    );
+
+    // Filter the HTMLCollection to get only those with data-length
+    // *** REMOVED TypeScript type annotation : SVGLineElement[] ***
+    const progressLines = Array.from(allLines).filter((line) =>
+      line.hasAttribute("data-length")
+    );
+    console.log(
+      `[IndexPopover] Filtered down to ${progressLines.length} lines with [data-length] attribute.`
+    );
+
+    // --- Check All Elements ---
+    // Check other elements AND the result of the filtered line array
+    if (!menuToggle || !menuList || !arrowIcon || progressLines.length !== 3) {
+      console.error(
+        "[IndexPopover] ERROR: Missing essential child elements or wrong count of progress lines (expected 3 with data-length after filtering). Aborting.",
+        {
+          menuToggle: !!menuToggle,
+          menuList: !!menuList,
+          arrowIcon: !!arrowIcon,
+          svgElementFound: !!svgElement,
+          totalLinesFound: allLines.length, // Log total lines found
+          progressLinesFound: progressLines.length, // Log filtered count
+        }
+      );
+      if (svgElement && progressLines.length !== 3) {
+        console.log(
+          "[IndexPopover] Current inner HTML of SVG:",
+          svgElement.innerHTML
+        );
+      }
+      return; // Stop if elements are missing
+    }
+    console.log(
+      "[IndexPopover] All elements including 3 progress lines found successfully."
+    );
+
+    // --- State ---
+    let isMenuExpanded = false;
+    const collapsedWidth = "120px";
+    const collapsedHeight = "44px";
+    const collapsedBorderRadius = "22px";
+    const expandedWidth = "240px";
+    const expandedBorderRadius = "24px";
+    // Get lengths directly from the filtered array
+    const lineLengths = progressLines.map(
+      (
+        line // No type needed here either
+      ) => parseFloat(line.dataset.length || "0")
+    );
+    let isScrolling = false;
+    let scrollListenerActive = false;
+
+    // --- Core Logic Functions (calculateSegmentFill, updateProgressLines, handleScroll, checkScrollabilityAndManageListener, toggleMenu) ---
+    // These functions remain the same
+    function calculateSegmentFill(
+      overallScrollPercent,
+      segmentStart,
+      segmentEnd
+    ) {
+      if (overallScrollPercent <= segmentStart) return 0;
+      if (overallScrollPercent >= segmentEnd) return 1;
+      const segmentRange = segmentEnd - segmentStart;
+      const progressInSegment = overallScrollPercent - segmentStart;
+      return segmentRange > 0 ? progressInSegment / segmentRange : 0;
+    }
+
+    function updateProgressLines() {
+      const element = document.documentElement;
+      const scrollTop = element.scrollTop;
+      const scrollHeight = element.scrollHeight;
+      const clientHeight = element.clientHeight;
+      const maxScroll =
+        scrollHeight > clientHeight ? scrollHeight - clientHeight : 0;
+      const scrollPercent =
+        maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0;
+
+      progressLines.forEach((line, index) => {
+        const dashLength = lineLengths[index];
+        if (dashLength === 0) return;
+        const startPercent = index / 3;
+        const endPercent = (index + 1) / 3;
+        const fillFraction = calculateSegmentFill(
+          scrollPercent,
+          startPercent,
+          endPercent
+        );
+        const offset = dashLength * (1 - fillFraction);
+        const clampedOffset = Math.max(0, Math.min(offset, dashLength));
+        // Ensure line is treated as an HTMLElement for style access
+        line.style.strokeDashoffset = clampedOffset.toString();
+      });
+      isScrolling = false;
+    }
+
+    function handleScroll() {
+      console.log("[IndexPopover] Scroll event detected!");
+      if (!isScrolling) {
+        isScrolling = true;
+        window.requestAnimationFrame(updateProgressLines);
+      }
+    }
+
+    function checkScrollabilityAndManageListener() {
+      const isScrollable =
+        document.documentElement.scrollHeight >
+        document.documentElement.clientHeight;
+      console.log(
+        `[IndexPopover] Checking scrollability: ${isScrollable ? "Yes" : "No"}`
+      );
+      if (isScrollable && !scrollListenerActive) {
+        console.log("[IndexPopover] Attaching scroll listener to window.");
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        scrollListenerActive = true;
+        window.requestAnimationFrame(updateProgressLines);
+      } else if (!isScrollable && scrollListenerActive) {
+        console.log("[IndexPopover] Detaching scroll listener from window.");
+        window.removeEventListener("scroll", handleScroll);
+        scrollListenerActive = false;
+        window.requestAnimationFrame(updateProgressLines);
+      } else if (isScrollable && scrollListenerActive) {
+        console.log("[IndexPopover] Scroll listener already active.");
+        window.requestAnimationFrame(updateProgressLines);
+      } else {
+        console.log("[IndexPopover] Not scrollable and listener not active.");
+        window.requestAnimationFrame(updateProgressLines);
+      }
+    }
+
+    function toggleMenu(expand) {
+      isMenuExpanded = expand;
+      if (expand) {
+        floatingMenu.style.width = expandedWidth;
+        floatingMenu.style.borderRadius = expandedBorderRadius;
+        floatingMenu.style.height = "auto";
+        menuList.classList.add("visible");
+        arrowIcon.classList.add("rotated");
+      } else {
+        const currentHeight = floatingMenu.scrollHeight + "px";
+        floatingMenu.style.height = currentHeight;
+        requestAnimationFrame(() => {
+          floatingMenu.style.width = collapsedWidth;
+          floatingMenu.style.borderRadius = collapsedBorderRadius;
+          floatingMenu.style.height = collapsedHeight;
+          menuList.classList.remove("visible");
+          arrowIcon.classList.remove("rotated");
+        });
+      }
+    }
+    // --- End of Core Logic Functions ---
+
+    // --- Event Listeners ---
+    console.log("[IndexPopover] Setting up event listeners...");
+    menuToggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      toggleMenu(!isMenuExpanded);
     });
+    menuList.querySelectorAll("a[data-menu-link]").forEach((link) => {
+      link.addEventListener("click", () => {
+        if (isMenuExpanded) toggleMenu(false);
+      });
+    });
+    document.addEventListener("click", (event) => {
+      if (isMenuExpanded && !floatingMenu.contains(event.target)) {
+        toggleMenu(false);
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isMenuExpanded) toggleMenu(false);
+    });
+
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        console.log("[IndexPopover] Resize detected.");
+        // This function re-checks scrollability and attaches the listener if needed
+        checkScrollabilityAndManageListener();
+      }, 250);
+    });
+    console.log("[IndexPopover] Event listeners set up.");
+
+    // --- Initial Setup ---
+    console.log("[IndexPopover] Performing initial style setup...");
+    floatingMenu.style.width = collapsedWidth;
+    floatingMenu.style.height = collapsedHeight;
+    floatingMenu.style.borderRadius = collapsedBorderRadius;
+
+    checkScrollabilityAndManageListener();
+    window.requestAnimationFrame(updateProgressLines); // Initial update
+
+    console.log("[IndexPopover] Initialization complete.");
+  } // End of setupIndexPopover function
+
+  // --- Run Setup ---
+  function runSetup() {
+    // Keep a small delay
+    const delay = 100;
+    console.log(
+      `[IndexPopover] Scheduling setup function with ${delay}ms delay.`
+    );
+    setTimeout(setupIndexPopover, delay);
   }
 
-  window.addEventListener("scroll", updateScrollProgress, { passive: true });
-  updateScrollProgress();
-
-  // MENU TOGGLING
-  const menuToggle = document.getElementById("menuToggle");
-  const floatingMenu = document.getElementById("floatingMenu")!!;
-  const menuList = document.getElementById("menuList")!!;
-  const arrowIcon = document.getElementById("arrow-icon")!!;
-  const backdrop = document.getElementById("backdrop")!!;
-  let isExpanded = false;
-  let expandedWidth = "240px"; // Store the expanded width
-  let expandedBorderRadius = "24px"; // Store the expanded border radius
-
-  // Set initial dimensions for accurate transitions
-  document.addEventListener("DOMContentLoaded", () => {
-    // Force layout calculation to ensure styles are applied properly
-    floatingMenu.getBoundingClientRect();
-  });
-
-  function toggleMenu(expand: boolean) {
-    isExpanded = expand;
-
-    if (expand) {
-      floatingMenu.style.width = expandedWidth;
-      floatingMenu.style.borderRadius = expandedBorderRadius;
-      floatingMenu.style.height = "auto";
-
-      // Show menu items
-      menuList.classList.add("visible");
-      arrowIcon.classList.add("rotated");
-      backdrop.classList.remove("hidden");
-    } else {
-      // Collapse the menu
-      floatingMenu.style.width = "120px";
-      floatingMenu.style.minHeight = "44px";
-      floatingMenu.style.borderRadius = "22px";
-      menuList.classList.remove("visible");
-      arrowIcon.classList.remove("rotated");
-      backdrop.classList.add("hidden");
-    }
+  if (document.readyState === "loading") {
+    console.log("[IndexPopover] DOM not ready, waiting for DOMContentLoaded.");
+    document.addEventListener("DOMContentLoaded", runSetup);
+  } else {
+    console.log("[IndexPopover] DOM ready, running setup soon (setTimeout).");
+    runSetup();
   }
-
-  // Toggle menu when clicking the button
-  menuToggle?.addEventListener("click", (event) => {
-    event.stopPropagation();
-    toggleMenu(!isExpanded);
-  });
-
-  // Close menu when clicking the backdrop
-  backdrop?.addEventListener("click", () => {
-    toggleMenu(false);
-  });
-
-  // Fix link click handler
-  document.querySelectorAll("[data-menu-link]").forEach((link) => {
-    link.addEventListener("click", (e) => {
-      // Stop event from bubbling to prevent immediate menu collapse
-      e.stopPropagation();
-
-      // Important: Stop propagation to document click handler
-      // that would close the menu before the link click is processed
-      e.stopImmediatePropagation();
-
-      // Let the navigation happen naturally
-      return true;
-    });
-  });
-
-  // Close menu when clicking anywhere outside of menu links or the menu itself
-  document.addEventListener("click", (event) => {
-    const clickedElement = event.target;
-    const isMenuLink = clickedElement.closest("[data-menu-link]");
-    const isMenuElement = floatingMenu.contains(clickedElement);
-
-    if (isExpanded && !isMenuLink && !isMenuElement) {
-      toggleMenu(false);
-    }
-  });
-
-  // Close menu when pressing Escape
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && isExpanded) {
-      toggleMenu(false);
-    }
-  });
 </script>

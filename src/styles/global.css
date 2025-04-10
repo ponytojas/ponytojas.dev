@@ -17,15 +17,9 @@
   font-style: normal;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
+* {
+  outline: 1px solid rgba(255, 0, 0, 0.1);
 }
-
 
 :root {
   font-family: 'Inter', sans-serif;
@@ -48,13 +42,29 @@ html.dark {
   color: #fafaee;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
-  background-color: #fafaee;
-  color: #17171c;
-  scroll-behavior: smooth;
   margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  background-color: #fafaee;
+  overflow-x: hidden;
+  color: #17171c;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
   width: 100%;
-  height: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .dark .nav-links a {
