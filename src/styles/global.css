@@ -3,6 +3,16 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@layer utilities {
+  .text-outline-black {
+    text-shadow:
+      -0.5px -0.5px 0 black,
+      0.5px -0.5px 0 black,
+      -0.5px 0.5px 0 black,
+      0.5px 0.5px 0 black;
+  }
+}
+
 @font-face {
   font-family: "Bumbbled";
   src: url("/fonts/Bumbbled.otf") format("opentype");
@@ -15,10 +25,6 @@
   src: url("/fonts/Lumen.ttf");
   font-weight: normal;
   font-style: normal;
-}
-
-* {
-  outline: 1px solid rgba(255, 0, 0, 0.1);
 }
 
 :root {
