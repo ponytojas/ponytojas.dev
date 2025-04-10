@@ -2,12 +2,12 @@
 import { Image } from "astro:assets";
 
 const bunnyImageImports = await Promise.all([
-  import("@assets/images/juno/photo1.webp"),
-  import("@assets/images/juno/photo2.webp"),
-  import("@assets/images/juno/photo3.webp"),
-  import("@assets/images/juno/photo4.webp"),
-  import("@assets/images/juno/photo5.webp"),
-  import("@assets/images/juno/photo6.webp"),
+  import("@assets/images/juno-min/photo1.webp"),
+  import("@assets/images/juno-min/photo2.webp"),
+  import("@assets/images/juno-min/photo3.webp"),
+  import("@assets/images/juno-min/photo4.webp"),
+  import("@assets/images/juno-min/photo5.webp"),
+  import("@assets/images/juno-min/photo6.webp"),
 ]);
 
 const bunnyImageSrcs = bunnyImageImports.map((img) => img.default.src);
@@ -113,6 +113,7 @@ const bunnyImageSrcs = bunnyImageImports.map((img) => img.default.src);
           ><Image
             src={bunnyImageImports[0].default}
             alt="Bunny"
+            width={256}
             loading="lazy"
             decoding="async"
             class="rounded-lg w-full h-auto transition-opacity duration-300 ease-in-out"
@@ -172,13 +173,30 @@ const bunnyImageSrcs = bunnyImageImports.map((img) => img.default.src);
 </style>
 
 <script define:vars={{ bunnyImageSrcs }}>
+  const preloadedImages = [];
+  let isTouch = false;
+
+  // Detect touch device
+  window.addEventListener("touchstart", function onFirstTouch() {
+    isTouch = true;
+    window.removeEventListener("touchstart", onFirstTouch);
+  });
+
   const preloadImages = (urls) => {
-    urls.forEach((url) => {
-      const img = new window.Image(); // Use window.Image to avoid potential name conflicts
-      img.src = url;
-    });
+    return Promise.all(
+      urls.map((url) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            preloadedImages.push(img);
+            resolve(img);
+          };
+          img.onerror = reject;
+          img.src = url;
+        });
+      })
+    );
   };
-  preloadImages(bunnyImageSrcs);
 
   const initializeImageRotation = () => {
     const hoverTriggers = document.querySelectorAll(".hover-trigger");
@@ -186,49 +204,109 @@ const bunnyImageSrcs = bunnyImageImports.map((img) => img.default.src);
     hoverTriggers.forEach((trigger) => {
       let rotationInterval = null;
       let currentIndex = 0;
+      let isActive = false;
       const imageElement = trigger.querySelector("img");
+      const imageContainer = trigger.querySelector(".bunny-image-container");
 
-      if (!imageElement) return;
+      if (!imageElement || !imageContainer) return;
 
       const updateImage = () => {
         imageElement.classList.add("fade-out");
 
         setTimeout(() => {
-          currentIndex = (currentIndex + 1) % bunnyImageSrcs.length;
-          imageElement.src = bunnyImageSrcs[currentIndex];
-
+          currentIndex = (currentIndex + 1) % preloadedImages.length;
+          imageElement.src = preloadedImages[currentIndex].src;
           imageElement.classList.remove("fade-out");
         }, 300);
       };
 
-      trigger.addEventListener("mouseenter", () => {
+      const startRotation = () => {
+        if (isActive) return;
+        isActive = true;
+
         currentIndex = 0;
-        imageElement.src = bunnyImageSrcs[currentIndex];
+        imageElement.src = preloadedImages[currentIndex].src;
         imageElement.classList.remove("fade-out");
+        imageContainer.style.visibility = "visible";
+        imageContainer.style.opacity = "1";
+
         if (rotationInterval) clearInterval(rotationInterval);
-
         rotationInterval = setInterval(updateImage, 3000);
-      });
+      };
 
-      trigger.addEventListener("mouseleave", () => {
+      const stopRotation = () => {
+        if (!isActive) return;
+        isActive = false;
+
         if (rotationInterval) {
           clearInterval(rotationInterval);
           rotationInterval = null;
         }
 
         imageElement.classList.add("fade-out");
+        imageContainer.style.visibility = "hidden";
+        imageContainer.style.opacity = "0";
+
         setTimeout(() => {
           currentIndex = 0;
-          imageElement.src = bunnyImageSrcs[0];
+          imageElement.src = preloadedImages[0].src;
           imageElement.classList.remove("fade-out");
         }, 300);
+      };
+
+      // Desktop events
+      trigger.addEventListener("mouseenter", () => {
+        if (!isTouch) startRotation();
+      });
+
+      trigger.addEventListener("mouseleave", () => {
+        if (!isTouch) stopRotation();
+      });
+
+      // Mobile events
+      trigger.addEventListener("touchstart", (e) => {
+        e.preventDefault(); // Prevent text selection
+        if (isActive) {
+          stopRotation();
+        } else {
+          startRotation();
+        }
+      });
+
+      // Handle clicks outside the trigger area
+      document.addEventListener("touchstart", (e) => {
+        if (isActive && !trigger.contains(e.target)) {
+          stopRotation();
+        }
+      });
+
+      // Clean up on page visibility change
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && isActive) {
+          stopRotation();
+        }
       });
     });
   };
 
+  // Initialize everything once images are loaded
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initializeImageRotation);
+    document.addEventListener("DOMContentLoaded", () => {
+      preloadImages(bunnyImageSrcs)
+        .then(() => {
+          initializeImageRotation();
+        })
+        .catch((error) => {
+          console.error("Error preloading images:", error);
+        });
+    });
   } else {
-    initializeImageRotation();
+    preloadImages(bunnyImageSrcs)
+      .then(() => {
+        initializeImageRotation();
+      })
+      .catch((error) => {
+        console.error("Error preloading images:", error);
+      });
   }
 </script>
