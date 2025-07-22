@@ -1,5 +1,4 @@
 'use client';
-import { RotatingTooltipText } from '@/components/rotating-tooltip-text/RotatingTooltipText';
 import About from '@/app/about/about.mdx';
 
 

@@ -10,7 +10,6 @@ export const SidebarIndex: React.FC = () => {
     const [activeId, setActiveId] = useState<string | null>(null);
 
     const [hoverY, setHoverY] = useState<number | null>(null);
-    const [scrollHoverY, setScrollHoverY] = useState<number | null>(null);
     const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
     const navRef = useRef<HTMLDivElement>(null);
@@ -49,13 +48,7 @@ export const SidebarIndex: React.FC = () => {
 
             const item = itemRefs.current[nextId];
             if (item && navRef.current) {
-                const itemRect = item.getBoundingClientRect();
-                const navRect = navRef.current.getBoundingClientRect();
-                const center = itemRect.top - navRect.top + itemRect.height / 2;
-
-                setScrollHoverY(center);
                 if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-                scrollTimeout.current = setTimeout(() => setScrollHoverY(null), 120);
             }
         }
     };
@@ -154,7 +147,7 @@ export const SidebarIndex: React.FC = () => {
                         <ul>
                             {INDEX.filter((s) => s.id !== "presentation").map((s) => (
                                 <li key={s.id} className="mb-2">
-                                    <div ref={(el) => (itemRefs.current[s.id] = el)}>
+                                    <div ref={(el) => { itemRefs.current[s.id] = el; }}>
                                         <HoverLineWithText
                                             getScale={getScale}
                                             baseWidth={52}

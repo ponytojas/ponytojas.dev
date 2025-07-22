@@ -3,9 +3,7 @@
 import V2X, { metadata as v2xMetadata } from '@/app/publications/v2x.mdx';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Badge } from '@/components/ui/badge';
 import { ArrowUpRight } from 'lucide-react';
-import { useTheme } from 'next-themes';
 
 const publications = [
     { Content: V2X, metadata: v2xMetadata },
