@@ -230,7 +230,6 @@ const HoverLineWithText: React.FC<{
 }> = ({ getScale, baseWidth, text, href, isActive, isSection }) => {
     const lineRef = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState(1);
-    const { isMobile } = useIsMobile(768);
 
     useEffect(() => {
         const tick = () => {
