@@ -4,9 +4,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { INDEX } from "@/static";
 import { PanelLeft, PanelRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export const SidebarIndex: React.FC = () => {
-    const [isOpen, setIsOpen] = useState(true);
+    const { isMobile } = useIsMobile(768);
+    const [isOpen, setIsOpen] = useState(!isMobile);
     const [activeId, setActiveId] = useState<string | null>(null);
 
     const [hoverY, setHoverY] = useState<number | null>(null);
@@ -17,6 +19,12 @@ export const SidebarIndex: React.FC = () => {
 
     const lastScrollY = useRef(0);
     const ticking = useRef(false);
+
+    useEffect(() => {
+        if (isMobile) {
+            setIsOpen(false);
+        }
+    }, [isMobile]);
 
     const pickActiveSection = (direction: "down" | "up") => {
         const sections = Array.from(
@@ -81,6 +89,7 @@ export const SidebarIndex: React.FC = () => {
     }, [activeId]);
 
     const handleMouseMove = (e: React.MouseEvent) => {
+        if (isMobile) return;
         const rect = navRef.current?.getBoundingClientRect();
         if (!rect) return;
         setHoverY(e.clientY - rect.top);
@@ -119,7 +128,7 @@ export const SidebarIndex: React.FC = () => {
     return (
         <>
             {/* open / close button */}
-            <span className="absolute top-0 left-0 mt-8 ml-8 z-30">
+            <span className="absolute top-0 left-0 mt-8 ml-8 z-50">
                 {isOpen ? (
                     <button className={commonClasses} onClick={() => setIsOpen(false)}>
                         <PanelRight className={iconClasses} />
@@ -131,37 +140,79 @@ export const SidebarIndex: React.FC = () => {
                 )}
             </span>
 
-            {/* sliding nav */}
             <AnimatePresence initial={true}>
                 {isOpen && (
-                    <motion.nav
-                        ref={navRef}
-                        onMouseMove={handleMouseMove}
-                        onMouseLeave={handleMouseLeave}
-                        initial={{ x: -300, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -300, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="flex flex-col justify-center w-64 h-full z-20 overflow-y-auto p-4 select-none"
-                    >
-                        <ul>
-                            {INDEX.filter((s) => s.id !== "presentation").map((s) => (
-                                <li key={s.id} className="mb-2">
-                                    <div ref={(el) => { itemRefs.current[s.id] = el; }}>
-                                        <HoverLineWithText
-                                            getScale={getScale}
-                                            baseWidth={52}
-                                            text={s.title}
-                                            href={`#${s.id}`}
-                                            isActive={s.id === activeId}
-                                            isSection
-                                            data-cursor="block"
-                                        />
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.nav>
+                    <>
+                        {isMobile ? (
+                            // Animated overlay with blur
+                            <motion.div
+                                initial={{ backdropFilter: "blur(0px)", opacity: 0 }}
+                                animate={{ backdropFilter: "blur(24px)", opacity: 1 }}
+                                exit={{ backdropFilter: "blur(0px)", opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="fixed inset-0 z-30"
+                            >
+                                <motion.nav
+                                    ref={navRef}
+                                    onMouseMove={handleMouseMove}
+                                    onMouseLeave={handleMouseLeave}
+                                    initial={{ x: -300, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    exit={{ x: -300, opacity: 0 }}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                    className="p-4 flex flex-col justify-center h-screen w-screen"
+                                >
+                                    <ul>
+                                        {INDEX.filter((s) => s.id !== "presentation").map((s) => (
+                                            <li key={s.id} className="mb-2">
+                                                <div ref={(el) => { itemRefs.current[s.id] = el; }}>
+                                                    <HoverLineWithText
+                                                        getScale={getScale}
+                                                        baseWidth={52}
+                                                        text={s.title}
+                                                        href={`#${s.id}`}
+                                                        isActive={s.id === activeId}
+                                                        isSection
+                                                        data-cursor="block"
+                                                    />
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </motion.nav>
+                            </motion.div>
+                        ) : (
+                            // Desktop sidebar
+                            <motion.nav
+                                ref={navRef}
+                                onMouseMove={handleMouseMove}
+                                onMouseLeave={handleMouseLeave}
+                                initial={{ x: -300, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                exit={{ x: -300, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="flex flex-col justify-center w-64 h-full z-20 overflow-y-auto p-4 select-none"
+                            >
+                                <ul>
+                                    {INDEX.filter((s) => s.id !== "presentation").map((s) => (
+                                        <li key={s.id} className="mb-2">
+                                            <div ref={(el) => { itemRefs.current[s.id] = el; }}>
+                                                <HoverLineWithText
+                                                    getScale={getScale}
+                                                    baseWidth={52}
+                                                    text={s.title}
+                                                    href={`#${s.id}`}
+                                                    isActive={s.id === activeId}
+                                                    isSection
+                                                    data-cursor="block"
+                                                />
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </motion.nav>
+                        )}
+                    </>
                 )}
             </AnimatePresence>
         </>
@@ -179,6 +230,7 @@ const HoverLineWithText: React.FC<{
 }> = ({ getScale, baseWidth, text, href, isActive, isSection }) => {
     const lineRef = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState(1);
+    const { isMobile } = useIsMobile(768);
 
     useEffect(() => {
         const tick = () => {
@@ -207,7 +259,7 @@ const HoverLineWithText: React.FC<{
             <a
                 href={href}
                 className={`ml-2 transition-all duration-150 ${isActive ? "font-bold text-accent-primary" : ""
-                    }`}
+                    } prose dark:prose-invert`}
                 style={{ marginLeft: `${lineWidth - baseWidth + 8}px` }}
             >
                 {text}
