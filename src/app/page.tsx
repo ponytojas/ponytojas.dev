@@ -4,19 +4,13 @@ import PublicationsComponent from '@/components/publications/PublicationsCompone
 import Footer from "@/components/footer/Footer";
 import AboutComponents from '@/components/about/AboutComponents';
 import ProjectsComponent from '@/components/projects/ProjectsComponent';
+import { Hero } from '@/components/hero/Hero';
 
 export default function Home() {
   return (
     <>
-      <section id="presentation" className="h-[70vh] mt-[25vh] pb-12">
-        <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
-          <span data-indicator-container="presentation" className="relative inline-block w-5 h-5" />
-          Hello, I&apos;m Daniel
-        </h1>
-        <p className="font-normal text-2xl prose lg:prose-xl dark:prose-invert">
-          Spaniard Software Engineer building neat things on the web.
-        </p>
-      </section>
+
+      <Hero />
       <section id="experience" className="mb-8">
         <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
           <span data-indicator-container="experience" className="relative w-5 h-5" />

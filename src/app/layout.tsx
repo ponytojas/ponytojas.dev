@@ -36,7 +36,7 @@ export default function RootLayout({
           <main className="flex flex-col min-h-screen">
             <ModeToggle />
             <FloatingIndicator />
-            <div className="flex flex-col fixed h-screen justify-center">
+            <div className="flex flex-col fixed h-screen justify-center z-50">
               <SidebarIndex />
             </div>
             <div className="flex-1 flex flex-col mx-auto max-w-[800px] w-full pt-16 px-4 mt-20 mb-96">
