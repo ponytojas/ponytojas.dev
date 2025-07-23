@@ -13,7 +13,7 @@ export default function Footer() {
     return (
         <motion.footer
             style={{ y, opacity }}
-            className="fixed bottom-0 left-0 z-50 w-full bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+            className="fixed bottom-0 left-0 pb-10 md:mb-0 z-50 w-full bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60"
         >
             <div className="mx-auto flex w-full max-w-[800px] flex-col items-center gap-4 px-4 py-10">
                 <span className="text-6xl font-thin prose dark:prose-invert tracking-tight sm:text-9xl">
