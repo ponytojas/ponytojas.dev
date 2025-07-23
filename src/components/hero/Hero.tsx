@@ -5,13 +5,13 @@ import { useTheme } from "next-themes";
 export const Hero = () => {
     const { theme } = useTheme();
     return (
-        <section id="presentation" className="h-[70vh] mt-[25vh] pb-12">
+        <section id="presentation" className="h-[70vh] mt-[25vh] pb-12 overflow-x-hidden">
             <Image
                 src="/logo/logo_no_name.webp"
                 alt="Daniel's Hero Image"
                 width={500}
                 height={500}
-                className={`absolute top-20 left-45% object-cover transform transition-all ${theme === "dark" ? "invert" : ""}`}
+                className={`absolute top-0 left-45% object-cover transform transition-all ${theme === "dark" ? "invert" : ""}`}
                 priority
             />
             <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
