@@ -25,7 +25,7 @@ const links: SocialLink[] = [
         icon: <Linkedin className="w-5 h-5 mt-1" />,
     },
     {
-        href: "/cv.pdf",
+        href: "/cv-danielVillalobos.pdf",
         title: "CV",
         textHover: "hover:text-accent-primary",
         underline: "bg-accent-primary",

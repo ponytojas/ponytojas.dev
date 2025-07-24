@@ -26,39 +26,39 @@ export function ModeToggle() {
         "transition-transform duration-300" +
         "w-[26px] h-[26px] hover:w-[26px] hover:h-[26px]"
 
+    const fillColor = theme === 'dark' ? '#17171c' : '#fefefe';
+
 
     return (
-        <div className="right-0 py-10 px-15 fixed z-1 flex justify-end items-center w-auto" suppressHydrationWarning>
-            <AnimatePresence mode="wait">
-                {theme === 'dark' ? (
-                    <motion.button
-                        layout
-                        key="dark"
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        variants={iconVariants}
-                        transition={{ duration: 0.15 }}
-                        className={commonClasses}
-                        onClick={() => setTheme("light")}
-                    >
-                        <Sun className={iconClasses} />
-                    </motion.button>
-                ) : (
-                    <motion.button
-                        key="light"
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        variants={iconVariants}
-                        transition={{ duration: 0.15 }}
-                        className={commonClasses}
-                        onClick={() => setTheme("dark")}
-                    >
-                        <Moon className={iconClasses} />
-                    </motion.button>
-                )}
-            </AnimatePresence>
-        </div>
+        <AnimatePresence mode="wait">
+            {theme === 'dark' ? (
+                <motion.button
+                    layout
+                    key="dark"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    variants={iconVariants}
+                    transition={{ duration: 0.15 }}
+                    className={commonClasses}
+                    onClick={() => setTheme("light")}
+                >
+                    <Sun className={iconClasses} fill={fillColor} />
+                </motion.button>
+            ) : (
+                <motion.button
+                    key="light"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    variants={iconVariants}
+                    transition={{ duration: 0.15 }}
+                    className={commonClasses}
+                    onClick={() => setTheme("dark")}
+                >
+                    <Moon className={iconClasses} fill={fillColor} />
+                </motion.button>
+            )}
+        </AnimatePresence>
     )
 }

@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { SidebarIndex } from "@/components/SidebarIndex";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { ModeToggle } from "@/components/theme/mode-toggle";
 import { FloatingIndicator } from "@/components/FloatingIndicator/FloatingIndicator";
+import { TopBar } from "@/components/top-bar/TopBar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,7 +34,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="flex flex-col min-h-screen">
-            <ModeToggle />
+            <TopBar />
             <FloatingIndicator />
             <div className="flex flex-col fixed h-screen justify-center z-50">
               <SidebarIndex />

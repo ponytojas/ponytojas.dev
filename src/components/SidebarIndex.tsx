@@ -2,13 +2,13 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { INDEX } from "@/static";
-import { PanelLeft, PanelRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useSidebarStore } from "@/store/sidebar";
 
 export const SidebarIndex: React.FC = () => {
+    const isOpen = useSidebarStore((state) => state.isOpen);
     const { isMobile } = useIsMobile(768);
-    const [isOpen, setIsOpen] = useState(!isMobile);
     const [activeId, setActiveId] = useState<string | null>(null);
 
     const [hoverY, setHoverY] = useState<number | null>(null);
@@ -19,12 +19,6 @@ export const SidebarIndex: React.FC = () => {
 
     const lastScrollY = useRef(0);
     const ticking = useRef(false);
-
-    useEffect(() => {
-        if (isMobile) {
-            setIsOpen(false);
-        }
-    }, [isMobile]);
 
     const pickActiveSection = (direction: "down" | "up") => {
         const sections = Array.from(
@@ -115,30 +109,12 @@ export const SidebarIndex: React.FC = () => {
         return 1;
     };
 
-    const commonClasses =
-        "transition-transform duration-300 cursor-pointer " +
-        "hover:scale-[1.15] active:scale-[1.15] " +
-        "text-neutral-600 dark:text-neutral-300 " +
-        "hover:text-accent-primary dark:hover:text-accent-primary";
 
-    const iconClasses =
-        "transition-transform duration-300 w-[26px] h-[26px] " +
-        "hover:w-[26px] hover:h-[26px]";
 
     return (
         <>
             {/* open / close button */}
-            <span className="absolute top-0 left-0 mt-8 ml-8 z-50">
-                {isOpen ? (
-                    <button className={commonClasses} onClick={() => setIsOpen(false)}>
-                        <PanelRight className={iconClasses} />
-                    </button>
-                ) : (
-                    <button className={commonClasses} onClick={() => setIsOpen(true)}>
-                        <PanelLeft className={iconClasses} />
-                    </button>
-                )}
-            </span>
+
 
             <AnimatePresence initial={true}>
                 {isOpen && (
