@@ -1,43 +1,17 @@
-"use client";
+import localFont from "next/font/local";
 
-import { motion, useScroll, useTransform } from "motion/react";
+const calendas = localFont({ src: "./calendas-plus.woff2" });
 
 export default function Footer() {
-    const { scrollYProgress } = useScroll();
-
-    // Translate from bottom ➜ top
-    const y = useTransform(scrollYProgress, [0.9, 1], ["100%", "0%"]);
-    // Fade in
-    const opacity = useTransform(scrollYProgress, [0.9, 0.95, 1], [0, 0.25, 1]);
-
     return (
-        <motion.footer
-            style={{ y, opacity }}
-            className="fixed bottom-0 left-0 pb-10 md:mb-0 z-50 w-full bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60"
-        >
-            <div className="mx-auto flex w-full max-w-[800px] flex-col items-center gap-4 px-4 py-10">
-                <span className="text-6xl font-thin prose dark:prose-invert tracking-tight sm:text-9xl">
+        <footer className="sticky bottom-0 bg-accent-primary h-65 w-full flex items-center justify-center pb-10 z-0">
+            <div className="relative w-full max-w-screen sm:max-w-[800px] h-full px-12 py-12 text-background">
+                <h2
+                    className={`${calendas.className} text-center pl-4 sm:ml-0 absolute bottom-0 left-0 text-[80px] sm:text-[150px] font-thin pointer-events-none`}
+                >
                     ponytojas
-                </span>
-                <nav className="flex gap-6 text-sm text-muted-foreground sm:text-base">
-                    <a
-                        href="https://github.com/ponytojas"
-                        className="transition-colors hover:text-foreground"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        GitHub
-                    </a>
-                    <a
-                        href="https://linkedin.com/in/ponytojas"
-                        className="transition-colors hover:text-foreground"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        LinkedIn
-                    </a>
-                </nav>
+                </h2>
             </div>
-        </motion.footer>
+        </footer>
     );
 }

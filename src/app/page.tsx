@@ -1,7 +1,6 @@
 "use client";
 import ExperienceComponent from '@/components/experience/ExperienceComponent';
 import PublicationsComponent from '@/components/publications/PublicationsComponent';
-import Footer from "@/components/footer/Footer";
 import AboutComponents from '@/components/about/AboutComponents';
 import ProjectsComponent from '@/components/projects/ProjectsComponent';
 import { Hero } from '@/components/hero/Hero';
@@ -9,7 +8,6 @@ import { Hero } from '@/components/hero/Hero';
 export default function Home() {
   return (
     <>
-
       <Hero />
       <section id="experience" className="mb-8">
         <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
@@ -42,8 +40,6 @@ export default function Home() {
         </h1>
         <AboutComponents />
       </section>
-
-      <Footer />
     </>
   );
 }

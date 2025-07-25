@@ -5,6 +5,7 @@ import { SidebarIndex } from "@/components/SidebarIndex";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { FloatingIndicator } from "@/components/FloatingIndicator/FloatingIndicator";
 import { TopBar } from "@/components/top-bar/TopBar";
+import Footer from "@/components/footer/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} antialiased`}
+        className={`${inter.variable} antialiased overscroll-none`}
       >
         <ThemeProvider
           attribute="class"
@@ -33,15 +34,20 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex flex-col min-h-screen">
+          <main className="relative z-10 flex flex-col min-h-screen">
             <TopBar />
             <FloatingIndicator />
             <div className="flex flex-col fixed h-screen justify-center z-50">
               <SidebarIndex />
             </div>
-            <div className="flex-1 flex flex-col mx-auto max-w-[800px] w-full pt-16 px-4 mt-20 mb-96">
-              {children}
+            <div className="w-screen bg-background z-20">
+              <div className="flex-1 flex flex-col mx-auto max-w-[800px] w-full pt-16 px-4 mt-20 z-20 bg-background">
+                {children}
+              </div>
             </div>
+
+            <Footer />
+
           </main>
         </ThemeProvider>
       </body>
