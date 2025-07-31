@@ -1,10 +1,12 @@
 'use client';
 
+import MyTasks, { metadata as myTasksMetadata } from '@/app/projects/my-tasks.mdx';
 import UTwin, { metadata as utwinMetadata } from '@/app/projects/utwin.mdx';
 import UNeed, { metadata as uneedMetadata } from '@/app/projects/uneed.mdx';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const experiences = [
+    { Content: MyTasks, metadata: myTasksMetadata },
     { Content: UTwin, metadata: utwinMetadata },
     { Content: UNeed, metadata: uneedMetadata },
 ];

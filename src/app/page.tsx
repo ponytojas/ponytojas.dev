@@ -17,7 +17,7 @@ export default function Home() {
         <ExperienceComponent />
 
       </section>
-      <section id="publications" className="mb-8 mt-28">
+      <section id="publications" className="mb-8 mt-36">
         <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
           <span data-indicator-container="publications" className="relative inline-block w-5 h-5" />
           Publications
@@ -25,7 +25,7 @@ export default function Home() {
         <PublicationsComponent />
       </section>
 
-      <section id="projects" className="mb-8 mt-28">
+      <section id="projects" className="mb-8 mt-36">
         <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
           <span data-indicator-container="projects" className="relative inline-block w-5 h-5" />
           Projects
@@ -33,7 +33,7 @@ export default function Home() {
         <ProjectsComponent />
       </section>
 
-      <section id="about" className="mb-8 mt-28">
+      <section id="about" className="mb-8 mt-36">
         <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
           <span data-indicator-container="about" className="relative inline-block w-5 h-5" />
           About
