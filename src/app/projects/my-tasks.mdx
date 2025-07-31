@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import ImageWithModal from '@/components/ImageWithModal/ImageWithModal';
 
 export const metadata = {
     title: "MyTasks",
@@ -14,10 +14,16 @@ Every Friday, my manager would ask for a quick summary of what I had done during
 **MyTasks** is a simple and intuitive app that helps users **log daily tasks** and generate **automated summaries**.
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/my-tasks/login.webp" alt="The image shows a basic login screen with black buttons and white background" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/my-tasks/login.webp"
+      alt="The image shows a basic login screen with black buttons and white background"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Login screen</span>
 </div>
-
 
 The interface is divided into two parts:
 
@@ -25,10 +31,16 @@ The interface is divided into two parts:
 - A **daily task list** on the right showing the days of the selected week
 
 <div className='flex flex-col justify-center items-center my-8'>
-            <Image src="/projects/my-tasks/main.webp" alt="The image shows a basic main screen with task lists and a calendar" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/my-tasks/main.webp"
+      alt="The image shows a basic main screen with task lists and a calendar"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Main screen</span>
 </div>
-
 
 For each day, I can quickly **add tasks** with the following details:
 
@@ -38,10 +50,16 @@ For each day, I can quickly **add tasks** with the following details:
 - **Type** (work or personal)
 
 <div className='flex flex-col justify-center items-center my-8'>
-            <Image src="/projects/my-tasks/add.webp" alt="The image shows the form used to add a new task" width={600} height={300} />
+ <ImageWithModal
+      src="/projects/my-tasks/add.webp"
+      alt="The image shows the form used to add a new task"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Add task form</span>
 </div>
-
 
 This structure helps me maintain a clear record of my daily efforts, even when they don’t appear in official tracking systems.
 
@@ -55,10 +73,16 @@ One of the most useful features is the **AI summary generation**. I added two bu
 Both use the **ChatGPT API** to generate natural-language summaries of the tasks recorded, saving me time when sending reports to my manager or simply reflecting on the week.
 
 <div className='flex flex-col justify-center items-center my-8'>
-            <Image src="/projects/my-tasks/summary.webp" alt="The image shows a summary example" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/my-tasks/summary.webp"
+      alt="The image shows a summary example"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Summary example</span>
 </div>
-
 
 ### Technology Stack
 

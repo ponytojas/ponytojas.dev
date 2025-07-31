@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import ImageWithModal from '@/components/ImageWithModal/ImageWithModal';
 
 export const metadata = {
     title: "U-NEED",
@@ -15,7 +15,14 @@ The development of **U-NEED** was carried out as part of the European Commission
 1. **Origin-Destination Matrices**: Visualizing travel distribution between public transport stops and vehicle flows between urban zones, it identifies population movement patterns. This allows urban planners to **optimize existing public transport lines** or **introduce new routes** tailored to citizens' needs.
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/uneed/arcs.webp" alt="The app shows a map with arcs representing travel flows between public transport stops" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/uneed/arcs.webp"
+      alt="The app shows a map with arcs representing travel flows between public transport stops"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Origin / Destination matrices as arcs</span>
 </div>
 
@@ -27,7 +34,14 @@ This data-driven approach not only aids in **public transport optimization** but
 - Designing **specialized transport lines**, like school-focused routes
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/uneed/services.webp" alt="The app shows a map with different services. The mouse is over one of them that shows information about the Valencia's university" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/uneed/services.webp"
+      alt="The app shows a map with different services. The mouse is over one of them that shows information about the Valencia's university"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Service information</span>
 </div>
 
@@ -42,7 +56,14 @@ This data-driven approach not only aids in **public transport optimization** but
   - Facilitates **urban infrastructure planning** by pinpointing gaps in accessibility.
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/uneed/select.webp" alt="The app shows modal menu where the user could select different layers" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/uneed/select.webp"
+      alt="The app shows modal menu where the user could select different layers"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Layers selection modal</span>
 </div>
 
@@ -62,7 +83,14 @@ Key spatial analyses included:
   - Adjusts buffer sizes around **public transport stops** dynamically, visualizing **stop concentration** across the city.
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/uneed/buffer.webp" alt="The app shows a map with bus stops as buffered circles" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/uneed/buffer.webp"
+      alt="The app shows a map with bus stops as buffered circles"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Dynamic Buffer Analysis</span>
 </div>
 
@@ -70,7 +98,14 @@ Key spatial analyses included:
   - Calculates the **percentage of urban areas lacking public transport coverage** by excluding buffered transport zones from the city's total area.
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/uneed/coverage.webp" alt="The app shows a map with some parts of it mark as coverage and some other as not" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/uneed/coverage.webp"
+      alt="The app shows a map with some parts of it mark as coverage and some other as not"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">No-Coverage Visualization</span>
 </div>
 

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import ImageWithModal from '@/components/ImageWithModal/ImageWithModal';
 
 export const metadata = {
     title: "U-TWIN",
@@ -8,7 +8,14 @@ export const metadata = {
 The development of **U-TWIN** was carried out as part of the European Commission's <a href="https://www.upperprojecteu.eu/" target="_blank" rel="noopener noreferrer">**UPPER project**</a> while working at <a href="https://www.grupoetra.com/" target="_blank" rel="noopener noreferrer">**ETRA I+D**</a>. This project aimed to create a powerful tool for visualizing geospatial data related to public transportation and multimodal mobility.
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/utwin/overview.webp" alt="U-TWIN overview. The app shows a map with route, lines and stops for public traffic system" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/utwin/overview.webp"
+      alt="U-TWIN overview. The app shows a map with route, lines and stops for public traffic system"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">U-TWIN Overview</span>
 </div>
 
@@ -29,7 +36,14 @@ Over time, additional urban data layers were incorporated, such as:
 - **Early-stage geospatial analysis**, focusing on **accessibility indices**
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/utwin/stop.webp" alt="The app shows a map and a sidebar on the left with all the information regarding a public transport stop" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/utwin/stop.webp"
+      alt="The app shows a map and a sidebar on the left with all the information regarding a public transport stop"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Stop details</span>
 </div>
 
@@ -44,7 +58,14 @@ Additional functionalities included:
 - Filtering and interacting with various datasets in real time
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/utwin/traffic.webp" alt="The app shows a map with lines and icons. Lines indicate the traffic level and icons identify incidents on the road" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/utwin/traffic.webp"
+      alt="The app shows a map with lines and icons. Lines indicate the traffic level and icons identify incidents on the road"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Traffic layer with incidents</span>
 </div>
 
@@ -63,7 +84,14 @@ On the backend, <a href="https://www.mongodb.com/)" target="_blank" rel="noopene
 To enhance **U-TWIN**'s analytical and visualization capabilities—and as a preparatory step for a complementary tool developed within the project—I designed what we referred to as **Accessibility Index**.
 
 <div className='flex flex-col justify-center items-center my-8'>
-    <Image src="/projects/utwin/hex.webp" alt="The app shows a map with hexagons of different colors on it" width={600} height={300} />
+    <ImageWithModal
+      src="/projects/utwin/hex.webp"
+      alt="The app shows a map with hexagons of different colors on it"
+      width={600}
+      height={300}
+      modalClassName="rounded-xl"
+      priority
+    />
     <span className="text-sm text-gray-500 dark:text-gray-400">Accesibility index hex</span>
 </div>
 
