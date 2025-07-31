@@ -234,7 +234,7 @@ const HoverLineWithText: React.FC<{
             <a
                 href={href}
                 className={`ml-2 transition-all duration-150 ${isActive ? "font-bold text-accent-primary" : ""
-                    } prose dark:prose-invert`}
+                    } prose max-w-none dark:prose-invert`}
                 style={{ marginLeft: `${lineWidth - baseWidth + 8}px` }}
             >
                 {text}

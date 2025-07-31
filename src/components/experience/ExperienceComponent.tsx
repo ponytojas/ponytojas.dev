@@ -40,7 +40,7 @@ export default function ExperienceComponent() {
                     <AccordionContent>
                         <span className="text-sm text-gray-500">{metadata.time}</span>
 
-                        <div className="prose dark:prose-invert text-justify my-8">
+                        <div className="prose max-w-none dark:prose-invert text-justify my-8">
                             <Content />
                         </div>
 

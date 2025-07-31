@@ -21,7 +21,7 @@ export default function ExperienceComponent() {
                         </h2>
                     </AccordionTrigger>
                     <AccordionContent>
-                        <div className="prose dark:prose-invert w-full text-justify my-8">
+                        <div className="prose max-w-none dark:prose-invert w-full text-justify my-8">
                             <Content />
                         </div>
 
