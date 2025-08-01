@@ -20,12 +20,12 @@ export interface ImageWithModalProps extends ImageProps {
 
 const ImageWithModal = React.forwardRef<HTMLDivElement, ImageWithModalProps>(
     ({ fullSrc, thumbnailClassName, modalClassName, ...imageProps }, ref) => {
-        const { width: _w, height: _h, ...rest } = imageProps;
+        const { ...rest } = imageProps;
 
         return (
             <Dialog>
-                <DialogTrigger asChild ref={ref}>
-                    <div className={cn("inline-block cursor-zoom-in", thumbnailClassName)}>
+                <DialogTrigger asChild>
+                    <div ref={ref} className={cn("inline-block cursor-zoom-in", thumbnailClassName)}>
                         <Image {...imageProps} />
                     </div>
                 </DialogTrigger>
