@@ -5,7 +5,7 @@ import { PanelLeft, PanelRight } from "lucide-react";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import { useTheme } from "next-themes";
 
-export const TopBar: React.FC = () => {
+export const TopBar: React.FC<{ hideIndex: boolean }> = ({ hideIndex = false }) => {
     const { theme } = useTheme();
     const isOpen = useSidebarStore((state) => state.isOpen);
     const setIsOpen = useSidebarStore((state) => state.setIsOpen);
@@ -24,7 +24,7 @@ export const TopBar: React.FC = () => {
 
     return (
         <nav className="fixed w-full flex flex-row justify-between align-middle items-center md:pb-0 pt-10 md:pt-6 px-6 z-100">
-            <div className="flex flex-col items-center">
+            {!hideIndex && (<div className="flex flex-col items-center">
                 {isOpen ? (
                     <button className={commonClasses} onClick={() => setIsOpen(false)}>
                         <PanelRight className={iconClasses} fill={fillColor} />
@@ -34,10 +34,10 @@ export const TopBar: React.FC = () => {
                         <PanelLeft className={iconClasses} fill={fillColor} />
                     </button>
                 )}
-            </div>
+            </div>)}
             <div className="flex items-center">
                 <ModeToggle />
             </div>
-        </nav>
+        </nav >
     )
 }

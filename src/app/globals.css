@@ -139,3 +139,76 @@ body {
   @apply antialiased;
   max-width: 100vw;
 }
+
+
+@keyframes slowRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slowRotateReverse {
+  0% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes pulseScale {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.95);
+  }
+}
+
+@keyframes rotate360 {
+  0% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.main-rotate {
+  animation: rotate360 linear infinite;
+  transform-origin: center;
+}
+
+.tail-rotate {
+  animation: rotate360 linear infinite;
+  transform-origin: center;
+}
+
+.slow-rotate {
+  animation: slowRotate 300s linear infinite;
+  transform-origin: center;
+}
+
+.not-so-slow-rotate {
+  animation: slowRotate 300s linear infinite;
+  transform-origin: center;
+}
+
+.not-so-slow-rotate-reverse {
+  animation: slowRotateReverse 300s linear infinite;
+  transform-origin: center;
+}
+
+.pulse-scale {
+  animation: pulseScale 45s ease-in-out infinite;
+  transform-origin: center;
+}
