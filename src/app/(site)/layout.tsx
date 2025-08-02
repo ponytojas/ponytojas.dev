@@ -18,7 +18,7 @@ export default function RootLayout({
     return (
 
         <main className="relative z-10 flex flex-col min-h-screen w-full">
-            <TopBar />
+            <TopBar hideIndex={false} />
             <FloatingIndicator />
             <div className="flex flex-col fixed h-screen justify-center z-50">
                 <SidebarIndex />

@@ -1,6 +1,5 @@
 import { TopBar } from "@/components/top-bar/TopBar";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 
 
 export const metadata: Metadata = {
