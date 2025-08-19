@@ -11,6 +11,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Badge } from '@/components/ui/badge';
 import { ArrowUpRight } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { LinkArrow } from '../LinkArrow/LinkArrow';
 
 const experiences = [
     { Content: Lumibit, metadata: lumibitMetadata },
@@ -45,14 +46,7 @@ export default function ExperienceComponent() {
                         </div>
 
                         {metadata.link && (
-                            <div className="mb-8">
-                                <a href={metadata.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                                    <span className="text-sm text-gray-500  hover:text-gray-900 dark:hover:text-gray-50 underline underline-offset-4 decoration-dotted hover:decoration-solid transform transition-all duration-300">
-                                        Check the company in {metadata.link}
-                                    </span>
-                                    <ArrowUpRight />
-                                </a>
-                            </div>
+                            <LinkArrow url={metadata.link} text={`Check the company in ${metadata.link}`} />
                         )}
 
                         <div className="mt-4 mb-8 flex flex-wrap gap-2">
