@@ -3,7 +3,6 @@
 import V2X, { metadata as v2xMetadata } from '@/app/publications/v2x.mdx';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowUpRight } from 'lucide-react';
 import { LinkArrow } from '../LinkArrow/LinkArrow';
 
 const publications = [

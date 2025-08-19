@@ -5,16 +5,12 @@ import { Cambio } from "cambio";
 import styles from "./styles.module.css";
 import { forwardRef } from "react";
 
-
-
 export interface ImageWithModalProps extends ImageProps {
     fullSrc?: ImageProps["src"];
-    thumbnailClassName?: string;
-    modalClassName?: string;
 }
 
 const ImageWithModal = forwardRef<HTMLDivElement, ImageWithModalProps>(
-    ({ fullSrc, thumbnailClassName, modalClassName, ...imageProps }, ref) => {
+    ({ fullSrc, ...imageProps }) => {
         return (
             <Cambio.Root motion="smooth">
                 <Cambio.Trigger className={styles.trigger}>

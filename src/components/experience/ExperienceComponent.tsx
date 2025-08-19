@@ -9,7 +9,6 @@ import Narrativa, { metadata as narrativaMetadata } from '@/app/experiences/narr
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
-import { ArrowUpRight } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { LinkArrow } from '../LinkArrow/LinkArrow';
 
