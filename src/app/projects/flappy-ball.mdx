@@ -1,0 +1,111 @@
+import ImageWithModal from '@/components/ImageWithModal/ImageWithModal';
+import { LinkArrow } from '@/components/LinkArrow/LinkArrow';
+
+export const metadata = {
+  title: "Flappy-Ball RL",
+  type: "Personal Project",
+};
+
+**Flappy-Ball RL** is a reinforcement learning demo where hundreds of neural-network agents learn to play a Flappy Bird–style game through **evolutionary algorithms**. It began as a curiosity after seeing how simple NNs can learn emergent control policies—then grew into a fully instrumented playground to test different optimization strategies, visualize learning in real time, and benchmark design choices.
+
+### Purpose and Overview
+
+The project demonstrates **population-based learning** with **genetic algorithms** and alternative strategies (ES, DE, PSO). Agents perceive a compact game state and decide **when to jump**. Fitness is based on survival and pipe passing, with several shaping terms to encourage smooth flight and robustness.
+
+<div className='flex flex-col justify-center items-center my-8'>
+  <ImageWithModal
+    src="/projects/flappy/flappy-main.webp"
+    alt="Intro: multiple agents flying through pipes, with an overlay showing generation, best fitness, and population charts"
+    width={850}
+    height={360}
+    modalClassName="rounded-xl"
+    priority
+  />
+  <span className="text-sm text-gray-500 dark:text-gray-400">Training viewport with live stats</span>
+</div>
+
+### Key Features
+
+- **Population Training**: 50–500 agents evolve in parallel
+- **Real-time Visualization**: See improvement across generations
+- **Interactive Controls**: Tune physics, NN, and evolution at runtime
+- **Live Analytics**: Fitness trends, generation stats, best agent playback
+- **Persistence**: Save / load top genomes
+- **Deterministic Mode**: Seeded RNG for reproducible runs
+
+### What's Inside the AI
+
+**Neural Network**
+- Inputs: position/velocity, next gap info, distance to ceiling/ground (6→8 features)
+- Hidden layers: `8 → 4` with `tanh`
+- Output: `sigmoid` → jump probability
+
+**Learning Algorithms**
+- **Genetic Algorithm (default)**: tournament selection, uniform crossover (~70%), adaptive mutation, elite preservation, wider weight bounds `[-5, 5]`
+- **Evolution Strategy (μ+λ)**: self-adaptive mutation for fine-tuning
+- **Differential Evolution**: diversity-aware exploration for continuous params
+- **Particle Swarm**: quick convergence via velocity + global/personal bests
+
+<div className='flex flex-col justify-center items-center my-8'>
+  <ImageWithModal
+    src="/projects/flappy/controls.webp"
+    alt="Control panel UI with algorithm selector, population size, mutation parameters, and physics sliders"
+    width={700}
+    height={360}
+    modalClassName="rounded-xl"
+  />
+  <span className="text-sm text-gray-500 dark:text-gray-400">Algorithm & physics controls</span>
+</div>
+
+### Game Mechanics
+
+- **Physics**: gravity + impulse jump; terminal velocity
+- **Pipes**: constant gap size, smooth random vertical drift, fixed spacing
+- **Fitness**: survival distance + gap-centering bonus + pipe-pass reward − movement penalty  
+- **Determinism**: procedural generation seeded for consistency
+
+<div className='flex flex-col justify-center items-center my-8'>
+  <ImageWithModal
+    src="/projects/flappy/charts.webp"
+    alt="Fitness charts over time showing best, mean, and diversity metrics"
+    width={700}
+    height={360}
+    modalClassName="rounded-xl"
+  />
+  <span className="text-sm text-gray-500 dark:text-gray-400">Live training metrics</span>
+</div>
+
+### Technology Stack
+
+- **React 19** + **TypeScript** (UI & state)
+- **Vite** (build & dev)
+- **Canvas 2D API** (rendering at 60 FPS)
+- **Vitest** (tests)
+- **Zero external ML deps** (custom NN, GA/ES/DE/PSO, RNG, math)
+
+### Architecture at a Glance
+
+- `game/nn.ts` — forward pass & genome ops  
+- `game/evolve.ts` — genetic algorithm core  
+- `game/world.ts` — physics, collisions, procedural pipes  
+- `game/sim.ts` — training loop, generation orchestration  
+- `game/render.ts` — canvas rendering & culling
+
+### Getting Started
+
+**Prerequisites**
+- Node.js 18+
+- `pnpm` (recommended) or `npm`
+
+**Install & Run**
+```bash
+git clone git@github.com:ponytojas/Flappy-Ball-RL.git
+cd flappy-ball-rl
+pnpm install
+pnpm dev      # open http://localhost:5173
+pnpm test     # run unit tests
+pnpm build    # production build
+```
+
+### Live Demo
+You can play around with it <LinkArrow url="https://flappy-ball.ponytojas.dev/" inline={true} text="here" />.
