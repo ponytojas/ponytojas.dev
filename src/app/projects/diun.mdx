@@ -1,0 +1,108 @@
+import { ImageWithModal } from '@/components/ImageWithModal/ImageWithModal';
+import { LinkArrow } from '@/components/LinkArrow/LinkArrow';
+
+export const metadata = {
+  title: "Docker Image Update Notify",
+  type: "Personal Project",
+};
+
+**Docker Image Update Notify** is a lightweight background service that monitors Docker containers and **notifies you when newer image versions are available**.
+It was designed for seamless deployment in **Coolify** and containerized environments, focusing on efficiency, modularity, and production readiness.
+
+### Purpose and Overview
+
+The project solves a common DevOps pain point: **keeping container images up to date** without manual checking.
+It scans all running containers, queries registries (DockerHub or private), and alerts you via **Email** or **Telegram** when updates are available.
+
+This lets teams react quickly to new releases, patches, and security fixes while avoiding downtime.
+
+<div className='flex flex-col justify-center items-center my-8'>
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Scheduler     │───▶│  Docker Scanner  │───▶│ Registry Client │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+                                │                        │
+                                ▼                        ▼
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│ Notification    │◀───│   Controller     │◀───│  Version Comp.  │
+│    System       │    └──────────────────┘    └─────────────────┘
+└─────────────────┘
+```
+  <span className="text-sm text-gray-500 dark:text-gray-400">Service architecture at a glance</span>
+</div>
+
+### Key Features
+
+- **Automatic Detection**: Scans all running containers
+- **Multiple Registries**: DockerHub + private registries supported
+- **Smart Filtering**: Include/exclude patterns for fine-grained control
+- **Notifications**: Email (SMTP) + Telegram bot integration
+- **Semantic Versioning**: Smarter update checks beyond simple tags
+- **Scheduling**: Cron-like intervals for periodic checks
+- **Resource Efficient**: Minimal CPU/memory footprint
+- **Production Ready**: Logging, health checks, and error handling baked in
+
+### Inside the System
+
+**Core Modules**
+- **Docker Scanner**: Detects running containers and extracts image info
+- **Registry Client**: Communicates with DockerHub & registries
+- **Version Comparator**: Intelligent semantic version comparison
+- **Notification System**: Sends alerts through email and/or Telegram
+- **Scheduler**: Manages periodic checks and execution
+
+<div className='flex flex-col justify-center items-center my-8'>
+  <ImageWithModal
+    src="/projects/diun/notifications.webp"
+    alt="Example of email and Telegram notifications with update alerts"
+    width={700}
+    height={360}
+    modalClassName="rounded-xl"
+  />
+  <span className="text-sm text-gray-500 dark:text-gray-400">Notifications in action</span>
+</div>
+
+### Technology Stack
+
+- **Go 1.24+** (service implementation)
+- **Docker & Docker API** (container scanning)
+- **Coolify / Kubernetes / Swarm** (deployment ready)
+- **SMTP + Telegram Bot API** (notifications)
+- **Logrus** (structured logging)
+- **robfig/cron** (scheduling)
+
+### Architecture at a Glance
+
+- `scanner/` — Docker container detection
+- `registry/` — registry API clients
+- `version/` — semantic version comparison
+- `notify/` — email & Telegram channels
+- `scheduler/` — cron-based task manager
+- `cmd/main.go` — service entrypoint
+
+### Getting Started
+
+**Prerequisites**
+- Docker Engine
+- Go 1.24+ (for local builds)
+
+**Install & Run**
+```bash
+# Clone
+git clone git@github.com:ponytojas/DIUN.git
+cd docker-notify
+
+# Run locally
+make run-local-once
+
+# Build local version
+make build-local
+
+# Run with Docker Compose
+cp configs/config.yaml configs/config.local.yaml
+docker-compose up -d
+```
+
+
+For more details on configuration and deployment options <LinkArrow url="https://github.com/ponytojas/DIUN" inline={true} text="visit the repository" />
