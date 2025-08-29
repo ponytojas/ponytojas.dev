@@ -1,0 +1,153 @@
+import { ImageWithModal } from '@/components/ImageWithModal/ImageWithModal';
+import { LinkArrow } from '@/components/LinkArrow/LinkArrow';
+
+export const metadata = {
+  title: "Labtools",
+  subtitle: "Inventory & IoT Monitoring for a Neuroscience Lab",
+  type: "Personal Project",
+};
+
+**Labtools** is a bespoke platform built for the **Neural Circuits Laboratory at the University of Valencia**.  
+It combines two pillars the lab needed day-to-day:
+
+1) A **personal + shared inventory** to track consumables and equipment with **low-stock alerts** and **provider management**, and  
+2) A lightweight **IoT telemetry system** (based on Raspberry Pi Zero 2W) that continuously monitors the **animal colony environment** (temperature, humidity, light) and **notifies researchers on anomalies** to support animal welfare.
+
+<div className='flex flex-col justify-center items-center my-8'>
+  <ImageWithModal
+    src="/projects/labtools/login.webp"
+    alt="Labtools login page"
+    width={800}
+    height={420}
+    modalClassName="rounded-xl"
+    priority
+  />
+  <span className="text-sm text-gray-500 dark:text-gray-400">Login page</span>
+</div>
+
+---
+
+### Purpose and Overview
+
+The lab needed a single place to:  
+- keep **accurate stock** across teams and individuals,  
+- **standardize purchases** via provider/material mappings, and  
+- **ensure environmental stability** around the animal rooms with automated alerting.
+
+Labtools provides a clean UI for inventory workflows and a reliable data pipeline that ingests sensor readings via **MQTT**, processes them in a **Go** backend service, persists them, and triggers alerts when thresholds are exceeded.
+
+<div className='flex flex-col justify-center items-center my-8'>
+  <ImageWithModal
+    src="/projects/labtools/dashboard.webp"
+    alt="Labtools main dashboard with inventory summary cards and live environment widgets"
+    width={800}
+    height={420}
+    modalClassName="rounded-xl"
+    priority
+  />
+  <span className="text-sm text-gray-500 dark:text-gray-400">Main dashboard: inventory + environment at a glance</span>
+</div>
+
+<div className='flex flex-col justify-center items-center my-8'>
+  <ImageWithModal
+    src="/projects/labtools/providers.webp"
+    alt="Provider view showing materials mapped to vendors to streamline orders"
+    width={800}
+    height={420}
+    modalClassName="rounded-xl"
+  />
+  <span className="text-sm text-gray-500 dark:text-gray-400">Provider view and material mapping</span>
+</div>
+
+---
+
+### IoT Monitoring — Animal Colony
+
+Small **Raspberry Pi Zero 2W** devices collect **temperature**, **humidity**, and **illuminance** via onboard sensors.  
+Devices publish readings over **MQTT**. A **Golang** service consumes, validates, transforms, stores, and **checks thresholds**; if anything looks off, it **alerts researchers** to investigate.
+The application provides a unified dashboard for monitoring all sensor data in real-time and historical values.
+
+<div className='flex flex-col justify-center items-center my-8'>
+  <ImageWithModal
+    src="/projects/labtools/device.webp"
+    alt="Compact Raspberry Pi Zero 2W device with sensor board mounted in the animal room"
+    width={700}
+    height={360}
+    modalClassName="rounded-xl"
+  />
+  <span className="text-sm text-gray-500 dark:text-gray-400">Pi Zero 2W telemetry node (sensorized)</span>
+</div>
+
+
+<div className='flex flex-col justify-center items-center my-8'>
+  <ImageWithModal
+    src="/projects/labtools/charts.webp"
+    alt="Charts displaying temperature, humidity, and light levels over time"
+    width={800}
+    height={420}
+    modalClassName="rounded-xl"
+  />
+  <span className="text-sm text-gray-500 dark:text-gray-400">Charts displaying temperature, humidity, and light levels over time</span>
+</div>
+
+---
+
+### System Architecture
+
+<div className='flex flex-col justify-center items-center my-8'>
+
+```
+┌────────────────────────┐      MQTT       ┌──────────────────────────┐
+│ Pi Zero 2W + Sensors   │ ──────────────▶ │  Ingest (Go)             │
+│  temp | hum | lux      │                 │  - Validate & transform  │
+└────────────────────────┘                 │  - Threshold checks      │
+                                           │  - Persistence           │
+                                           └─────────────┬────────────┘
+                                                         │
+                                                         ▼
+                                               ┌──────────────────┐
+                                               │   Database       │
+                                               │  (timeseries +   │
+                                               │   inventory)     │
+                                               └─────────┬────────┘
+                                                         │
+                                                         ▼
+                                         ┌─────────────────────────────────┐
+                                         │ Web App (Inventory + Telemetry) │
+                                         │ - Inventory CRUD & providers     │
+                                         │ - Live charts & alerts           │
+                                         └─────────────────────────────────┘
+```
+
+  <span className="text-sm text-gray-500 dark:text-gray-400">End-to-end flow: device → MQTT → Go service → DB → UI & alerts</span>
+</div>
+
+---
+
+### Key Features
+
+- **Personal & Shared Inventory:** clear separation, easy collaboration  
+- **Low-Stock Indicators:** color-coded badges and at-a-glance dashboards  
+- **Provider Management:** materials mapped to vendors to speed up orders  
+- **IoT Environment Monitoring:** temp/humidity/light telemetry from Pi Zero 2W  
+- **Automated Alerts:** threshold-based checks to protect animal welfare  
+- **Auditable History:** item changes and sensor trends for traceability
+
+---
+
+### Technology Stack
+
+- **Raspberry Pi Zero 2W** (sensor nodes)  
+- **MQTT** (telemetry transport)  
+- **Go** backend service (ingest, transform, thresholds, persistence)  
+- **Database** (inventory + time-series telemetry)  
+- **Web UI** for inventory, dashboards, and alert management
+
+> Note: This is a lab deployment; repository and infrastructure details are private. Reach out if you’d like a technical deep-dive.
+
+---
+
+### Impact
+
+Labtools reduced stock-outs, standardized provider ordering, and added **proactive monitoring** of animal-room conditions.  
+It turned scattered spreadsheets and manual checks into a **single, reliable system** the entire lab can trust.
