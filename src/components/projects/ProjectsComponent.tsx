@@ -1,5 +1,6 @@
 "use client";
 
+import Labtools, { metadata as labtoolsMetadata } from "@/app/projects/labtools.mdx";
 import Diun, { metadata as diunMetadata } from "@/app/projects/diun.mdx";
 import FlappyBall, {
   metadata as flappyBallMetadata,
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/accordion";
 
 const experiences = [
+  { Content: Labtools, metadata: labtoolsMetadata },
   { Content: Diun, metadata: diunMetadata },
   { Content: FlappyBall, metadata: flappyBallMetadata },
   { Content: MyTasks, metadata: myTasksMetadata },
@@ -30,13 +32,22 @@ export default function ExperienceComponent() {
       {experiences.map(({ Content, metadata }, index) => (
         <AccordionItem key={index} value={`experience-${index}`}>
           <AccordionTrigger className="cursor-pointer">
-            <h2 className="text-2xl font-normal mb-4">
-              {metadata.title}
-              <span className="text-gray-500 dark:text-gray-400">
-                {" "}
-                - {metadata.type}
-              </span>
-            </h2>
+            <div className="w-full flex flex-row flex-wrap">
+              <div className="flex flex-col w-full">
+                <h2 className="text-2xl font-normal mb-4">
+                  {metadata.title}
+                  <span className="text-gray-500 dark:text-gray-400">
+                    {" "}
+                    - {metadata.type}
+                  </span>
+                </h2>
+              </div>
+              <div className="flex flex-col w-full">
+                <p className="text-sm text-gray-500 dark:text-gray-400 no-underline hover:no-underline">
+                  {metadata.subtitle}
+                </p>
+              </div>
+            </div>
           </AccordionTrigger>
           <AccordionContent>
             <div className="prose max-w-none dark:prose-invert w-full text-justify my-8">
