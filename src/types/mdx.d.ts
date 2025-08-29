@@ -3,6 +3,7 @@ declare module '*.mdx' {
 
     export const metadata: {
         title: string;
+        subtitle?: string;
         position: string;
         color: string;
         darkColor?: string;
