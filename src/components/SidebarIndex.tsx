@@ -5,18 +5,14 @@ import { INDEX } from "@/static";
 import { motion, AnimatePresence } from "motion/react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useSidebarStore } from "@/store/sidebar";
+import { cn } from "@/lib/utils";
 
 export const SidebarIndex: React.FC = () => {
     const isOpen = useSidebarStore((state) => state.isOpen);
     const { isMobile } = useIsMobile(768);
     const [activeId, setActiveId] = useState<string | null>(null);
 
-    const [hoverY, setHoverY] = useState<number | null>(null);
-    const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
-
-    const navRef = useRef<HTMLDivElement>(null);
     const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
-
     const lastScrollY = useRef(0);
     const ticking = useRef(false);
 
@@ -30,7 +26,7 @@ export const SidebarIndex: React.FC = () => {
 
         if (direction === "down") {
             for (const sec of sections) {
-                if (sec.getBoundingClientRect().top <= vh * 0.75) {
+                if (sec.getBoundingClientRect().top <= vh * 0.5) {
                     nextId = sec.id;
                 } else {
                     break;
@@ -38,7 +34,7 @@ export const SidebarIndex: React.FC = () => {
             }
         } else {
             for (let i = sections.length - 1; i >= 0; i--) {
-                if (sections[i].getBoundingClientRect().top <= vh * 0.25) {
+                if (sections[i].getBoundingClientRect().top <= vh * 0.5) {
                     nextId = sections[i].id;
                     break;
                 }
@@ -47,11 +43,6 @@ export const SidebarIndex: React.FC = () => {
 
         if (nextId && nextId !== activeId) {
             setActiveId(nextId);
-
-            const item = itemRefs.current[nextId];
-            if (item && navRef.current) {
-                if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-            }
         }
     };
 
@@ -77,168 +68,74 @@ export const SidebarIndex: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeId]);
 
-    useEffect(() => {
-        const el = itemRefs.current[activeId ?? ""];
-        if (el) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
-    }, [activeId]);
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (isMobile) return;
-        const rect = navRef.current?.getBoundingClientRect();
-        if (!rect) return;
-        setHoverY(e.clientY - rect.top);
-    };
-    const handleMouseLeave = () => setHoverY(null);
-
-    const getScale = (el: HTMLDivElement | null): number => {
-        if (!el) return 1;
-        const rect = el.getBoundingClientRect();
-        const navTop = navRef.current?.getBoundingClientRect().top || 0;
-        const y = rect.top - navTop + rect.height / 2;
-
-        if (hoverY != null) {
-            const d = Math.abs(hoverY - y);
-            const f = Math.exp(-(d ** 2) / (2 * 30 ** 2));
-            return 1 + f * 2;
+    const scrollToSection = (id: string) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
         }
-        // if (scrollHoverY != null) {
-        //     const d = Math.abs(scrollHoverY - y);
-        //     const f = Math.exp(-(d ** 2) / (2 * 30 ** 2));
-        //     return 1 + f * 0.5;
-        // }
-        return 1;
     };
 
-
-
     return (
-        <>
-            {/* open / close button */}
-
-
-            <AnimatePresence initial={true}>
-                {isOpen && (
-                    <>
-                        {isMobile ? (
-                            // Animated overlay with blur
-                            <motion.div
-                                initial={{ backdropFilter: "blur(0px)", opacity: 0 }}
-                                animate={{ backdropFilter: "blur(24px)", opacity: 1 }}
-                                exit={{ backdropFilter: "blur(0px)", opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                className="fixed inset-0 z-30"
-                            >
-                                <motion.nav
-                                    ref={navRef}
-                                    onMouseMove={handleMouseMove}
-                                    onMouseLeave={handleMouseLeave}
-                                    initial={{ x: -300, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    exit={{ x: -300, opacity: 0 }}
-                                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                                    className="p-4 flex flex-col justify-center h-screen w-screen"
-                                >
-                                    <ul>
-                                        {INDEX.filter((s) => s.id !== "presentation").map((s) => (
-                                            <li key={s.id} className="mb-2">
-                                                <div ref={(el) => { itemRefs.current[s.id] = el; }}>
-                                                    <HoverLineWithText
-                                                        getScale={getScale}
-                                                        baseWidth={52}
-                                                        text={s.title}
-                                                        href={`#${s.id}`}
-                                                        isActive={s.id === activeId}
-                                                        isSection
-                                                        data-cursor="block"
-                                                    />
-                                                </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </motion.nav>
-                            </motion.div>
-                        ) : (
-                            // Desktop sidebar
-                            <motion.nav
-                                ref={navRef}
-                                onMouseMove={handleMouseMove}
-                                onMouseLeave={handleMouseLeave}
-                                initial={{ x: -300, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                exit={{ x: -300, opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                className="flex flex-col justify-center w-64 h-full z-20 overflow-y-auto p-4 select-none"
-                            >
-                                <ul>
-                                    {INDEX.filter((s) => s.id !== "presentation").map((s) => (
-                                        <li key={s.id} className="mb-2">
-                                            <div ref={(el) => { itemRefs.current[s.id] = el; }}>
-                                                <HoverLineWithText
-                                                    getScale={getScale}
-                                                    baseWidth={52}
-                                                    text={s.title}
-                                                    href={`#${s.id}`}
-                                                    isActive={s.id === activeId}
-                                                    isSection
-                                                    data-cursor="block"
-                                                />
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </motion.nav>
-                        )}
-                    </>
-                )}
-            </AnimatePresence>
-        </>
-    );
-};
-
-
-const HoverLineWithText: React.FC<{
-    getScale: (el: HTMLDivElement | null) => number;
-    baseWidth: number;
-    text: string;
-    href: string;
-    isActive: boolean;
-    isSection?: boolean;
-}> = ({ getScale, baseWidth, text, href, isActive, isSection }) => {
-    const lineRef = useRef<HTMLDivElement>(null);
-    const [scale, setScale] = useState(1);
-
-    useEffect(() => {
-        const tick = () => {
-            const s = getScale(lineRef.current);
-            setScale((prev) => (Math.abs(prev - s) < 0.01 ? prev : s));
-        };
-        tick();
-        const id = setInterval(tick, 50);
-        return () => clearInterval(id);
-    }, [getScale]);
-
-    const lineWidth = baseWidth * scale;
-
-    return (
-        <div className="flex items-center transition-all duration-150">
-            <div
-                ref={lineRef}
-                className={`origin-left ${isSection ? "bg-gray-500" : "bg-gray-300"
-                    } transition-transform duration-200`}
-                style={{
-                    transform: `scaleX(${scale})`,
-                    width: `${baseWidth}px`,
-                    height: isSection ? "1.5px" : "1px",
-                }}
-            />
-            <a
-                href={href}
-                className={`ml-2 transition-all duration-150 ${isActive ? "font-bold text-accent-primary" : ""
-                    } prose max-w-none dark:prose-invert`}
-                style={{ marginLeft: `${lineWidth - baseWidth + 8}px` }}
-            >
-                {text}
-            </a>
-        </div>
+        <AnimatePresence initial={false}>
+            {(isOpen || !isMobile) && (
+                <>
+                    {isMobile ? (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-40 bg-background/90 backdrop-blur-sm flex items-center justify-center"
+                        >
+                            <ul className="flex flex-col gap-6 text-center">
+                                {INDEX.filter((s) => s.id !== "presentation").map((s) => (
+                                    <li key={s.id}>
+                                        <button
+                                            onClick={() => {
+                                                scrollToSection(s.id);
+                                                useSidebarStore.getState().setIsOpen(false);
+                                            }}
+                                            className={cn(
+                                                "text-2xl font-medium transition-colors duration-300",
+                                                activeId === s.id ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                                            )}
+                                        >
+                                            {s.title}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+                    ) : (
+                        <nav className="hidden md:flex flex-col justify-center w-64 h-full pl-12 select-none">
+                            <ul className="flex flex-col gap-4">
+                                {INDEX.filter((s) => s.id !== "presentation").map((s) => (
+                                    <li key={s.id} className="group flex items-center">
+                                        <button
+                                            onClick={() => scrollToSection(s.id)}
+                                            className="flex items-center gap-3 group focus:outline-none"
+                                        >
+                                            <div
+                                                className={cn(
+                                                    "h-[1px] transition-all duration-300",
+                                                    activeId === s.id ? "w-8 opacity-100 bg-accent-primary" : "w-4 opacity-30 bg-foreground group-hover:w-6 group-hover:opacity-50"
+                                                )}
+                                            />
+                                            <span
+                                                className={cn(
+                                                    "text-sm tracking-tight transition-colors duration-300",
+                                                    activeId === s.id ? "text-accent-primary font-medium" : "text-muted-foreground group-hover:text-foreground"
+                                                )}
+                                            >
+                                                {s.title}
+                                            </span>
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+                    )}
+                </>
+            )}
+        </AnimatePresence>
     );
 };

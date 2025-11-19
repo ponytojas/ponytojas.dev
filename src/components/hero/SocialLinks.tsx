@@ -1,3 +1,5 @@
+'use client';
+
 import { FileDown, Github, Linkedin } from "lucide-react";
 import { motion } from "motion/react";
 

@@ -1,12 +1,15 @@
+import SocialLinks from "../hero/SocialLinks";
+
 export default function Footer() {
     return (
-        <footer className="sticky bottom-0 bg-accent-primary h-65 w-full flex items-center justify-center pb-10 z-0">
-            <div className="relative w-full max-w-screen sm:max-w-[800px] h-full px-12 py-12 text-background flex items-center justify-center align-middle">
-                <span
-                    className='font-sans mx-auto text-center absolute bottom-0 text-[80px] sm:text-[150px] font-thin pointer-events-none'
-                >
-                    ponytojas
-                </span>
+        <footer className="w-full py-12 mt-20 border-t border-border/40">
+            <div className="max-w-[1000px] mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="text-sm text-muted-foreground">
+                    © {new Date().getFullYear()} Daniel Villalobos. All rights reserved.
+                </div>
+                <div className="scale-90">
+                    <SocialLinks />
+                </div>
             </div>
         </footer>
     );

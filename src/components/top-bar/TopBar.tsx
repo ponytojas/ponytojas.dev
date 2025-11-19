@@ -4,11 +4,14 @@ import { useSidebarStore } from "@/store/sidebar";
 import { PanelLeft, PanelRight } from "lucide-react";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import { useTheme } from "next-themes";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export const TopBar: React.FC<{ hideIndex: boolean }> = ({ hideIndex = false }) => {
     const { theme } = useTheme();
     const isOpen = useSidebarStore((state) => state.isOpen);
     const setIsOpen = useSidebarStore((state) => state.setIsOpen);
+    const { isMobile } = useIsMobile(768);
+    console.debug({ isMobile })
 
     const commonClasses =
         "transition-transform duration-300 cursor-pointer " +
@@ -24,17 +27,19 @@ export const TopBar: React.FC<{ hideIndex: boolean }> = ({ hideIndex = false }) 
 
     return (
         <nav className="fixed w-full flex flex-row justify-between align-middle items-center md:pb-0 pt-10 md:pt-6 px-6 z-100">
-            {!hideIndex && (<div className="flex flex-col items-center">
-                {isOpen ? (
-                    <button className={commonClasses} onClick={() => setIsOpen(false)}>
-                        <PanelRight className={iconClasses} fill={fillColor} />
-                    </button>
-                ) : (
-                    <button className={commonClasses} onClick={() => setIsOpen(true)}>
-                        <PanelLeft className={iconClasses} fill={fillColor} />
-                    </button>
-                )}
-            </div>)}
+            {!hideIndex && isMobile && (
+                <div className="flex flex-col items-center">
+                    {isOpen ? (
+                        <button className={commonClasses} onClick={() => setIsOpen(false)}>
+                            <PanelRight className={iconClasses} fill={fillColor} />
+                        </button>
+                    ) : (
+                        <button className={commonClasses} onClick={() => setIsOpen(true)}>
+                            <PanelLeft className={iconClasses} fill={fillColor} />
+                        </button>
+                    )}
+                </div>
+            )}
             <div className="flex items-center">
                 <ModeToggle />
             </div>

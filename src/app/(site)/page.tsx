@@ -7,39 +7,36 @@ import { Hero } from '@/components/hero/Hero';
 
 export default function Home() {
   return (
-    <>
+    <div className="flex flex-col gap-32 pb-20">
       <Hero />
-      <section id="experience" className="mb-8">
-        <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
-          <span data-indicator-container="experience" className="relative w-5 h-5" />
-          Experience
-        </h1>
-        <ExperienceComponent />
 
+      <section id="experience" className="scroll-mt-32">
+        <h2 className="text-3xl font-medium tracking-tight mb-12 text-foreground">
+          Experience
+        </h2>
+        <ExperienceComponent />
       </section>
-      <section id="publications" className="mb-8 mt-36">
-        <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
-          <span data-indicator-container="publications" className="relative inline-block w-5 h-5" />
+
+      <section id="publications" className="scroll-mt-32">
+        <h2 className="text-3xl font-medium tracking-tight mb-12 text-foreground">
           Publications
-        </h1>
+        </h2>
         <PublicationsComponent />
       </section>
 
-      <section id="projects" className="mb-8 mt-36">
-        <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
-          <span data-indicator-container="projects" className="relative inline-block w-5 h-5" />
+      <section id="projects" className="scroll-mt-32">
+        <h2 className="text-3xl font-medium tracking-tight mb-12 text-foreground">
           Projects
-        </h1>
+        </h2>
         <ProjectsComponent />
       </section>
 
-      <section id="about" className="mb-8 mt-36">
-        <h1 className="text-4xl font-medium mb-4 flex items-center gap-6">
-          <span data-indicator-container="about" className="relative inline-block w-5 h-5" />
+      <section id="about" className="scroll-mt-32">
+        <h2 className="text-3xl font-medium tracking-tight mb-12 text-foreground">
           About
-        </h1>
+        </h2>
         <AboutComponents />
       </section>
-    </>
+    </div>
   );
 }
