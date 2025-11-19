@@ -68,11 +68,14 @@ export default function SocialLinks() {
                             },
                         }}
                     >
-                        <a
+                        <motion.a
                             href={href}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={`flex flex-row group relative gap-1 overflow-hidden transition-colors duration-300 text-muted-foreground ${textHover}`}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
                         >
                             {icon && (
                                 icon
@@ -81,7 +84,7 @@ export default function SocialLinks() {
                             <span
                                 className={`absolute left-0 bottom-0 h-[1.5px] w-full translate-x-[-100%] ${underline} transition-transform duration-300 group-hover:translate-x-0`}
                             />
-                        </a>
+                        </motion.a>
                     </motion.li>
                 ))}
             </motion.ul>

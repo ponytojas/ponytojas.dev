@@ -7,7 +7,8 @@ import { Hero } from '@/components/hero/Hero';
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-32 pb-20">
+    <div className="flex flex-col gap-32 pb-20 relative">
+      <div className="bg-noise" />
       <Hero />
 
       <section id="experience" className="scroll-mt-32">

@@ -28,31 +28,31 @@ const experiences = [
 
 export default function ExperienceComponent() {
   return (
-    <Accordion type="multiple" className="w-full flex flex-col gap-8">
+    <Accordion type="multiple" className="w-full flex flex-col gap-12">
       {experiences.map(({ Content, metadata }, index) => (
         <AccordionItem
           key={index}
           value={`experience-${index}`}
-          className="border-none group"
+          className="border-b border-border/40 pb-8 last:border-0 group transition-all duration-300"
         >
-          <AccordionTrigger className="hover:no-underline py-0 pr-4">
-            <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 w-full text-left">
-              <h2 className="text-2xl font-medium tracking-tight group-hover:text-accent-primary transition-colors duration-300">
+          <AccordionTrigger className="hover:no-underline py-2 pr-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full text-left">
+              <h2 className="text-xl md:text-2xl font-medium tracking-tight group-hover:text-accent-primary transition-colors duration-300">
                 {metadata.title}
               </h2>
-              <span className="text-muted-foreground font-normal">
+              <span className="text-muted-foreground font-normal text-sm sm:text-base group-hover:text-foreground transition-colors duration-300">
                 - {metadata.type}
               </span>
-              <p className="text-sm text-muted-foreground/60 sm:ml-auto hidden sm:block">
+              <p className="text-sm text-muted-foreground/60 sm:ml-auto hidden sm:block font-light group-hover:text-muted-foreground transition-colors duration-300">
                 {metadata.subtitle}
               </p>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="pt-4 pb-0 pl-0 sm:pl-1">
-            <div className="sm:hidden mb-4 text-sm text-muted-foreground">
+          <AccordionContent className="pt-4 pb-2">
+            <div className="sm:hidden mb-4 text-sm text-muted-foreground italic">
               {metadata.subtitle}
             </div>
-            <div className="prose max-w-none dark:prose-invert text-muted-foreground leading-relaxed w-full">
+            <div className="prose max-w-none dark:prose-invert text-muted-foreground leading-relaxed w-full text-base">
               <Content />
             </div>
           </AccordionContent>
