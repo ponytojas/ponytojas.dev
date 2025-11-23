@@ -1,52 +1,71 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+const CENTER = { x: 150, y: 150 };
+const RADIUS_LEVELS = [0, 40, 100, 120];
+const INTERMEDIATE_COUNT = 6;
+const EXTERNAL_COUNT = 12;
+
+interface Node {
+    angle: number;
+    pos: { x: number; y: number };
+}
 
 const RadialGraph: React.FC = () => {
     const { theme } = useTheme();
     const isDarkTheme = theme === "dark";
-
-    const center = { x: 150, y: 150 };
-    const radiusLevels = [0, 40, 100, 120]; // niveles radiales
-    const intermediateCount = 6;
-    const externalCount = 12;
-
-    const randomOffset = (base: number, delta: number) =>
-        base + (Math.random() * 2 - 1) * delta;
-
-    const polarToCartesian = (r: number, angleDeg: number) => {
-        const angleRad = (angleDeg * Math.PI) / 180;
-        return {
-            x: center.x + r * Math.cos(angleRad),
-            y: center.y + r * Math.sin(angleRad),
-        };
-    };
-
-    const intermediateNodes = Array.from({ length: intermediateCount }, (_, i) => {
-        const angle = randomOffset(i * (360 / intermediateCount), 20);
-        return {
-            angle,
-            pos: polarToCartesian(radiusLevels[1], angle),
-        };
+    
+    const [nodes, setNodes] = useState<{ intermediate: Node[], external: Node[] }>({
+        intermediate: [],
+        external: []
     });
+    const [mounted, setMounted] = useState(false);
 
-    const externalNodes = Array.from({ length: externalCount }, (_, i) => {
-        const angle = randomOffset(i * (360 / externalCount), 15);
-        return {
-            angle,
-            pos: polarToCartesian(radiusLevels[2], angle),
+    useEffect(() => {
+        const randomOffset = (base: number, delta: number) =>
+            base + (Math.random() * 2 - 1) * delta;
+
+        const polarToCartesian = (r: number, angleDeg: number) => {
+            const angleRad = (angleDeg * Math.PI) / 180;
+            return {
+                x: CENTER.x + r * Math.cos(angleRad),
+                y: CENTER.y + r * Math.sin(angleRad),
+            };
         };
-    });
+
+        const intermediate = Array.from({ length: INTERMEDIATE_COUNT }, (_, i) => {
+            const angle = randomOffset(i * (360 / INTERMEDIATE_COUNT), 20);
+            return {
+                angle,
+                pos: polarToCartesian(RADIUS_LEVELS[1], angle),
+            };
+        });
+
+        const external = Array.from({ length: EXTERNAL_COUNT }, (_, i) => {
+            const angle = randomOffset(i * (360 / EXTERNAL_COUNT), 15);
+            return {
+                angle,
+                pos: polarToCartesian(RADIUS_LEVELS[2], angle),
+            };
+        });
+
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setNodes({ intermediate, external });
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
 
     return (
         <div className="flex justify-center items-center w-full h-full">
             <svg width={300} height={300} fill={isDarkTheme ? "#f0f0f0" : "#333333"} className="not-so-slow-rotate">
-                {radiusLevels.slice(1).map((r, i) => (
+                {RADIUS_LEVELS.slice(1).map((r, i) => (
                     <circle
                         key={`circle-${i}`}
-                        cx={center.x}
-                        cy={center.y}
+                        cx={CENTER.x}
+                        cy={CENTER.y}
                         r={r}
                         fill="none"
                         stroke="currentColor"
@@ -55,11 +74,11 @@ const RadialGraph: React.FC = () => {
                     />
                 ))}
 
-                {intermediateNodes.map((node, i) => (
+                {nodes.intermediate.map((node, i) => (
                     <line
                         key={`line-center-${i}`}
-                        x1={center.x}
-                        y1={center.y}
+                        x1={CENTER.x}
+                        y1={CENTER.y}
                         x2={node.pos.x}
                         y2={node.pos.y}
                         stroke="currentColor"
@@ -67,9 +86,12 @@ const RadialGraph: React.FC = () => {
                     />
                 ))}
 
-                {intermediateNodes.map((mid, i) => {
-                    const leftChild = externalNodes[(2 * i) % externalCount];
-                    const rightChild = externalNodes[(2 * i + 1) % externalCount];
+                {nodes.intermediate.map((mid, i) => {
+                    const leftChild = nodes.external[(2 * i) % EXTERNAL_COUNT];
+                    const rightChild = nodes.external[(2 * i + 1) % EXTERNAL_COUNT];
+                    // Ensure children exist before rendering lines (safety check though logic guarantees it)
+                    if (!leftChild || !rightChild) return null;
+                    
                     return (
                         <React.Fragment key={`branch-${i}`}>
                             <line
@@ -92,13 +114,13 @@ const RadialGraph: React.FC = () => {
                     );
                 })}
 
-                <circle cx={center.x} cy={center.y} r={6} fill="currentColor" />
+                <circle cx={CENTER.x} cy={CENTER.y} r={6} fill="currentColor" />
 
-                {intermediateNodes.map((node, i) => (
+                {nodes.intermediate.map((node, i) => (
                     <circle key={`mid-${i}`} cx={node.pos.x} cy={node.pos.y} r={4} fill="currentColor" />
                 ))}
 
-                {externalNodes.map((node, i) => (
+                {nodes.external.map((node, i) => (
                     <circle key={`ext-${i}`} cx={node.pos.x} cy={node.pos.y} r={3} fill="currentColor" />
                 ))}
             </svg>

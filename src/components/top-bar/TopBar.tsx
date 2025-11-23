@@ -1,48 +1,14 @@
 'use client'
 
-import { useSidebarStore } from "@/store/sidebar";
-import { PanelLeft, PanelRight } from "lucide-react";
 import { ModeToggle } from "@/components/theme/mode-toggle";
-import { useTheme } from "next-themes";
-import { useIsMobile } from "@/hooks/useIsMobile";
 
-export const TopBar: React.FC<{ hideIndex: boolean }> = ({ hideIndex = false }) => {
-    const { theme } = useTheme();
-    const isOpen = useSidebarStore((state) => state.isOpen);
-    const setIsOpen = useSidebarStore((state) => state.setIsOpen);
-    const { isMobile } = useIsMobile(768);
-    console.debug({ isMobile })
-
-    const commonClasses =
-        "transition-transform duration-300 cursor-pointer " +
-        "hover:scale-[1.15] active:scale-[1.15] " +
-        "text-neutral-600 dark:text-neutral-300 " +
-        "hover:text-accent-primary dark:hover:text-accent-primary";
-
-    const iconClasses =
-        "transition-transform duration-300 w-[26px] h-[26px] " +
-        "hover:w-[26px] hover:h-[26px]";
-
-    const fillColor = theme === 'dark' ? '#17171c' : '#fefefe';
-
+export const TopBar: React.FC<{ hideIndex?: boolean }> = () => {
     return (
-        <nav className="fixed w-full flex flex-row justify-between align-middle items-center md:pb-0 pt-10 md:pt-6 px-6 z-100">
-            {!hideIndex && isMobile && (
-                <div className="flex flex-col items-center">
-                    {isOpen ? (
-                        <button className={commonClasses} onClick={() => setIsOpen(false)}>
-                            <PanelRight className={iconClasses} fill={fillColor} />
-                        </button>
-                    ) : (
-                        <button className={commonClasses} onClick={() => setIsOpen(true)}>
-                            <PanelLeft className={iconClasses} fill={fillColor} />
-                        </button>
-                    )}
-                </div>
-            )}
-            <div className="flex items-center">
+        <header className="fixed top-0 left-0 w-full flex flex-row justify-end items-center py-6 px-6 md:px-12 z-50 bg-background/80 backdrop-blur-sm border-b border-border/40 md:bg-transparent md:backdrop-blur-none md:border-none">
+            <div className="flex items-center gap-4">
+                {/* Future navigation links can go here */}
                 <ModeToggle />
             </div>
-        </nav >
+        </header>
     )
 }

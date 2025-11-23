@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import { SidebarIndex } from "@/components/SidebarIndex";
-import { FloatingIndicator } from "@/components/FloatingIndicator/FloatingIndicator";
 import { TopBar } from "@/components/top-bar/TopBar";
-import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
     title: "Daniel Villalobos",
-    description: "Portfolio of Daniel Villalobos",
+    description: "Senior Software Engineer",
 };
 
 export default function RootLayout({
@@ -14,19 +11,11 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-
     return (
-
-        <main className="relative z-10 flex flex-col min-h-screen w-full">
-            <TopBar hideIndex={false} />
-            <FloatingIndicator />
-            <div className="flex flex-col fixed h-screen justify-center z-50">
-                <SidebarIndex />
-            </div>
-            <div className="w-full bg-background z-20">
-                <div className="flex-1 flex flex-col mx-auto max-w-full px-6 md:px-12 md:max-w-[1000px] w-full pt-16 mt-20 z-20 bg-background">
-                    {children}
-                </div>
+        <main className="relative flex flex-col min-h-screen w-full bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+            <TopBar />
+            <div className="flex-1 w-full max-w-3xl mx-auto px-6 md:px-8 pt-32 pb-20">
+                {children}
             </div>
         </main>
     );

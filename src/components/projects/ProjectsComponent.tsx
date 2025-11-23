@@ -17,7 +17,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const experiences = [
+const projects = [
   { Content: Labtools, metadata: labtoolsMetadata },
   { Content: Diun, metadata: diunMetadata },
   { Content: FlappyBall, metadata: flappyBallMetadata },
@@ -26,38 +26,40 @@ const experiences = [
   { Content: UNeed, metadata: uneedMetadata },
 ];
 
-export default function ExperienceComponent() {
+export default function ProjectsComponent() {
   return (
-    <Accordion type="multiple" className="w-full flex flex-col gap-12">
-      {experiences.map(({ Content, metadata }, index) => (
-        <AccordionItem
-          key={index}
-          value={`experience-${index}`}
-          className="border-b border-border/40 pb-8 last:border-0 group transition-all duration-300"
-        >
-          <AccordionTrigger className="hover:no-underline py-2 pr-2">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full text-left">
-              <h2 className="text-xl md:text-2xl font-medium tracking-tight group-hover:text-accent-primary transition-colors duration-300">
-                {metadata.title}
-              </h2>
-              <span className="text-muted-foreground font-normal text-sm sm:text-base group-hover:text-foreground transition-colors duration-300">
-                - {metadata.type}
-              </span>
-              <p className="text-sm text-muted-foreground/60 sm:ml-auto hidden sm:block font-light group-hover:text-muted-foreground transition-colors duration-300">
-                {metadata.subtitle}
-              </p>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4 pb-2">
-            <div className="sm:hidden mb-4 text-sm text-muted-foreground italic">
-              {metadata.subtitle}
-            </div>
-            <div className="prose max-w-none dark:prose-invert text-muted-foreground leading-relaxed w-full text-base">
-              <Content />
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+    <section className="py-10">
+        <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-wider mb-8">Selected Projects</h3>
+        <Accordion type="multiple" className="w-full space-y-4">
+        {projects.map(({ Content, metadata }, index) => (
+            <AccordionItem
+            key={index}
+            value={`project-${index}`}
+            className="border-0 pb-0 hover:bg-accent/40 rounded-xl px-4 -mx-4 transition-colors duration-200"
+            >
+            <AccordionTrigger className="hover:no-underline py-4 group">
+                <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 w-full text-left">
+                    <div className="min-w-[140px] shrink-0 hidden md:block">
+                         <span className="text-xs font-mono text-muted-foreground/40 group-hover:text-accent-primary transition-colors">0{index + 1}</span>
+                    </div>
+                    <div className="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-3 flex-1">
+                        <h4 className="text-lg font-medium text-foreground group-hover:text-accent-primary transition-colors">
+                        {metadata.title}
+                        </h4>
+                        <span className="text-sm text-muted-foreground/80">
+                        {metadata.subtitle}
+                        </span>
+                    </div>
+                </div>
+            </AccordionTrigger>
+            <AccordionContent className="md:pl-[172px]">
+                <div className="prose prose-sm max-w-none dark:prose-invert text-muted-foreground/90 leading-relaxed">
+                <Content />
+                </div>
+            </AccordionContent>
+            </AccordionItem>
+        ))}
+        </Accordion>
+    </section>
   );
 }

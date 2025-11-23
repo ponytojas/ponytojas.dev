@@ -1,33 +1,32 @@
-import Image from "next/image";
 import SocialLinks from "./SocialLinks";
-import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export const Hero = () => {
-    const { theme } = useTheme();
     return (
-        <section id="presentation" className="min-h-[90vh] flex flex-col justify-center py-20 relative overflow-hidden">
+        <section id="presentation" className="relative min-h-[60vh] flex flex-col justify-center items-start py-20 overflow-hidden">
+            {/* Technical Grid Background */}
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05] bg-grid [mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]" />
 
-            <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-24 z-10">
-                <div className="flex-1 animate-[fadeInUp_0.8s_ease-out_forwards] text-center md:text-left">
-                    <h1 className="text-6xl md:text-8xl font-semibold tracking-tighter mb-8 text-foreground leading-[1.1]">
-                        Hello, I&apos;m <span className="text-accent-primary inline-block hover:scale-105 transition-transform duration-300 cursor-default">Daniel</span>
-                    </h1>
-                    <p className="text-xl md:text-3xl text-muted-foreground max-w-2xl leading-relaxed mb-10 font-light tracking-wide mx-auto md:mx-0">
-                        Spaniard Software Engineer building <span className="text-foreground font-medium">neat things</span> on the web.
-                    </p>
-                    <div className="opacity-0 animate-[fadeInUp_0.8s_ease-out_0.2s_forwards] flex justify-center md:justify-start">
-                        <SocialLinks />
-                    </div>
-                </div>
-
-                <div className="relative w-48 h-48 md:w-72 md:h-72 shrink-0 opacity-0 animate-[fadeInUp_0.8s_ease-out_0.4s_forwards]">
-                    <Image
-                        src="/logo/logo_no_name.webp"
-                        alt="Daniel's Logo"
-                        fill
-                        className={`object-contain drop-shadow-2xl ${theme === "dark" ? "invert" : ""}`}
-                        priority
-                    />
+            <div className="relative z-10 animate-[fadeInUp_0.5s_ease-out_forwards] w-full max-w-3xl">
+                <span className="block text-sm font-mono text-accent-primary mb-4 tracking-widest uppercase">
+                    Daniel Villalobos
+                </span>
+                <h1 className="text-5xl md:text-7xl font-medium tracking-tight text-foreground mb-6 leading-[1.1]">
+                    Senior Software Engineer
+                    <span className="block text-muted-foreground">architecting resilient systems.</span>
+                </h1>
+                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-8">
+                    I design and build high-performance distributed architectures and geospatial solutions. My focus is on delivering scalability, reliability, and tangible business impact through code.
+                </p>
+                <div className="flex flex-row gap-6 items-center mt-8">
+                    <Button asChild className="group" size="lg">
+                        <a href="mailto:daniel.villalobosdel@icloud.com">
+                            Get in touch
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </a>
+                    </Button>
+                    <SocialLinks />
                 </div>
             </div>
         </section>

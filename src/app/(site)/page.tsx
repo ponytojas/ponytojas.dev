@@ -7,37 +7,24 @@ import { Hero } from '@/components/hero/Hero';
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-32 pb-20 relative">
-      <div className="bg-noise" />
+    <div className="flex flex-col gap-20 pb-20">
       <Hero />
-
-      <section id="experience" className="scroll-mt-32">
-        <h2 className="text-3xl font-medium tracking-tight mb-12 text-foreground">
-          Experience
-        </h2>
+      
+      <div id="experience" className="scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.2s_forwards] opacity-0" style={{ animationDelay: '0.2s' }}>
         <ExperienceComponent />
-      </section>
+      </div>
 
-      <section id="publications" className="scroll-mt-32">
-        <h2 className="text-3xl font-medium tracking-tight mb-12 text-foreground">
-          Publications
-        </h2>
-        <PublicationsComponent />
-      </section>
-
-      <section id="projects" className="scroll-mt-32">
-        <h2 className="text-3xl font-medium tracking-tight mb-12 text-foreground">
-          Projects
-        </h2>
+      <div id="projects" className="scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.3s_forwards] opacity-0" style={{ animationDelay: '0.3s' }}>
         <ProjectsComponent />
-      </section>
+      </div>
 
-      <section id="about" className="scroll-mt-32">
-        <h2 className="text-3xl font-medium tracking-tight mb-12 text-foreground">
-          About
-        </h2>
+      <div id="publications" className="scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.4s_forwards] opacity-0" style={{ animationDelay: '0.4s' }}>
+        <PublicationsComponent />
+      </div>
+
+      <div id="about" className="scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.5s_forwards] opacity-0" style={{ animationDelay: '0.5s' }}>
         <AboutComponents />
-      </section>
+      </div>
     </div>
   );
 }

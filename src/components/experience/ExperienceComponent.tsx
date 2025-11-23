@@ -8,8 +8,6 @@ import Anova, { metadata as anovaMetadata } from '@/app/experiences/anova.mdx';
 import Narrativa, { metadata as narrativaMetadata } from '@/app/experiences/narrativa.mdx';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Badge } from '@/components/ui/badge';
-import { useTheme } from 'next-themes';
 import { LinkArrow } from '../LinkArrow/LinkArrow';
 
 const experiences = [
@@ -22,56 +20,57 @@ const experiences = [
 ];
 
 export default function ExperienceComponent() {
-    const { theme } = useTheme();
 
     return (
-        <Accordion type="multiple" className="w-full flex flex-col gap-12">
-            {experiences.map(({ Content, metadata }, index) => (
-                <AccordionItem
-                    key={index}
-                    value={`experience-${index}`}
-                    className="border-b border-border/40 pb-8 last:border-0 group transition-all duration-300"
-                >
-                    <AccordionTrigger className="hover:no-underline py-2 pr-2">
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full text-left">
-                            <h2 className="text-xl md:text-2xl font-medium tracking-tight group-hover:text-accent-primary transition-colors duration-300">
-                                {metadata.title}
-                            </h2>
-                            <span className="text-muted-foreground font-normal text-sm sm:text-base group-hover:text-foreground transition-colors duration-300">
-                                {metadata.position}
-                            </span>
-                            <span className="text-xs sm:text-sm text-muted-foreground/60 sm:ml-auto font-mono group-hover:text-muted-foreground transition-colors duration-300">
-                                {metadata.time}
-                            </span>
-                        </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pt-4 pb-2">
-                        <div className="prose max-w-none dark:prose-invert text-muted-foreground leading-relaxed mb-6 text-base">
-                            <Content />
-                        </div>
-
-                        {metadata.link && (
-                            <div className="mb-6">
-                                <LinkArrow url={metadata.link} text={`Visit ${metadata.title}`} />
+        <section className="py-10">
+            <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-wider mb-8">Work History</h3>
+            <Accordion type="multiple" className="w-full space-y-4">
+                {experiences.map(({ Content, metadata }, index) => (
+                    <AccordionItem
+                        key={index}
+                        value={`experience-${index}`}
+                        className="border-0 pb-0 hover:bg-accent/40 rounded-xl px-4 -mx-4 transition-colors duration-200"
+                    >
+                        <AccordionTrigger className="hover:no-underline py-4 group">
+                            <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 w-full text-left">
+                                <span className="font-mono text-sm text-muted-foreground min-w-[140px] shrink-0 group-hover:text-foreground transition-colors">
+                                    {metadata.time}
+                                </span>
+                                <div className="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-3 flex-1">
+                                    <h4 className="text-lg font-medium text-foreground group-hover:text-accent-primary transition-colors">
+                                        {metadata.title}
+                                    </h4>
+                                    <span className="text-sm text-muted-foreground">
+                                        {metadata.position}
+                                    </span>
+                                </div>
                             </div>
-                        )}
+                        </AccordionTrigger>
+                        <AccordionContent className="md:pl-[172px]">
+                            <div className="prose prose-sm max-w-none dark:prose-invert text-muted-foreground/90 leading-relaxed mb-4">
+                                <Content />
+                            </div>
 
-                        <div className="flex flex-wrap gap-2 mt-4">
-                            {(metadata.tags || []).map(({ technology }: { technology: string }) => (
-                                <Badge
-                                    key={technology}
-                                    variant="secondary"
-                                    className="bg-secondary/50 text-secondary-foreground hover:bg-accent-primary/10 hover:text-accent-primary hover:border-accent-primary/20 border border-transparent transition-all duration-300 font-medium rounded-full px-3 py-0.5 text-xs"
-                                >
-                                    {technology}
-                                </Badge>
-                            ))}
-                        </div>
-                    </AccordionContent>
-                </AccordionItem>
-            ))}
-        </Accordion>
+                            {metadata.link && (
+                                <div className="mb-4">
+                                    <LinkArrow url={metadata.link} text="Visit Website" />
+                                </div>
+                            )}
+
+                            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+                                {(metadata.tags || []).map(({ technology }: { technology: string }) => (
+                                    <span
+                                        key={technology}
+                                        className="text-xs font-mono text-muted-foreground/60 hover:text-foreground transition-colors cursor-default"
+                                    >
+                                        #{technology.toLowerCase()}
+                                    </span>
+                                ))}
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                ))}
+            </Accordion>
+        </section>
     );
 }
-
-

@@ -8,16 +8,17 @@ const locationToAngles = (lat: number, long: number) => {
     return [Math.PI - ((long * Math.PI) / 180 - Math.PI / 2), (lat * Math.PI) / 180]
 }
 
-const Globe = () => {
+interface GlobeProps {
+    className?: string;
+}
+
+const Globe = ({ className }: GlobeProps) => {
     const { theme } = useTheme();
     const isDarkTheme = theme === "dark";
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const baseColor: [number, number, number] = isDarkTheme ? [0.4, 0.4, 0.4] : [1, 1, 1];
     const glowColor: [number, number, number] = isDarkTheme ? [0.09, 0.09, 0.09] : [0.9, 0.9, 0.9];
-
-    console.debug({ baseColor, glowColor });
-
-    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
         let phi = 0;
@@ -33,14 +34,14 @@ const Globe = () => {
         if (canvasRef.current) {
             globe = createGlobe(canvasRef.current, {
                 devicePixelRatio: 2,
-                width: 300 * 2,
-                height: 300 * 2,
+                width: 600 * 2,
+                height: 600 * 2,
                 phi: initialPhi,
                 theta: initialTheta,
                 dark: 0.9,
-                diffuse: 1.9,
-                mapSamples: 15000,
-                mapBrightness: 8,
+                diffuse: 1.2,
+                mapSamples: 16000,
+                mapBrightness: 6,
                 baseColor,
                 markerColor: [0, 0, 0],
                 glowColor,
@@ -48,7 +49,7 @@ const Globe = () => {
                 onRender: (state) => {
                     state.phi = initialPhi + phi;
                     state.theta = initialTheta;
-                    phi += 0.001;
+                    phi += 0.003;
                 }
             });
         }
@@ -56,12 +57,13 @@ const Globe = () => {
         return () => {
             if (globe) globe.destroy();
         };
-    }, [theme]);
+    }, [theme, baseColor, glowColor]);
 
     return (
         <canvas
             ref={canvasRef}
-            style={{ width: 300, height: 300, maxWidth: "100%", aspectRatio: 1 }}
+            className={className}
+            style={{ width: 600, height: 600, maxWidth: "100%", aspectRatio: 1 }}
         />
     );
 }
