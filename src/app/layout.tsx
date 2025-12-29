@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const sfPro = localFont({
   src: [
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body
         className={`antialiased overscroll-none font-sans`}
       >
+        <SpeedInsights />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
