@@ -16,6 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 
 const projects = [
   { Content: Labtools, metadata: labtoolsMetadata },
@@ -28,33 +29,41 @@ const projects = [
 
 export default function ProjectsComponent() {
   return (
-    <section className="py-10">
-        <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-wider mb-8">Selected Projects</h3>
-        <Accordion type="multiple" className="w-full space-y-4">
+    <section className="container-custom py-20">
+       <div className="flex items-center gap-4 mb-12">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground">Selected Projects</h2>
+            <div className="h-px flex-1 bg-border/60" />
+        </div>
+
+        <Accordion type="multiple" className="w-full space-y-6">
         {projects.map(({ Content, metadata }, index) => (
             <AccordionItem
             key={index}
             value={`project-${index}`}
-            className="border-0 pb-0 hover:bg-accent/40 rounded-xl px-4 -mx-4 transition-colors duration-200"
+            className="group border border-border bg-card rounded-lg px-6 sm:px-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_20px_-8px_rgba(0,0,0,0.1)] transition-all duration-300"
             >
-            <AccordionTrigger className="hover:no-underline py-4 group">
-                <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 w-full text-left">
-                    <div className="min-w-[140px] shrink-0 hidden md:block">
-                         <span className="text-xs font-mono text-muted-foreground/40 group-hover:text-accent-primary transition-colors">0{index + 1}</span>
+            <AccordionTrigger className="hover:no-underline py-6 [&[data-state=open]]:pb-4">
+                <div className="flex flex-col sm:flex-row sm:items-baseline gap-4 w-full text-left">
+                    <div className="min-w-[40px] shrink-0 hidden sm:block">
+                         <span className="text-sm font-medium font-mono text-brand-primary/40 group-hover:text-brand-primary transition-colors">
+                            {String(index + 1).padStart(2, '0')}
+                         </span>
                     </div>
-                    <div className="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-3 flex-1">
-                        <h4 className="text-lg font-medium text-foreground group-hover:text-accent-primary transition-colors">
-                        {metadata.title}
-                        </h4>
-                        <span className="text-sm text-muted-foreground/80">
-                        {metadata.subtitle}
-                        </span>
+                    <div className="flex flex-col gap-1 flex-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                            <h3 className="text-xl font-bold text-foreground group-hover:text-brand-primary transition-colors font-heading">
+                            {metadata.title}
+                            </h3>
+                            <Badge variant="outline" className="w-fit rounded-full text-[10px] uppercase tracking-wider font-medium text-muted-foreground border-muted-foreground/20">
+                                {metadata.subtitle}
+                            </Badge>
+                        </div>
                     </div>
                 </div>
             </AccordionTrigger>
-            <AccordionContent className="md:pl-[172px]">
-                <div className="prose prose-sm max-w-none dark:prose-invert text-muted-foreground/90 leading-relaxed">
-                <Content />
+            <AccordionContent className="pt-2 pb-8 sm:pl-[56px]">
+                <div className="prose prose-slate dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
+                    <Content />
                 </div>
             </AccordionContent>
             </AccordionItem>

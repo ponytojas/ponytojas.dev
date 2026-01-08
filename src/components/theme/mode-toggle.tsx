@@ -10,10 +10,9 @@ export function ModeToggle() {
     const commonClasses =
         "transition-transform duration-300 cursor-pointer " +
         "hover:scale-[1.05] hover:rotate-[15deg] " +
-        "active:scale-[1.15]" +
-        "w-[26px] h-[26px] hover:w-[26px] hover:h-[26px]" +
-        "text-neutral-600 dark:text-neutral-300 hover:text-accent-primary dark:hover:text-accent-primary"
-
+        "active:scale-[1.15] " +
+        "w-[26px] h-[26px] " +
+        "text-muted-foreground hover:text-brand-primary"
 
     const iconVariants = {
         initial: { opacity: 0, scale: 1.2, rotate: -90 },
@@ -21,13 +20,12 @@ export function ModeToggle() {
         exit: { opacity: 0, scale: 1.2, rotate: 90 },
     };
 
+    const iconClasses = "w-full h-full"
 
-    const iconClasses =
-        "transition-transform duration-300" +
-        "w-[26px] h-[26px] hover:w-[26px] hover:h-[26px]"
-
-    const fillColor = theme === 'dark' ? '#17171c' : '#fefefe';
-
+    // Optional: fill color based on theme, but Lucide icons usually use stroke.
+    // We can use currentColor (via text class) for stroke.
+    // If fill is desired:
+    const fillColor = theme === 'dark' ? 'currentColor' : 'currentColor'; 
 
     return (
         <AnimatePresence mode="wait">
@@ -42,8 +40,9 @@ export function ModeToggle() {
                     transition={{ duration: 0.15 }}
                     className={commonClasses}
                     onClick={() => setTheme("light")}
+                    aria-label="Switch to light mode"
                 >
-                    <Sun className={iconClasses} fill={fillColor} />
+                    <Sun className={iconClasses} />
                 </motion.button>
             ) : (
                 <motion.button
@@ -55,8 +54,9 @@ export function ModeToggle() {
                     transition={{ duration: 0.15 }}
                     className={commonClasses}
                     onClick={() => setTheme("dark")}
+                    aria-label="Switch to dark mode"
                 >
-                    <Moon className={iconClasses} fill={fillColor} />
+                    <Moon className={iconClasses} />
                 </motion.button>
             )}
         </AnimatePresence>

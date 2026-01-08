@@ -2,11 +2,11 @@ import { ArrowUpRight } from "lucide-react"
 
 export const LinkArrow: React.FC<{ url: string, inline?: boolean, text?: string }> = ({ url, inline = false, text = 'Check it out' }) => {
     const content = (
-        <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-            <span className="text-sm text-gray-500  hover:text-gray-900 dark:hover:text-gray-50 underline underline-offset-4 decoration-dotted hover:decoration-solid transform transition-all duration-300">
+        <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 group w-fit">
+            <span className="text-sm font-medium text-brand-secondary group-hover:text-brand-primary underline underline-offset-4 decoration-dotted hover:decoration-solid transform transition-all duration-300">
                 {text}
             </span>
-            <ArrowUpRight />
+            <ArrowUpRight className="w-4 h-4 text-brand-secondary group-hover:text-brand-primary transition-colors" />
         </a>
     )
 
@@ -15,9 +15,8 @@ export const LinkArrow: React.FC<{ url: string, inline?: boolean, text?: string 
             {content}
         </span>
     ) : (
-        <div className={`mb-8`}>
+        <div className={`mb-4`}>
             {content}
         </div>
     )
-
 }

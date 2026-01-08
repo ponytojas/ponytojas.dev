@@ -9,6 +9,7 @@ import Narrativa, { metadata as narrativaMetadata } from '@/app/experiences/narr
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { LinkArrow } from '../LinkArrow/LinkArrow';
+import { Badge } from '@/components/ui/badge';
 
 const experiences = [
     { Content: Lumibit, metadata: lumibitMetadata },
@@ -20,51 +21,58 @@ const experiences = [
 ];
 
 export default function ExperienceComponent() {
-
     return (
-        <section className="py-10">
-            <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-wider mb-8">Work History</h3>
-            <Accordion type="multiple" className="w-full space-y-4">
+        <section className="container-custom py-20">
+            <div className="flex items-center gap-4 mb-12">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground">Work History</h2>
+                <div className="h-px flex-1 bg-border/60" />
+            </div>
+            
+            <Accordion type="multiple" className="w-full space-y-6">
                 {experiences.map(({ Content, metadata }, index) => (
                     <AccordionItem
                         key={index}
                         value={`experience-${index}`}
-                        className="border-0 pb-0 hover:bg-accent/40 rounded-xl px-4 -mx-4 transition-colors duration-200"
+                        className="group border border-border bg-card rounded-lg px-6 sm:px-8 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_20px_-8px_rgba(0,0,0,0.1)] transition-all duration-300"
                     >
-                        <AccordionTrigger className="hover:no-underline py-4 group">
-                            <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 w-full text-left">
-                                <span className="font-mono text-sm text-muted-foreground min-w-[140px] shrink-0 group-hover:text-foreground transition-colors">
+                        <AccordionTrigger className="hover:no-underline py-6 [&[data-state=open]]:pb-4">
+                            <div className="flex flex-col sm:flex-row sm:items-baseline gap-4 w-full text-left">
+                                <span className="text-sm font-medium text-muted-foreground/60 min-w-[140px] shrink-0 font-sans tracking-tight">
                                     {metadata.time}
                                 </span>
-                                <div className="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-3 flex-1">
-                                    <h4 className="text-lg font-medium text-foreground group-hover:text-accent-primary transition-colors">
-                                        {metadata.title}
-                                    </h4>
-                                    <span className="text-sm text-muted-foreground">
-                                        {metadata.position}
-                                    </span>
+                                <div className="flex flex-col gap-1 flex-1">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                        <h3 className="text-xl font-bold text-foreground group-hover:text-brand-primary transition-colors font-heading">
+                                            {metadata.title}
+                                        </h3>
+                                        <span className="hidden sm:inline text-muted-foreground/40">•</span>
+                                        <span className="text-base text-muted-foreground font-medium">
+                                            {metadata.position}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </AccordionTrigger>
-                        <AccordionContent className="md:pl-[172px]">
-                            <div className="prose prose-sm max-w-none dark:prose-invert text-muted-foreground/90 leading-relaxed mb-4">
+                        <AccordionContent className="pt-2 pb-8 sm:pl-[156px]">
+                            <div className="prose prose-slate dark:prose-invert max-w-none text-muted-foreground leading-relaxed mb-6">
                                 <Content />
                             </div>
 
                             {metadata.link && (
-                                <div className="mb-4">
+                                <div className="mb-6">
                                     <LinkArrow url={metadata.link} text="Visit Website" />
                                 </div>
                             )}
 
-                            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+                            <div className="flex flex-wrap gap-2 mt-4">
                                 {(metadata.tags || []).map(({ technology }: { technology: string }) => (
-                                    <span
-                                        key={technology}
-                                        className="text-xs font-mono text-muted-foreground/60 hover:text-foreground transition-colors cursor-default"
+                                    <Badge 
+                                        key={technology} 
+                                        variant="secondary" 
+                                        className="rounded-full px-3 py-0.5 text-xs font-medium bg-secondary/5 text-secondary-foreground/80 hover:bg-secondary/10 border-transparent transition-colors"
                                     >
-                                        #{technology.toLowerCase()}
-                                    </span>
+                                        {technology}
+                                    </Badge>
                                 ))}
                             </div>
                         </AccordionContent>

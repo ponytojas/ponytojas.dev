@@ -12,9 +12,9 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <main className="relative flex flex-col min-h-screen w-full bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+        <main className="relative flex flex-col min-h-screen w-full bg-background text-foreground selection:bg-brand-primary/20 selection:text-brand-primary">
             <TopBar />
-            <div className="flex-1 w-full max-w-3xl mx-auto px-6 md:px-8 pt-32 pb-20">
+            <div className="flex-1 w-full pb-20">
                 {children}
             </div>
         </main>
