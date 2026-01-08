@@ -23,7 +23,7 @@ export function LetterDisplay({
         <div
           key={i}
           className={`letter text-4xl ${isName ? "font-light" : "font-thin italic"
-            }  md:text-[120px]`}
+            }  md:text-[120px] cursor-default`}
           data-speed={getDeterministicSpeed(word, i)}
         >
           {char}

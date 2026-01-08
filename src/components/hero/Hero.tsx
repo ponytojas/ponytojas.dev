@@ -14,7 +14,7 @@ export const Hero = () => {
           <LetterCollision />
         </div>
         <div
-          className="flex flex-row absolute bottom-70 right-10 text-2xl text-gray-500 transition-opacity duration-500"
+          className="flex flex-row absolute bottom-70 right-10 text-2xl text-gray-500 transition-opacity duration-500 cursor-default"
           style={{
             opacity:
               typeof window !== "undefined" && window.scrollY > 10 ? 0 : 1,
