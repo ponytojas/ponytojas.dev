@@ -49,21 +49,21 @@ export function LetterCollision() {
   }, []);
 
   return (
-    <div ref={ref} className="ml-8 scroll-smooth">
-      <div className="mb-12 flex h-screen flex-col justify-center lg:mb-24">
+    <div ref={ref} className="ml-4 sm:ml-6 md:ml-8 scroll-smooth">
+      <div className="mb-8 sm:mb-12 lg:mb-24 flex h-screen flex-col justify-center">
         <div className="flex flex-wrap">
           <LetterDisplay word={lines[0]} isName={true} />
-          <div className="w-8 sm:w-10" />
+          <div className="w-4 sm:w-6 md:w-8 lg:w-10" />
           <LetterDisplay word={lines[1]} isName={true} />
         </div>
         <div className="flex flex-wrap">
           <LetterDisplay word={lines[2]} isName={false} />
-          <div className="w-8 sm:w-10" />
+          <div className="w-4 sm:w-6 md:w-8 lg:w-10" />
           <LetterDisplay word={lines[3]} isName={false} />
         </div>
         <div className="flex flex-wrap">
           <LetterDisplay word={lines[4]} isName={false} />
-          <div className="w-8 sm:w-10" />
+          <div className="w-4 sm:w-6 md:w-8 lg:w-10" />
           <LetterDisplay word={lines[5]} isName={false} />
         </div>
       </div>

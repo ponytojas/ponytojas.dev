@@ -8,13 +8,13 @@ import { Rabbit } from "@/components/hero/Rabbit";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-20 pb-20">
+    <div className="flex flex-col gap-10 md:gap-20 pb-10 md:pb-20">
       <Hero />
       <Rabbit />
 
       <div
         id="experience"
-        className="scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.2s_forwards] opacity-0"
+        className="scroll-mt-20 md:scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.2s_forwards] opacity-0"
         style={{ animationDelay: "0.2s" }}
       >
         <ExperienceComponent />
@@ -22,7 +22,7 @@ export default function Home() {
 
       <div
         id="projects"
-        className="scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.3s_forwards] opacity-0"
+        className="scroll-mt-20 md:scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.3s_forwards] opacity-0"
         style={{ animationDelay: "0.3s" }}
       >
         <ProjectsComponent />
@@ -30,7 +30,7 @@ export default function Home() {
 
       <div
         id="publications"
-        className="scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.4s_forwards] opacity-0"
+        className="scroll-mt-20 md:scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.4s_forwards] opacity-0"
         style={{ animationDelay: "0.4s" }}
       >
         <PublicationsComponent />
@@ -38,7 +38,7 @@ export default function Home() {
 
       <div
         id="about"
-        className="scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.5s_forwards] opacity-0"
+        className="scroll-mt-20 md:scroll-mt-32 animate-[fadeInUp_0.5s_ease-out_0.5s_forwards] opacity-0"
         style={{ animationDelay: "0.5s" }}
       >
         <AboutComponents />

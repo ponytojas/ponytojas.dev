@@ -22,8 +22,8 @@ export function LetterDisplay({
       {word.split("").map((char, i) => (
         <div
           key={i}
-          className={`letter text-4xl ${isName ? "font-light" : "font-thin italic"
-            }  md:text-[120px] cursor-default`}
+          className={`letter text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[120px] ${isName ? "font-light" : "font-thin italic"
+            } cursor-default`}
           data-speed={getDeterministicSpeed(word, i)}
         >
           {char}
