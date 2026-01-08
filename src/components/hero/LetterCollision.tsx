@@ -9,7 +9,7 @@ function getRandomRotation() {
   return Math.random() * 60 - 30;
 }
 
-function animateLettersOnScroll(ref: React.RefObject<HTMLDivElement>) {
+function animateLettersOnScroll(ref: React.RefObject<HTMLDivElement | null>) {
   const nodes = ref.current?.querySelectorAll<HTMLElement>(".letter") || [];
   const tweens: gsap.core.Tween[] = [];
   nodes.forEach((letter) => {
@@ -23,7 +23,7 @@ function animateLettersOnScroll(ref: React.RefObject<HTMLDivElement>) {
         trigger: document.documentElement,
         start: 0,
         end: window.innerHeight,
-        scrub: 0.9,
+        scrub: 0.8,
         invalidateOnRefresh: true,
       },
     };

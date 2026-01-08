@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 function getDeterministicSpeed(word: string, index: number) {
   let hash = 0;
@@ -23,9 +22,8 @@ export function LetterDisplay({
       {word.split("").map((char, i) => (
         <div
           key={i}
-          className={`letter text-4xl ${
-            isName ? "font-light" : "font-thin italic"
-          }  md:text-[120px]`}
+          className={`letter text-4xl ${isName ? "font-light" : "font-thin italic"
+            }  md:text-[120px]`}
           data-speed={getDeterministicSpeed(word, i)}
         >
           {char}
