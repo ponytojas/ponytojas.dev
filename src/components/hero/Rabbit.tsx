@@ -97,7 +97,7 @@ export const Rabbit = () => {
   }, [mouseX, mouseY]);
 
   return (
-    <div className="relative w-screen h-[110vh] overflow-hidden bg-foreground flex items-center justify-center">
+    <div className="relative w-full h-[110vh] overflow-hidden bg-foreground flex items-center justify-center">
       {icons.map((icon, index) => (
         <motion.div
           key={index}

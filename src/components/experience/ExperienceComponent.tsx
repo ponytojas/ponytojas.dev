@@ -9,6 +9,9 @@ import Narrativa, { metadata as narrativaMetadata } from '@/app/experiences/narr
 
 import { LinkArrow } from '../LinkArrow/LinkArrow';
 import { cn } from '@/lib/utils';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { ChevronDown } from 'lucide-react';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const experiences = [
     { Content: Lumibit, metadata: lumibitMetadata },
@@ -21,18 +24,19 @@ const experiences = [
 
 const ExperienceItem = ({
     experience,
-    className
+    className,
+    isMobile,
+    value
 }: {
     experience: typeof experiences[0],
-    className?: string
+    className?: string,
+    isMobile?: boolean,
+    value?: string
 }) => {
     const { Content, metadata } = experience;
 
-    return (
-        <div className={cn(
-            "group relative flex flex-col md:flex-row p-4 sm:p-6 md:p-8 lg:p-10 border-border/60 hover:bg-muted/5 transition-colors duration-300",
-            className
-        )}>
+    const content = (
+        <>
             {/* Header Section */}
             <div className="flex flex-col md:w-[30%] gap-2 mb-4 md:mb-2">
                 <div className='flex flex-row items-center gap-4'>
@@ -60,11 +64,63 @@ const ExperienceItem = ({
                     <Content />
                 </div>
             </div>
+        </>
+    );
+
+    // Mobile: Collapsible accordion
+    if (isMobile && value) {
+        return (
+            <AccordionItem value={value} className={cn("border-none", className)}>
+                <div className="group relative flex flex-col border-border/60">
+                    <AccordionTrigger className="hover:no-underline w-full [&>svg]:hidden">
+                        <div className="flex flex-row w-full p-4 sm:p-6 hover:bg-muted/5 transition-colors duration-300">
+                            <div className="flex flex-col flex-1 gap-2 pr-4">
+                                <h2 className="text-2xl sm:text-3xl font-light text-muted-foreground text-left">
+                                    {metadata.position}
+                                </h2>
+                                <h3 className="text-xl sm:text-2xl font-extralight font-heading text-foreground text-left">
+                                    {metadata.title}
+                                </h3>
+                                <span className="text-xs sm:text-sm font-medium text-muted-foreground">
+                                    {metadata.time}
+                                </span>
+                            </div>
+                            <div className="flex items-start pt-1 sm:pt-2 shrink-0">
+                                <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6 text-muted-foreground transition-transform duration-200 [[data-state=open]_&]:rotate-180" />
+                            </div>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+                            <div className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground/90 leading-relaxed">
+                                <Content />
+                                {metadata.link && (
+                                    <div className="flex justify-start mt-4">
+                                        <LinkArrow url={metadata.link} text="Visit Website" />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </AccordionContent>
+                </div>
+            </AccordionItem>
+        );
+    }
+
+    // Desktop: Expanded view
+    return (
+        <div className={cn(
+            "group relative flex flex-col md:flex-row p-4 sm:p-6 md:p-8 lg:p-10 border-border/60 hover:bg-muted/5 transition-colors duration-300",
+            className
+        )}>
+            {content}
         </div>
     );
 };
 
 export default function ExperienceComponent() {
+    const { isMobile } = useIsMobile();
+
     return (
         <section className="container-custom py-10 md:py-20 max-w-screen-2xl mx-auto">
             <div className="flex flex-col gap-2 md:gap-4 mb-8 md:mb-16 px-4 md:px-0">
@@ -74,15 +130,30 @@ export default function ExperienceComponent() {
             </div>
 
             {/* Grid Container with borders */}
-            <div className="grid grid-cols-1 border-t border-l border-border/60">
-                {experiences.map((experience, index) => (
-                    <ExperienceItem
-                        key={index}
-                        experience={experience}
-                        className="border-b border-r"
-                    />
-                ))}
-            </div>
+            {isMobile ? (
+                <Accordion type="multiple" className="grid grid-cols-1 border-t border-l border-border/60">
+                    {experiences.map((experience, index) => (
+                        <ExperienceItem
+                            key={index}
+                            experience={experience}
+                            value={`experience-${index}`}
+                            isMobile={isMobile}
+                            className="border-b border-r"
+                        />
+                    ))}
+                </Accordion>
+            ) : (
+                <div className="grid grid-cols-1 border-t border-l border-border/60">
+                    {experiences.map((experience, index) => (
+                        <ExperienceItem
+                            key={index}
+                            experience={experience}
+                            isMobile={isMobile}
+                            className="border-b border-r"
+                        />
+                    ))}
+                </div>
+            )}
         </section>
     );
 }
