@@ -13,28 +13,12 @@ export const Footer = () => {
         className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08]"
         style={{
           backgroundImage: `radial-gradient(circle, var(--foreground) 1px, transparent 1px)`,
-          backgroundSize: '30px 30px',
+          backgroundSize: "30px 30px",
         }}
       />
 
       <div className="container-custom py-12 md:py-16 max-w-screen-2xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          {/* Left side - Name and tagline */}
-          <motion.div
-            className="flex flex-col items-center md:items-start gap-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h3 className="text-xl font-heading font-light text-foreground">
-              Daniel Villalobos
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Building systems that survive the real world
-            </p>
-          </motion.div>
-
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8">
           {/* Center - Social Links */}
           <div className="flex items-center gap-6">
             <a
@@ -58,18 +42,13 @@ export const Footer = () => {
               <span className="text-sm hidden sm:inline">LinkedIn</span>
             </a>
             <a
-              href="mailto:danielvillalobosmorales@gmail.com"
+              href="mailto:danielvillalobosmorales@gmail.com?subject=See%20your%20page&body=Let's%20talk!"
               className="group flex items-center gap-2 text-muted-foreground hover:text-brand-primary transition-colors duration-300"
               aria-label="Email Contact"
             >
               <Mail className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
               <span className="text-sm hidden sm:inline">Email</span>
             </a>
-          </div>
-
-          {/* Right side - Copyright */}
-          <div className="text-sm text-muted-foreground text-center md:text-right">
-            <p>{currentYear} Daniel Villalobos</p>
           </div>
         </div>
       </div>
