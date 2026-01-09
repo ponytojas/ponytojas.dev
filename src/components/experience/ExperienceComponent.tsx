@@ -12,6 +12,8 @@ import { cn } from '@/lib/utils';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { ChevronDown } from 'lucide-react';
 import { useIsMobile } from '@/hooks/useIsMobile';
+import { TechBadge } from '@/components/TechBadge/TechBadge';
+import { ScrollReveal } from '@/components/ScrollReveal/ScrollReveal';
 
 const experiences = [
     { Content: Lumibit, metadata: lumibitMetadata },
@@ -51,8 +53,23 @@ const ExperienceItem = ({
                 <span className="text-xs sm:text-sm font-medium text-muted-foreground mb-2 md:mb-4">
                     {metadata.time}
                 </span>
+
+                {/* Tech Stack Badges */}
+                {metadata.tags && metadata.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {metadata.tags.map((tag: any, idx: number) => (
+                            <TechBadge
+                                key={idx}
+                                technology={tag.technology}
+                                color={tag.color}
+                                index={idx}
+                            />
+                        ))}
+                    </div>
+                )}
+
                 {metadata.link && (
-                    <div className="flex justify-start">
+                    <div className="flex justify-start mt-4">
                         <LinkArrow url={metadata.link} text="Visit Website" />
                     </div>
                 )}
@@ -109,11 +126,16 @@ const ExperienceItem = ({
 
     // Desktop: Expanded view
     return (
-        <div className={cn(
-            "group relative flex flex-col md:flex-row p-4 sm:p-6 md:p-8 lg:p-10 border-border/60 hover:bg-muted/5 transition-colors duration-300",
-            className
-        )}>
-            {content}
+        <div
+            className={cn(
+                "group relative flex flex-col md:flex-row p-4 sm:p-6 md:p-8 lg:p-10 border-border/60 hover:bg-muted/5 transition-all duration-300",
+                "before:absolute before:inset-0 before:bg-gradient-to-r before:from-brand-primary/0 before:via-brand-primary/5 before:to-brand-primary/0 before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100",
+                className
+            )}
+        >
+            <div className="relative z-10 flex flex-col md:flex-row w-full">
+                {content}
+            </div>
         </div>
     );
 };
@@ -123,34 +145,38 @@ export default function ExperienceComponent() {
 
     return (
         <section className="container-custom py-10 md:py-20 max-w-screen-2xl mx-auto">
-            <div className="flex flex-col gap-2 md:gap-4 mb-8 md:mb-16 px-4 md:px-0">
-                <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-thin tracking-tight text-foreground">
-                    Experience
-                </h2>
-            </div>
+            <ScrollReveal>
+                <div className="flex flex-col gap-2 md:gap-4 mb-8 md:mb-16 px-4 md:px-0">
+                    <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-thin tracking-tight text-foreground">
+                        Experience
+                    </h2>
+                </div>
+            </ScrollReveal>
 
             {/* Grid Container with borders */}
             {isMobile ? (
                 <Accordion type="multiple" className="grid grid-cols-1 border-t border-l border-border/60">
                     {experiences.map((experience, index) => (
-                        <ExperienceItem
-                            key={index}
-                            experience={experience}
-                            value={`experience-${index}`}
-                            isMobile={isMobile}
-                            className="border-b border-r"
-                        />
+                        <ScrollReveal key={index} delay={index * 0.1}>
+                            <ExperienceItem
+                                experience={experience}
+                                value={`experience-${index}`}
+                                isMobile={isMobile}
+                                className="border-b border-r"
+                            />
+                        </ScrollReveal>
                     ))}
                 </Accordion>
             ) : (
                 <div className="grid grid-cols-1 border-t border-l border-border/60">
                     {experiences.map((experience, index) => (
-                        <ExperienceItem
-                            key={index}
-                            experience={experience}
-                            isMobile={isMobile}
-                            className="border-b border-r"
-                        />
+                        <ScrollReveal key={index} delay={index * 0.1}>
+                            <ExperienceItem
+                                experience={experience}
+                                isMobile={isMobile}
+                                className="border-b border-r"
+                            />
+                        </ScrollReveal>
                     ))}
                 </div>
             )}

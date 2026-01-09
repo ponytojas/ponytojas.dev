@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { AnimatedBackground } from "@/components/AnimatedBackground/AnimatedBackground";
+import { ScrollProgress } from "@/components/ScrollProgress/ScrollProgress";
+import { KonamiCode } from "@/components/KonamiCode/KonamiCode";
+import { BackToTop } from "@/components/BackToTop/BackToTop";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -36,9 +40,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen flex flex-col">
-            {children}
-          </div>
+          <AnimatedBackground />
+          <ScrollProgress />
+          <KonamiCode />
+          <BackToTop />
+          <div className="min-h-screen flex flex-col">{children}</div>
         </ThemeProvider>
       </body>
     </html>
