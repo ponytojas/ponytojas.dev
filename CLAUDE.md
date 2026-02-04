@@ -42,13 +42,13 @@ pnpm lint
   - `globals.css`: Tailwind v4 configuration with CSS variables
 
 - **`src/components/`**: Organized by feature/domain
-  - **`hero/`**: Landing section components (LetterCollision, Rabbit, Hero)
+  - **`hero/`**: Landing section component (Hero)
   - **`experience/`**: ExperienceComponent that imports and renders MDX files
   - **`projects/`**: ProjectsComponent that imports and renders MDX files
   - **`publications/`**: PublicationsComponent that imports and renders MDX files
   - **`about/`**: AboutComponents that imports and renders MDX files
   - **`experiments/`**: Interactive visual components (Globe, HarmonicCircles, RadialGraph, etc.)
-  - **`ui/`**: Radix UI-based components (dialog, tooltip, accordion, button, badge)
+  - **`ui/`**: Radix UI-based components (tooltip)
   - **`theme/`**: Theme provider and mode toggle
   - **`top-bar/`**: Fixed header with theme toggle
 
@@ -86,12 +86,7 @@ Component files (e.g., `ExperienceComponent.tsx`) import these MDX files directl
 
 ### Animation System
 
-- **GSAP with ScrollTrigger**: Used extensively in Hero section (`LetterCollision.tsx`)
-  - Letters animate with individual speeds and rotations on scroll
-  - `data-speed` attributes control parallax effect intensity
-  - ScrollTrigger scrub creates smooth, physics-based scroll animations
-
-- **Framer Motion**: Used for micro-interactions (e.g., `motion` library)
+- **Motion (`motion/react`)**: Used for micro-interactions and scroll-based transforms
 
 - **CSS Animations**: Defined in `globals.css` using Tailwind v4's `@theme` directive (`fadeIn`, `fadeInUp`)
 
@@ -121,10 +116,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
 ### Scroll Animations
 
-The Hero section's `LetterCollision` component uses GSAP to animate individual letters:
-- Each letter has a random speed (`data-speed`) between values, creating depth
-- ScrollTrigger animates letters vertically and rotates them as user scrolls
-- Animation respects `prefers-reduced-motion` (check `LetterDisplay.tsx`)
+The Hero section uses `motion/react` scroll transforms for subtle parallax and opacity changes, with reduced-motion fallbacks.
 
 ### Path Aliases
 
@@ -152,7 +144,6 @@ The `/experiments` route is a standalone page showcasing interactive visual comp
 - **React 19.2.3** (note: uses overrides in pnpm config for react types)
 - **Tailwind CSS v4** (uses new `@theme` directive and `@custom-variant`)
 - **MDX** via `@next/mdx` for content authoring
-- **GSAP** for scroll-based animations
 - **Radix UI** for accessible components
 - **Zustand** for client-side state management
 - **next-themes** for dark mode support

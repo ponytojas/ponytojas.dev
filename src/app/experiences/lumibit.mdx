@@ -1,26 +1,10 @@
-export const metadata = {
-    title: "Lumibit Digital",
-    position: "Principal Architect",
-    color: "#DA0D3A",
-    darkColor: "#DA0D3A",
-    tags: [
-        { technology: "React", color: "#0A7EA4" },
-        { technology: "NodeJS", color: "#336633" },
-        { technology: "MongoDB", color: "#00684A" },
-        { technology: "PostgreSQL", color: "#336791" },
-        { technology: "GraphQL", color: "#E10098" },
-        { technology: "Redis", color: "#FF4438" },
-        { technology: "TypeScript", color: "#3178C6" },
-        { technology: "BullMQ", color: "#BDBDBD" },
-        { technology: "Mongoose", color: "#00684A" },
-    ],
-    time: "2024 - Present",
-    link: "https://lumibit.io",
-};
+As a **Senior Full-Stack Engineer** at **Lumibit Digital** (contracted for **BMW**), I build internal products used by thousands of engineers across multiple applications. Most of the work runs inside a highly restricted **private cloud**, so shipping means being pragmatic: deliver value fast, but never at the expense of reliability or security constraints.
 
-As a **Lead Fullstack Engineer** contracted for **BMW**, I architect and build mission-critical internal tooling that accelerates vehicle prototyping and testing. I own the entire lifecycle—from requirements gathering with automotive engineers to system design, implementation, and deployment within a highly restricted **private cloud environment**.
+I usually own features end-to-end — from clarifying requirements with domain experts, to architecture, implementation, and production support.
 
-Key contributions include:
-*   **Firmware Delivery System:** Engineered a secure web-based platform enabling engineers to flash test firmware onto prototype vehicle ECUs, reducing manual intervention and testing cycles.
-*   **Vehicle Topology Visualization:** Developed complex visualizations for internal electronic car architectures, allowing engineers to inspect and debug on-board networks intuitively.
-*   **Infrastructure & Scalability:** Designed the backend services to be stateless and scalable, utilizing **Redis** and **BullMQ** for handling asynchronous job queues related to heavy data processing.
+Key contributions:
+* **Functionality track system:** A **feature lifecycle management tool** that tracks required functionalities across vehicle models, monitoring component status, ownership, and real-time metrics to ensure delivery and compliance.
+* **Vehicle topology visualization:** Turned internal vehicle architecture definitions (compiled from multiple internal data sources) into an interactive **SVG-based** explorer — clickable elements, targeted search, and contextual details — making complex systems easier to navigate and debug.
+* **Scalable data processing & automation:** Designed stateless backend services and background pipelines with **Redis** + **BullMQ** to parse large datasets, run validations, and handle long-running preprocessing. This improved overall app responsiveness and enabled new features like event-driven notifications (e.g., emails for key events or expirations).
+* **Test vehicle utilization & availability system:** A fleet availability and utilization platform that visualizes test vehicle allocation across teams on a timeline, tracking assignments, availability, and in/out metrics while aggregating data from multiple vehicle data sources.
+

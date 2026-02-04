@@ -1,17 +1,12 @@
 import { ImageWithModal } from '@/components/ImageWithModal/ImageWithModal';
 import { LinkArrow } from '@/components/LinkArrow/LinkArrow';
 
-export const metadata = {
-  title: "Labtools",
-  subtitle: "Inventory & IoT Monitoring for a Neuroscience Lab",
-  type: "Personal Project",
-};
 
-**Labtools** is a bespoke platform built for the **Neural Circuits Laboratory at the University of Valencia**.  
-It combines two pillars the lab needed day-to-day:
+**Labtools** is a custom platform built for the **Neural Circuits Laboratory at the University of Valencia**.
+It brings together two everyday needs:
 
-1) A **personal + shared inventory** to track consumables and equipment with **low-stock alerts** and **provider management**, and  
-2) A lightweight **IoT telemetry system** (based on Raspberry Pi Zero 2W) that continuously monitors the **animal colony environment** (temperature, humidity, light) and **notifies researchers on anomalies** to support animal welfare.
+1) A **personal + shared inventory** to track consumables and equipment, with **low-stock alerts** and **provider management**, and
+2) A lightweight **IoT telemetry system** (Raspberry Pi Zero 2W) that monitors the **animal colony environment** (temperature, humidity, light) and **notifies researchers on anomalies** to support animal welfare.
 
 <div className='flex flex-col justify-center items-center my-8'>
   <ImageWithModal
@@ -29,10 +24,10 @@ It combines two pillars the lab needed day-to-day:
 
 ### Purpose and Overview
 
-The lab needed a single place to:  
-- keep **accurate stock** across teams and individuals,  
-- **standardize purchases** via provider/material mappings, and  
-- **ensure environmental stability** around the animal rooms with automated alerting.
+The lab needed a single place to:
+- keep **accurate stock** across teams and individuals,
+- **standardize purchases** via provider/material mappings, and
+- **maintain stable conditions** around the animal rooms with automated alerting.
 
 Labtools provides a clean UI for inventory workflows and a reliable data pipeline that ingests sensor readings via **MQTT**, processes them in a **Go** backend service, persists them, and triggers alerts when thresholds are exceeded.
 
@@ -61,11 +56,11 @@ Labtools provides a clean UI for inventory workflows and a reliable data pipelin
 
 ---
 
-### IoT Monitoring — Animal Colony
+### IoT Monitoring - Animal Colony
 
-Small **Raspberry Pi Zero 2W** devices collect **temperature**, **humidity**, and **illuminance** via onboard sensors.  
-Devices publish readings over **MQTT**. A **Golang** service consumes, validates, transforms, stores, and **checks thresholds**; if anything looks off, it **alerts researchers** to investigate.
-The application provides a unified dashboard for monitoring all sensor data in real-time and historical values.
+Small **Raspberry Pi Zero 2W** devices collect **temperature**, **humidity**, and **illuminance** via onboard sensors.
+Devices publish readings over **MQTT**. A **Go** service consumes, validates, transforms, stores, and **checks thresholds**; if anything looks off, it **alerts researchers** to investigate.
+The application provides a unified dashboard for monitoring all sensor data in real time and historical values.
 
 <div className='flex flex-col justify-center items-center my-8'>
   <ImageWithModal
@@ -119,35 +114,35 @@ The application provides a unified dashboard for monitoring all sensor data in r
                                          └─────────────────────────────────┘
 ```
 
-  <span className="text-sm text-gray-500 dark:text-gray-400">End-to-end flow: device → MQTT → Go service → DB → UI & alerts</span>
+  <span className="text-sm text-gray-500 dark:text-gray-400">End-to-end flow: device → MQTT → Go service → DB → UI and alerts</span>
 </div>
 
 ---
 
 ### Key Features
 
-- **Personal & Shared Inventory:** clear separation, easy collaboration  
-- **Low-Stock Indicators:** color-coded badges and at-a-glance dashboards  
-- **Provider Management:** materials mapped to vendors to speed up orders  
-- **IoT Environment Monitoring:** temp/humidity/light telemetry from Pi Zero 2W  
-- **Automated Alerts:** threshold-based checks to protect animal welfare  
+- **Personal & Shared Inventory:** clear separation and easy collaboration
+- **Low-Stock Indicators:** color-coded badges and at-a-glance dashboards
+- **Provider Management:** materials mapped to vendors to speed up orders
+- **IoT Environment Monitoring:** temp/humidity/light telemetry from Pi Zero 2W
+- **Automated Alerts:** threshold-based checks to protect animal welfare
 - **Auditable History:** item changes and sensor trends for traceability
 
 ---
 
 ### Technology Stack
 
-- **Raspberry Pi Zero 2W** (sensor nodes)  
-- **MQTT** (telemetry transport)  
-- **Go** backend service (ingest, transform, thresholds, persistence)  
-- **Database** (inventory + time-series telemetry)  
+- **Raspberry Pi Zero 2W** (sensor nodes)
+- **MQTT** (telemetry transport)
+- **Go** backend service (ingest, transform, thresholds, persistence)
+- **Database** (inventory + time-series telemetry)
 - **Web UI** for inventory, dashboards, and alert management
 
-> Note: This is a lab deployment; repository and infrastructure details are private. Reach out if you’d like a technical deep-dive.
+> Note: This is a lab deployment; repository and infrastructure details are private. Reach out if you'd like a technical deep-dive.
 
 ---
 
 ### Impact
 
-Labtools reduced stock-outs, standardized provider ordering, and added **proactive monitoring** of animal-room conditions.  
+Labtools reduced stock-outs, standardized provider ordering, and added **proactive monitoring** of animal-room conditions.
 It turned scattered spreadsheets and manual checks into a **single, reliable system** the entire lab can trust.

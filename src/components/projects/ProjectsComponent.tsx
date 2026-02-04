@@ -1,109 +1,193 @@
 "use client";
 
-import Labtools, {
-  metadata as labtoolsMetadata,
-} from "@/app/projects/labtools.mdx";
-import Diun, { metadata as diunMetadata } from "@/app/projects/diun.mdx";
-import FlappyBall, {
-  metadata as flappyBallMetadata,
-} from "@/app/projects/flappy-ball.mdx";
-import MyTasks, {
-  metadata as myTasksMetadata,
-} from "@/app/projects/my-tasks.mdx";
-import UTwin, { metadata as utwinMetadata } from "@/app/projects/utwin.mdx";
-import UNeed, { metadata as uneedMetadata } from "@/app/projects/uneed.mdx";
-import { cn } from "@/lib/utils";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ChevronDown } from "lucide-react";
-import { ScrollReveal } from "@/components/ScrollReveal/ScrollReveal";
-
-const projects = [
-  { Content: Labtools, metadata: labtoolsMetadata },
-  { Content: Diun, metadata: diunMetadata },
-  { Content: FlappyBall, metadata: flappyBallMetadata },
-  { Content: MyTasks, metadata: myTasksMetadata },
-  { Content: UTwin, metadata: utwinMetadata },
-  { Content: UNeed, metadata: uneedMetadata },
-];
+import { projects } from "@/data/projects";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { ArrowUpRight, Plus, Minus } from "lucide-react";
+import { useState } from "react";
 
 const ProjectItem = ({
   project,
-  className,
-  value,
+  index,
+  isOpen,
+  onToggle,
+  prefersReducedMotion,
 }: {
   project: (typeof projects)[0];
-  className?: string;
-  value: string;
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  prefersReducedMotion: boolean;
 }) => {
   const { Content, metadata } = project;
 
   return (
-    <AccordionItem value={value} className={cn("border-none", className)}>
-      <div className="group relative flex flex-col border-border/60 hover:shadow-sm transition-all duration-500">
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-secondary/0 via-brand-secondary/5 to-brand-secondary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-        <AccordionTrigger className="hover:no-underline w-full [&>svg]:hidden relative z-10">
-          <div className="flex flex-row w-full p-4 sm:p-6 md:p-8 lg:p-10 transition-colors duration-300">
-            {/* Header Section */}
-            <div className="flex flex-col flex-1 gap-2 pr-4">
-              <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-light text-muted-foreground text-left">
-                {metadata.title}
-              </h2>
-
-              <h3 className="text-base sm:text-xl md:text-2xl font-extralight font-heading text-foreground text-left">
-                {metadata.subtitle}
-              </h3>
-            </div>
-
-            {/* Chevron */}
-            <div className="flex items-start pt-1 sm:pt-2 shrink-0">
-              <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6 text-muted-foreground transition-transform duration-200 [[data-state=open]_&]:rotate-180" />
-            </div>
+    <motion.article
+      className={`group border-b border-border last:border-b-0 relative expanded-accent ${isOpen ? "is-expanded" : ""}`}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{
+        duration: prefersReducedMotion ? 0 : 0.4,
+        delay: prefersReducedMotion ? 0 : 0.2 + index * 0.05,
+        ease: [0.33, 1, 0.68, 1],
+      }}
+    >
+      {/* Header - Clickable with hover accent line */}
+      <motion.button
+        onClick={onToggle}
+        className="w-full py-10 md:py-12 flex items-start justify-between gap-6 text-left cursor-pointer group/header focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg transition-colors relative"
+      >
+        {/* Hover accent line */}
+        <div className="flex-1">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1">
+            <h3 className="text-xl md:text-2xl font-medium text-foreground group-hover/header:text-foreground/80 transition-colors">
+              {metadata.title}
+            </h3>
+            {metadata.type && (
+              <span className="text-xs font-mono text-muted-foreground/60 shrink-0">
+                {metadata.type}
+              </span>
+            )}
           </div>
-        </AccordionTrigger>
+          {metadata.subtitle && (
+            <p className="text-muted-foreground">{metadata.subtitle}</p>
+          )}
+        </div>
 
-        <AccordionContent>
-          <div className="px-4 sm:px-6 md:px-8 lg:px-10 pb-4 sm:pb-6 md:pb-8">
-            <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none text-muted-foreground/90 leading-relaxed">
-              <Content />
+        {/* Toggle icon with scale on expand */}
+        <motion.div
+          className="mt-1 text-brand-accent"
+          animate={{ rotate: isOpen ? 180 : 0, scale: isOpen ? 1.1 : 1 }}
+          transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
+        >
+          {isOpen ? <Minus aria-hidden="true" className="w-5 h-5" /> : <Plus aria-hidden="true" className="w-5 h-5" />}
+        </motion.div>
+      </motion.button>
+
+      {/* Expandable content */}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={prefersReducedMotion ? false : { height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={prefersReducedMotion ? undefined : { height: 0, opacity: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: [0.215, 0.61, 0.355, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pb-10 md:pb-12 flex flex-col gap-6">
+              {/* Tech stack with stagger animation */}
+              {metadata.tags && metadata.tags.length > 0 && (
+                <motion.div
+                  className="flex flex-wrap gap-2"
+                  initial={prefersReducedMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: prefersReducedMotion ? 0 : 0.1 }}
+                >
+                  {metadata.tags.map(
+                    (tag: { technology: string; color: string }, idx: number) => (
+                      <motion.span
+                        key={idx}
+                        className="tech-badge text-xs font-mono px-3 py-1.5 rounded-full border border-border text-muted-foreground cursor-default"
+                        initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: prefersReducedMotion ? 0 : 0.1 + idx * 0.02, ease: [0.33, 1, 0.68, 1] }}
+                        whileHover={prefersReducedMotion ? undefined : { y: -1, scale: 1.01 }}
+                      >
+                        {tag.technology}
+                      </motion.span>
+                    )
+                  )}
+                </motion.div>
+              )}
+
+              {/* Description */}
+              <motion.div
+                className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: prefersReducedMotion ? 0 : 0.2 }}
+              >
+                <Content />
+              </motion.div>
+
+              {/* Link */}
+              {metadata.link && (
+                <motion.a
+                  href={metadata.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-brand-accent transition-colors w-fit group/link rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  initial={prefersReducedMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: prefersReducedMotion ? 0 : 0.3 }}
+                  whileHover={prefersReducedMotion ? undefined : { x: 4 }}
+                >
+                  <span>View project</span>
+                  <ArrowUpRight aria-hidden="true" className="w-4 h-4 text-brand-accent transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                </motion.a>
+              )}
             </div>
-          </div>
-        </AccordionContent>
-      </div>
-    </AccordionItem>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.article>
   );
 };
 
 export default function ProjectsComponent() {
-  return (
-    <section className="container-custom py-10 md:py-20 max-w-screen-2xl mx-auto">
-      <ScrollReveal>
-        <div className="flex flex-col gap-2 md:gap-4 mb-8 md:mb-16 px-4 md:px-0">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-thin tracking-tight text-foreground">
-            Selected Projects
-          </h2>
-        </div>
-      </ScrollReveal>
+  const [openItems, setOpenItems] = useState<Set<number>>(new Set());
+  const prefersReducedMotion = useReducedMotion();
 
-      {/* Grid Container with borders */}
-      <Accordion
-        type="multiple"
-        className="grid grid-cols-1 border-t border-l border-border/60"
+  const toggleItem = (index: number) => {
+    setOpenItems((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
+
+  return (
+    <div className="container-custom">
+      {/* Section header - bold and impactful */}
+      <motion.div
+        className="mb-16 md:mb-20"
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: prefersReducedMotion ? 0 : 0.15, ease: [0.33, 1, 0.68, 1] }}
       >
+        <motion.span
+          className="section-number text-sm font-mono text-brand-accent uppercase tracking-widest inline-flex items-center gap-2 mb-6"
+          initial={prefersReducedMotion ? false : { opacity: 0, x: -10 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: prefersReducedMotion ? 0 : 0.2, ease: [0.33, 1, 0.68, 1] }}
+        >
+          <span className="bauhaus-dot bauhaus-dot-animated" />
+          Projects
+        </motion.span>
+        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground tracking-tight">
+          Things I&apos;ve built
+        </h2>
+      </motion.div>
+
+      {/* Projects list */}
+      <div className="border-t border-border">
         {projects.map((project, index) => (
-          <ScrollReveal key={index} delay={index * 0.08}>
-            <ProjectItem
-              project={project}
-              value={`project-${index}`}
-              className="border-b border-r"
-            />
-          </ScrollReveal>
+          <ProjectItem
+            key={project.metadata.title}
+            project={project}
+            index={index}
+            isOpen={openItems.has(index)}
+            onToggle={() => toggleItem(index)}
+            prefersReducedMotion={!!prefersReducedMotion}
+          />
         ))}
-      </Accordion>
-    </section>
+      </div>
+    </div>
   );
 }

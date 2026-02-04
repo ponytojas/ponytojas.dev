@@ -1,17 +1,14 @@
 import { ImageWithModal } from '@/components/ImageWithModal/ImageWithModal';
 import { LinkArrow } from '@/components/LinkArrow/LinkArrow';
 
-export const metadata = {
-  title: "Flappy-Ball RL",
-  subtitle: "A Reinforcement Learning Demo",
-  type: "Personal Project",
-};
 
-**Flappy-Ball RL** is a reinforcement learning demo where hundreds of neural-network agents learn to play a Flappy Bird–style game through **evolutionary algorithms**. It began as a curiosity after seeing how simple NNs can learn emergent control policies—then grew into a fully instrumented playground to test different optimization strategies, visualize learning in real time, and benchmark design choices.
+**Flappy-Ball RL** is a reinforcement learning demo where hundreds of neural-network agents learn a Flappy Bird-style game through **evolutionary algorithms**.
+It started as a curiosity about how simple networks can discover control policies, and grew into a playground to compare optimization strategies, visualize learning in real time, and benchmark design choices.
 
 ### Purpose and Overview
 
-The project demonstrates **population-based learning** with **genetic algorithms** and alternative strategies (ES, DE, PSO). Agents perceive a compact game state and decide **when to jump**. Fitness is based on survival and pipe passing, with several shaping terms to encourage smooth flight and robustness.
+The project showcases **population-based learning** with **genetic algorithms** and alternatives (ES, DE, PSO).
+Agents read a compact game state and decide **when to jump**. Fitness is based on survival and pipe passing, with shaping terms that encourage smooth flight and robustness.
 
 <div className='flex flex-col justify-center items-center my-8'>
   <ImageWithModal
@@ -27,25 +24,25 @@ The project demonstrates **population-based learning** with **genetic algorithms
 
 ### Key Features
 
-- **Population Training**: 50–500 agents evolve in parallel
-- **Real-time Visualization**: See improvement across generations
-- **Interactive Controls**: Tune physics, NN, and evolution at runtime
-- **Live Analytics**: Fitness trends, generation stats, best agent playback
-- **Persistence**: Save / load top genomes
-- **Deterministic Mode**: Seeded RNG for reproducible runs
+- **Population Training:** 50-500 agents evolve in parallel
+- **Real-time Visualization:** See improvement across generations
+- **Interactive Controls:** Tune physics, NN, and evolution at runtime
+- **Live Analytics:** Fitness trends, generation stats, best agent playback
+- **Persistence:** Save and load top genomes
+- **Deterministic Mode:** Seeded RNG for reproducible runs
 
 ### What's Inside the AI
 
 **Neural Network**
-- Inputs: position/velocity, next gap info, distance to ceiling/ground (6→8 features)
+- Inputs: position/velocity, next gap info, distance to ceiling/ground (6-8 features)
 - Hidden layers: `8 → 4` with `tanh`
 - Output: `sigmoid` → jump probability
 
 **Learning Algorithms**
-- **Genetic Algorithm (default)**: tournament selection, uniform crossover (~70%), adaptive mutation, elite preservation, wider weight bounds `[-5, 5]`
-- **Evolution Strategy (μ+λ)**: self-adaptive mutation for fine-tuning
-- **Differential Evolution**: diversity-aware exploration for continuous params
-- **Particle Swarm**: quick convergence via velocity + global/personal bests
+- **Genetic Algorithm (default):** tournament selection, uniform crossover (~70%), adaptive mutation, elite preservation, wider weight bounds `[-5, 5]`
+- **Evolution Strategy (μ+λ):** self-adaptive mutation for fine-tuning
+- **Differential Evolution:** diversity-aware exploration for continuous params
+- **Particle Swarm:** quick convergence via velocity + global/personal bests
 
 <div className='flex flex-col justify-center items-center my-8'>
   <ImageWithModal
@@ -55,15 +52,15 @@ The project demonstrates **population-based learning** with **genetic algorithms
     height={360}
     modalClassName="rounded-xl"
   />
-  <span className="text-sm text-gray-500 dark:text-gray-400">Algorithm & physics controls</span>
+  <span className="text-sm text-gray-500 dark:text-gray-400">Algorithm and physics controls</span>
 </div>
 
 ### Game Mechanics
 
-- **Physics**: gravity + impulse jump; terminal velocity
-- **Pipes**: constant gap size, smooth random vertical drift, fixed spacing
-- **Fitness**: survival distance + gap-centering bonus + pipe-pass reward − movement penalty  
-- **Determinism**: procedural generation seeded for consistency
+- **Physics:** gravity + impulse jump; terminal velocity
+- **Pipes:** constant gap size, smooth random vertical drift, fixed spacing
+- **Fitness:** survival distance + gap-centering bonus + pipe-pass reward - movement penalty
+- **Determinism:** procedural generation seeded for consistency
 
 <div className='flex flex-col justify-center items-center my-8'>
   <ImageWithModal
@@ -78,19 +75,19 @@ The project demonstrates **population-based learning** with **genetic algorithms
 
 ### Technology Stack
 
-- **React 19** + **TypeScript** (UI & state)
-- **Vite** (build & dev)
+- **React 19** + **TypeScript** (UI and state)
+- **Vite** (build and dev)
 - **Canvas 2D API** (rendering at 60 FPS)
 - **Vitest** (tests)
 - **Zero external ML deps** (custom NN, GA/ES/DE/PSO, RNG, math)
 
 ### Architecture at a Glance
 
-- `game/nn.ts` — forward pass & genome ops  
-- `game/evolve.ts` — genetic algorithm core  
-- `game/world.ts` — physics, collisions, procedural pipes  
-- `game/sim.ts` — training loop, generation orchestration  
-- `game/render.ts` — canvas rendering & culling
+- `game/nn.ts` — forward pass and genome ops
+- `game/evolve.ts` — genetic algorithm core
+- `game/world.ts` — physics, collisions, procedural pipes
+- `game/sim.ts` — training loop, generation orchestration
+- `game/render.ts` — canvas rendering and culling
 
 ### Getting Started
 
@@ -98,7 +95,7 @@ The project demonstrates **population-based learning** with **genetic algorithms
 - Node.js 18+
 - `pnpm` (recommended) or `npm`
 
-**Install & Run**
+**Install and Run**
 ```bash
 git clone git@github.com:ponytojas/Flappy-Ball-RL.git
 cd flappy-ball-rl

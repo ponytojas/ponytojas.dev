@@ -1,19 +1,15 @@
 import { ImageWithModal } from '@/components/ImageWithModal/ImageWithModal';
 import { LinkArrow } from '@/components/LinkArrow/LinkArrow';
 
-export const metadata = {
-    title: "MyTasks",
-    subtitle: "A Personal Task Logging and Summarization Tool",
-    type: "Personal Project",
-};
 
-**MyTasks** was born out of a personal need to better track and summarize weekly work activities. While my team primarily uses **Jira** to manage tasks and tickets, I often found myself involved in responsibilities that didn’t fall under a specific Jira issue — such as **reviewing pull requests**, **helping teammates**, or handling **production hotfixes** and **database interventions**.
+**MyTasks** started as a way to better track and summarize weekly work.
+While my team uses **Jira** for tasks and tickets, a lot of my work happens outside of it - things like **reviewing pull requests**, **helping teammates**, or handling **production hotfixes** and **database interventions**.
 
-Every Friday, my manager would ask for a quick summary of what I had done during the week and what I planned for the next. More often than not, I realized I couldn’t remember half the things I’d done. This inspired me to design and build a lightweight tool to solve this exact problem.
+Every Friday my manager asked for a quick summary of the week and my plan for the next. I often realized I could not remember half of what I had done. That is what pushed me to build a lightweight tool to capture those tasks as they happen.
 
 ### Purpose and Overview
 
-**MyTasks** is a simple and intuitive app that helps users **log daily tasks** and generate **automated summaries**.
+**MyTasks** is a simple, focused app for **logging daily tasks** and generating **automated summaries**.
 
 <div className='flex flex-col justify-center items-center my-8'>
     <ImageWithModal
@@ -27,7 +23,7 @@ Every Friday, my manager would ask for a quick summary of what I had done during
     <span className="text-sm text-gray-500 dark:text-gray-400">Login screen</span>
 </div>
 
-The interface is divided into two parts:
+The interface is split into two parts:
 
 - A **calendar** on the left to select the week
 - A **daily task list** on the right showing the days of the selected week
@@ -63,16 +59,16 @@ For each day, I can quickly **add tasks** with the following details:
     <span className="text-sm text-gray-500 dark:text-gray-400">Add task form</span>
 </div>
 
-This structure helps me maintain a clear record of my daily efforts, even when they don’t appear in official tracking systems.
+This structure keeps a clear record of daily work, even when it does not show up in official tracking systems.
 
 ### AI-Powered Summarization
 
-One of the most useful features is the **AI summary generation**. I added two buttons:
+One of the most useful features is **AI summary generation**. I added two buttons:
 
 - **Daily summary**
 - **Weekly summary**
 
-Both use the **ChatGPT API** to generate natural-language summaries of the tasks recorded, saving me time when sending reports to my manager or simply reflecting on the week.
+Both call the **ChatGPT API** to generate natural-language summaries of the tasks recorded, which saves time when sending reports or reflecting on the week.
 
 <div className='flex flex-col justify-center items-center my-8'>
     <ImageWithModal
@@ -88,7 +84,7 @@ Both use the **ChatGPT API** to generate natural-language summaries of the tasks
 
 ### Technology Stack
 
-The application is intentionally minimalistic, focusing on usability and speed. It was built using:
+The app is intentionally minimalistic and optimized for speed. It was built with:
 
 - <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">**Next.js**</a> for the frontend and routing
 - <a href="https://pocketbase.io/" target="_blank" rel="noopener noreferrer">**PocketBase**</a> as a lightweight backend and database
@@ -98,7 +94,7 @@ While simple in scope, **MyTasks** solved a recurring issue in my day-to-day wor
 
 ### From Personal to Team-Wide
 
-Originally built just for myself, I eventually shared the app with my manager. He liked the idea — and now we’re working together to evolve **MyTasks** into a tool for **company-wide usage**. It's a perfect example of how solving a personal pain point can grow into something with broader value.
+I originally built the app for myself, then shared it with my manager. He liked the idea, and now we are working together to evolve **MyTasks** into a tool for **company-wide usage**. It is a clear example of how a personal pain point can turn into broader value.
 
 ### Test it out
 You can try out the app yourself <LinkArrow url="https://tasks.ponytojas.dev/" inline={true} text="here"/>. There's a demo account to let you explore the features without needing to create an account.

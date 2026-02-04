@@ -1,21 +1,16 @@
 import { ImageWithModal } from '@/components/ImageWithModal/ImageWithModal';
 import { LinkArrow } from '@/components/LinkArrow/LinkArrow';
 
-export const metadata = {
-  title: "Docker Image Update Notify",
-  subtitle: "Stay Updated with the Latest Docker Images",
-  type: "Personal Project",
-};
 
-**Docker Image Update Notify** is a lightweight background service that monitors Docker containers and **notifies you when newer image versions are available**.
-It was designed for seamless deployment in **Coolify** and containerized environments, focusing on efficiency, modularity, and production readiness.
+**Docker Image Update Notify** is a lightweight service that watches running containers and **alerts you when a newer image is available**.
+It is designed to drop into **Coolify** and other containerized environments, with an emphasis on efficiency, modularity, and production readiness.
 
 ### Purpose and Overview
 
-The project solves a common DevOps pain point: **keeping container images up to date** without manual checking.
-It scans all running containers, queries registries (DockerHub or private), and alerts you via **Email** or **Telegram** when updates are available.
+The goal is straightforward: **keep container images up to date** without manual checks.
+It scans running containers, queries registries (DockerHub or private), and notifies you via **Email** or **Telegram** when updates are available.
 
-This lets teams react quickly to new releases, patches, and security fixes while avoiding downtime.
+That helps teams react quickly to releases, patches, and security fixes without unnecessary downtime.
 
 <div className='flex flex-col justify-center items-center my-8'>
 
@@ -35,20 +30,22 @@ This lets teams react quickly to new releases, patches, and security fixes while
 
 ### Key Features
 
-- **Automatic Detection**: Scans all running containers
-- **Multiple Registries**: DockerHub + private registries supported
-- **Smart Filtering**: Include/exclude patterns for fine-grained control
-- **Notifications**: Email (SMTP) + Telegram bot integration
-- **Semantic Versioning**: Smarter update checks beyond simple tags
-- **Scheduling**: Cron-like intervals for periodic checks
-- **Resource Efficient**: Minimal CPU/memory footprint
-- **Production Ready**: Logging, health checks, and error handling baked in
+- **Automatic Detection:** Scans all running containers automatically
+- **Multiple Registries:** Supports DockerHub and private registries
+- **Smart Filtering:** Include/exclude patterns for fine-grained control
+- **Notifications:** Email (SMTP) + Telegram bot integration
+- **Semantic Versioning:** Smarter update checks beyond simple tags
+- **Scheduling:** Cron-like intervals for periodic checks
+- **Resource Efficient:** Minimal CPU/memory footprint
+- **Production Ready:** Logging, health checks, and error handling baked in
 
 ### Inside the System
 
+The service is split into a few focused modules:
+
 **Core Modules**
 - **Docker Scanner**: Detects running containers and extracts image info
-- **Registry Client**: Communicates with DockerHub & registries
+- **Registry Client**: Communicates with DockerHub and registries
 - **Version Comparator**: Intelligent semantic version comparison
 - **Notification System**: Sends alerts through email and/or Telegram
 - **Scheduler**: Manages periodic checks and execution
@@ -78,7 +75,7 @@ This lets teams react quickly to new releases, patches, and security fixes while
 - `scanner/` — Docker container detection
 - `registry/` — registry API clients
 - `version/` — semantic version comparison
-- `notify/` — email & Telegram channels
+- `notify/` — email and Telegram channels
 - `scheduler/` — cron-based task manager
 - `cmd/main.go` — service entrypoint
 
@@ -88,7 +85,7 @@ This lets teams react quickly to new releases, patches, and security fixes while
 - Docker Engine
 - Go 1.24+ (for local builds)
 
-**Install & Run**
+**Install and Run**
 ```bash
 # Clone
 git clone git@github.com:ponytojas/DIUN.git

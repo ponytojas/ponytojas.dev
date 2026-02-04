@@ -1,79 +1,173 @@
 "use client";
 
-import V2X, { metadata as v2xMetadata } from "@/app/publications/v2x.mdx";
-import { LinkArrow } from "../LinkArrow/LinkArrow";
-import { cn } from "@/lib/utils";
-import { ScrollReveal } from "@/components/ScrollReveal/ScrollReveal";
-
-const publications = [{ Content: V2X, metadata: v2xMetadata }];
+import { publications } from "@/data/publications";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { ArrowUpRight, Plus, Minus } from "lucide-react";
+import { useState } from "react";
 
 const PublicationItem = ({
   publication,
-  className,
+  index,
+  isOpen,
+  onToggle,
+  prefersReducedMotion,
 }: {
   publication: (typeof publications)[0];
-  className?: string;
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  prefersReducedMotion: boolean;
 }) => {
   const { Content, metadata } = publication;
 
   return (
-    <div
-      className={cn(
-        "group relative flex flex-col md:flex-row p-4 sm:p-6 md:p-8 lg:p-10 border-border/60 hover:bg-muted/5 transition-all duration-500 hover:shadow-sm",
-        className
-      )}
+    <motion.article
+      className={`group border-b border-border last:border-b-0 relative expanded-accent ${isOpen ? "is-expanded" : ""}`}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{
+        duration: prefersReducedMotion ? 0 : 0.4,
+        delay: prefersReducedMotion ? 0 : 0.2 + index * 0.06,
+        ease: [0.33, 1, 0.68, 1],
+      }}
     >
-      <div className="absolute inset-0 bg-linear-to-r from-brand-secondary/0 via-brand-secondary/5 to-brand-secondary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="relative z-10 flex flex-col md:flex-row w-full">
-        {/* Header Section */}
-        <div className="flex flex-col md:w-[30%] gap-2 mb-4 md:mb-2">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-muted-foreground">
-            {metadata.time}
-          </h2>
+      {/* Header - Clickable with hover accent line */}
+      <motion.button
+        onClick={onToggle}
+        className="w-full py-10 md:py-12 flex items-start justify-between gap-6 text-left cursor-pointer group/header focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg transition-colors relative"
+      >
+        {/* Hover accent line */}
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-[180px_1fr] gap-4 md:gap-8">
+          {/* Date */}
+          <div className="flex flex-col gap-1">
+            <span className="text-sm font-mono text-muted-foreground">
+              {metadata.time}
+            </span>
+          </div>
 
-          {metadata.link && (
-            <div className="flex justify-start mt-2">
-              <LinkArrow url={metadata.link} text="Read Publication" />
-            </div>
-          )}
-        </div>
-
-        {/* Content Section */}
-        <div className="flex-1 mb-4 md:mb-8">
-          <h3 className="text-xl sm:text-2xl font-extralight font-heading text-foreground mb-4 md:mb-6">
-            {metadata.title}
-          </h3>
-          <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none text-muted-foreground/90 leading-relaxed">
-            <Content />
+          {/* Title */}
+          <div className="flex flex-col gap-1">
+            <h3 className="text-xl md:text-2xl font-medium text-foreground group-hover/header:text-foreground/80 transition-colors">
+              {metadata.title}
+            </h3>
           </div>
         </div>
-      </div>
-    </div>
+
+        {/* Toggle icon with scale on expand */}
+        <motion.div
+          className="mt-1 text-brand-accent"
+          animate={{ rotate: isOpen ? 180 : 0, scale: isOpen ? 1.1 : 1 }}
+          transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
+        >
+          {isOpen ? <Minus aria-hidden="true" className="w-5 h-5" /> : <Plus aria-hidden="true" className="w-5 h-5" />}
+        </motion.div>
+      </motion.button>
+
+      {/* Expandable content */}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={prefersReducedMotion ? false : { height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={prefersReducedMotion ? undefined : { height: 0, opacity: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: [0.215, 0.61, 0.355, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pb-10 md:pb-12 grid grid-cols-1 md:grid-cols-[180px_1fr] gap-4 md:gap-8">
+              {/* Spacer */}
+              <div />
+
+              {/* Content */}
+              <div className="flex flex-col gap-6">
+                <motion.div
+                  className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground"
+                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: prefersReducedMotion ? 0 : 0.2 }}
+                >
+                  <Content />
+                </motion.div>
+
+                {/* Link */}
+                {metadata.link && (
+                  <motion.a
+                    href={metadata.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-brand-accent transition-colors w-fit group/link rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    initial={prefersReducedMotion ? false : { opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: prefersReducedMotion ? 0 : 0.3 }}
+                    whileHover={prefersReducedMotion ? undefined : { x: 4 }}
+                  >
+                    <span>Read publication</span>
+                    <ArrowUpRight aria-hidden="true" className="w-4 h-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 text-brand-accent" />
+                  </motion.a>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.article>
   );
 };
 
 export default function PublicationsComponent() {
-  return (
-    <section className="container-custom py-10 md:py-20 max-w-screen-2xl mx-auto">
-      <ScrollReveal>
-        <div className="flex flex-col gap-2 md:gap-4 mb-8 md:mb-16 px-4 md:px-0">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-thin tracking-tight text-foreground">
-            Writing & Research
-          </h2>
-        </div>
-      </ScrollReveal>
+  const [openItems, setOpenItems] = useState<Set<number>>(new Set());
+  const prefersReducedMotion = useReducedMotion();
 
-      {/* Grid Container with borders */}
-      <div className="grid grid-cols-1 border-t border-l border-border/60">
+  const toggleItem = (index: number) => {
+    setOpenItems((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
+
+  return (
+    <div className="container-custom">
+      {/* Section header - bold and impactful */}
+      <motion.div
+        className="mb-16 md:mb-20"
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: prefersReducedMotion ? 0 : 0.15, ease: [0.33, 1, 0.68, 1] }}
+      >
+        <motion.span
+          className="section-number text-sm font-mono text-brand-accent uppercase tracking-widest inline-flex items-center gap-2 mb-6"
+          initial={prefersReducedMotion ? false : { opacity: 0, x: -10 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: prefersReducedMotion ? 0 : 0.2, ease: [0.33, 1, 0.68, 1] }}
+        >
+          <span className="bauhaus-triangle bauhaus-triangle-animated" />
+          Publications
+        </motion.span>
+        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground tracking-tight">
+          Research & publications
+        </h2>
+      </motion.div>
+
+      {/* Publications list */}
+      <div className="border-t border-border">
         {publications.map((publication, index) => (
-          <ScrollReveal key={index} delay={index * 0.1}>
-            <PublicationItem
-              publication={publication}
-              className="border-b border-r"
-            />
-          </ScrollReveal>
+          <PublicationItem
+            key={publication.metadata.title}
+            publication={publication}
+            index={index}
+            isOpen={openItems.has(index)}
+            onToggle={() => toggleItem(index)}
+            prefersReducedMotion={!!prefersReducedMotion}
+          />
         ))}
       </div>
-    </section>
+    </div>
   );
 }

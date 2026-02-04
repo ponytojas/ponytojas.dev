@@ -1,27 +1,20 @@
-import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { AnimatedBackground } from "@/components/AnimatedBackground/AnimatedBackground";
 import { ScrollProgress } from "@/components/ScrollProgress/ScrollProgress";
-import { KonamiCode } from "@/components/KonamiCode/KonamiCode";
-import { BackToTop } from "@/components/BackToTop/BackToTop";
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Daniel Villalobos",
-  description: "Senior Software Engineer architecting resilient systems.",
+  description: "Software Engineer",
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FAFAFA" },
+    { media: "(prefers-color-scheme: dark)", color: "#0A0A0A" },
+  ],
 };
 
 export default function RootLayout({
@@ -32,19 +25,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} antialiased font-sans bg-background text-foreground`}
+        className={`${GeistSans.variable} ${GeistMono.variable} antialiased font-sans bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
-          disableTransitionOnChange
         >
-          <AnimatedBackground />
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-200 focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:ring-2 focus:ring-foreground focus:rounded"
+          >
+            Skip to content
+          </a>
           <ScrollProgress />
-          <KonamiCode />
-          <BackToTop />
-          <div className="min-h-screen flex flex-col">{children}</div>
+          <div id="main-content" className="min-h-screen flex flex-col">{children}</div>
         </ThemeProvider>
       </body>
     </html>
