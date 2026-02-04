@@ -3,7 +3,7 @@
 import { experiences } from "@/data/experiences";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Plus, Minus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
 const ExperienceItem = ({
@@ -19,9 +19,8 @@ const ExperienceItem = ({
   onToggle: () => void;
   prefersReducedMotion: boolean;
 }) => {
-  const { Content, metadata } = experience;
+  const { Component, metadata } = experience;
   const { theme } = useTheme();
-
 
   return (
     <motion.article
@@ -37,6 +36,9 @@ const ExperienceItem = ({
     >
       {/* Header - Clickable with hover accent line */}
       <motion.button
+        onMouseEnter={() => experience.preload?.()}
+        onFocus={() => experience.preload?.()}
+        onTouchStart={() => experience.preload?.()}
         onClick={onToggle}
         className="w-full py-10 md:py-12 flex items-start justify-between gap-6 text-left cursor-pointer group/header focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg transition-colors relative"
       >
@@ -80,7 +82,7 @@ const ExperienceItem = ({
         </motion.div>
       </motion.button>
 
-      {/* Expandable content */}
+      {/* Expandable Component */}
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
@@ -94,7 +96,7 @@ const ExperienceItem = ({
               {/* Spacer for alignment */}
               <div />
 
-              {/* Content */}
+              {/* Component */}
               <div className="flex flex-col gap-6">
                 {/* Tech stack with stagger animation */}
                 {metadata.tags && metadata.tags.length > 0 && (
@@ -128,7 +130,7 @@ const ExperienceItem = ({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: prefersReducedMotion ? 0 : 0.2 }}
                 >
-                  <Content />
+                  <Component />
                 </motion.div>
               </div>
             </div>
@@ -142,6 +144,11 @@ const ExperienceItem = ({
 export default function ExperienceComponent() {
   const [openItems, setOpenItems] = useState<Set<number>>(new Set());
   const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    experiences.forEach((e) => e.preload?.());
+  }, []);
+
 
   const toggleItem = (index: number) => {
     setOpenItems((prev) => {

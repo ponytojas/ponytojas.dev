@@ -19,11 +19,14 @@ export type ExperienceMetadata = {
 export type ExperienceEntry = {
   id: string;
   metadata: ExperienceMetadata;
-  Content: ComponentType;
+  Component: ComponentType;
+  preload?: () => Promise<{ default: ComponentType }>;
 };
 
-const loadMdx = (loader: () => Promise<{ default: ComponentType }>) =>
-  dynamic(loader, { ssr: false, loading: () => null });
+const mdx = (loader: () => Promise<{ default: ComponentType }>) => {
+  const C = dynamic(loader, { ssr: true, loading: () => null });
+  return { Component: C, preload: loader };
+};
 
 export const experiences: ExperienceEntry[] = [
   {
@@ -36,7 +39,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2024 - Present",
       link: "https://lumibit.io",
     },
-    Content: loadMdx(() => import("@/app/experiences/lumibit.mdx")),
+    ...mdx(() => import("@/app/experiences/lumibit.mdx")),
   },
   {
     id: "etra",
@@ -48,7 +51,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2023 - 2024",
       link: "https://www.grupoetra.com/",
     },
-    Content: loadMdx(() => import("@/app/experiences/etra.mdx")),
+    ...mdx(() => import("@/app/experiences/etra.mdx")),
   },
   {
     id: "bounsel",
@@ -60,7 +63,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2022 - 2023",
       link: "https://bounsel.com",
     },
-    Content: loadMdx(() => import("@/app/experiences/bounsel.mdx")),
+    ...mdx(() => import("@/app/experiences/bounsel.mdx")),
   },
   {
     id: "thermohuman",
@@ -72,7 +75,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2021 - 2022",
       link: "https://thermohuman.com",
     },
-    Content: loadMdx(() => import("@/app/experiences/thermohuman.mdx")),
+    ...mdx(() => import("@/app/experiences/thermohuman.mdx")),
   },
   {
     id: "anova",
@@ -84,7 +87,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2019 - 2021",
       link: "https://www.anovagroup.es/",
     },
-    Content: loadMdx(() => import("@/app/experiences/anova.mdx")),
+    ...mdx(() => import("@/app/experiences/anova.mdx")),
   },
   {
     id: "narrativa",
@@ -96,6 +99,6 @@ export const experiences: ExperienceEntry[] = [
       time: "2017 - 2019",
       link: "https://www.narrativa.com/",
     },
-    Content: loadMdx(() => import("@/app/experiences/narrativa.mdx")),
+    ...mdx(() => import("@/app/experiences/narrativa.mdx")),
   },
 ];
