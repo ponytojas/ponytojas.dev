@@ -1,4 +1,7 @@
+import { lazy } from "react";
 import type { ComponentType } from "react";
+
+type MDXProps = { className?: string };
 
 export type BlogPost = {
   slug: string;
@@ -7,7 +10,7 @@ export type BlogPost = {
   excerpt: string;
   readTime: string;
   tags?: string[];
-  load: () => Promise<{ default: ComponentType }>;
+  load: () => Promise<{ default: ComponentType<MDXProps> }>;
 };
 
 export const blogPosts: BlogPost[] = [
@@ -34,13 +37,16 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
+export const blogPostComponentsBySlug: Record<
+  string,
+  ComponentType<MDXProps>
+> = Object.fromEntries(blogPosts.map((p) => [p.slug, lazy(p.load)]));
+
 const byDateDesc = (a: BlogPost, b: BlogPost) =>
   new Date(b.date).getTime() - new Date(a.date).getTime();
 
 export const getAllBlogPosts = () => [...blogPosts].sort(byDateDesc);
-
 export const getLatestBlogPosts = (count = 3) =>
   getAllBlogPosts().slice(0, count);
-
 export const getBlogPostBySlug = (slug: string) =>
   blogPosts.find((post) => post.slug === slug);

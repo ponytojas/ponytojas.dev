@@ -1,20 +1,11 @@
 "use client";
 
-import { lazy, Suspense, useMemo } from "react";
-import { getBlogPostBySlug } from "@/data/blog";
+import { Suspense } from "react";
+import { blogPostComponentsBySlug } from "@/data/blog";
 
 export const BlogPostContent = ({ slug }: { slug: string }) => {
-  const Content = useMemo(() => {
-    const post = getBlogPostBySlug(slug);
-    if (!post) {
-      return null;
-    }
-    return lazy(post.load);
-  }, [slug]);
-
-  if (!Content) {
-    return null;
-  }
+  const Content = blogPostComponentsBySlug[slug];
+  if (!Content) return null;
 
   return (
     <Suspense fallback={null}>
