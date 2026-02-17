@@ -31,7 +31,7 @@ const isActive = (href: string) => {
       </span>
     </a>
 
-    <nav class="flex items-center gap-1 overflow-x-auto">
+    <nav class="hidden md:flex items-center gap-1">
       {
         navItems.map((item) => (
           <a
@@ -50,48 +50,144 @@ const isActive = (href: string) => {
       }
     </nav>
 
-    <button
-      id="theme-toggle"
-      type="button"
-      class="inline-flex items-center justify-center rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:border-brand-accent transition-colors"
-      aria-label="Toggle theme"
+    <div class="flex items-center gap-2">
+      <button
+        id="theme-toggle"
+        type="button"
+        class="inline-flex items-center justify-center rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:border-brand-accent transition-colors"
+        aria-label="Toggle theme"
+      >
+        <svg
+          data-theme-icon="sun"
+          class="h-4 w-4 hidden"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2.5"></path>
+          <path d="M12 19.5V22"></path>
+          <path d="M4.93 4.93 6.7 6.7"></path>
+          <path d="m17.3 17.3 1.77 1.77"></path>
+          <path d="M2 12h2.5"></path>
+          <path d="M19.5 12H22"></path>
+          <path d="m4.93 19.07 1.77-1.77"></path>
+          <path d="m17.3 6.7 1.77-1.77"></path>
+        </svg>
+        <svg
+          data-theme-icon="moon"
+          class="h-4 w-4 hidden"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+        </svg>
+        <span class="sr-only">Toggle theme</span>
+      </button>
+
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Open menu"
+        class="md:hidden inline-flex items-center justify-center rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:border-brand-accent transition-colors"
+      >
+        <svg
+          data-menu-icon="open"
+          class="h-4 w-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M4 7h16"></path>
+          <path d="M4 12h16"></path>
+          <path d="M4 17h16"></path>
+        </svg>
+        <svg
+          data-menu-icon="close"
+          class="h-4 w-4 hidden"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m6 6 12 12"></path>
+          <path d="m18 6-12 12"></path>
+        </svg>
+        <span class="sr-only">Open menu</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="md:hidden fixed inset-0 z-40 pointer-events-none" aria-hidden="true">
+    <div
+      data-mobile-overlay
+      class="absolute inset-0 bg-background opacity-0 transition-opacity duration-300 ease-out"
+    ></div>
+    <aside
+      id="mobile-menu-panel"
+      class="absolute right-0 top-0 h-dvh w-[min(86vw,22rem)] border-l border-border bg-background px-6 pt-24 pb-8 translate-x-full opacity-0 scale-[0.98] transition duration-300 ease-out"
+      aria-label="Mobile navigation"
     >
-      <svg
-        data-theme-icon="sun"
-        class="h-4 w-4 hidden"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
+      <button
+        id="mobile-menu-close"
+        type="button"
+        class="absolute top-4 right-4 inline-flex items-center justify-center rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:border-brand-accent transition-colors"
       >
-        <circle cx="12" cy="12" r="4"></circle>
-        <path d="M12 2v2.5"></path>
-        <path d="M12 19.5V22"></path>
-        <path d="M4.93 4.93 6.7 6.7"></path>
-        <path d="m17.3 17.3 1.77 1.77"></path>
-        <path d="M2 12h2.5"></path>
-        <path d="M19.5 12H22"></path>
-        <path d="m4.93 19.07 1.77-1.77"></path>
-        <path d="m17.3 6.7 1.77-1.77"></path>
-      </svg>
-      <svg
-        data-theme-icon="moon"
-        class="h-4 w-4 hidden"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
-      </svg>
-      <span class="sr-only">Toggle theme</span>
-    </button>
+        <svg
+          class="h-4 w-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m6 6 12 12"></path>
+          <path d="m18 6-12 12"></path>
+        </svg>
+        <span class="sr-only">Close menu</span>
+      </button>
+
+      <nav class="flex flex-col gap-2" aria-label="Mobile">
+        {
+          navItems.map((item, index) => (
+            <a
+              href={item.href}
+              data-mobile-link
+              aria-current={isActive(item.href) ? "page" : undefined}
+              style={`--menu-item-delay: ${70 + index * 45}ms;`}
+              class:list={[
+                "mobile-menu-item rounded-xl px-4 py-3 text-base font-medium transition-colors",
+                isActive(item.href)
+                  ? "bg-brand-accent/10 text-foreground"
+                  : "text-muted-foreground hover:text-foreground hover:bg-accent/40",
+              ]}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </aside>
   </div>
 </header>
 
@@ -99,6 +195,9 @@ const isActive = (href: string) => {
   (() => {
     const html = document.documentElement;
     const storageKey = "theme";
+    const focusableSelector =
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const isMenuOpen = () => html.classList.contains("mobile-menu-open");
 
     const syncThemeButton = () => {
       const button = document.getElementById("theme-toggle");
@@ -133,6 +232,113 @@ const isActive = (href: string) => {
       syncThemeButton();
     };
 
+    const setMobileMenuState = (open, options = { restoreFocus: false }) => {
+      const toggle = document.getElementById("mobile-menu-toggle");
+      const root = document.getElementById("mobile-menu");
+      const panel = document.getElementById("mobile-menu-panel");
+      const overlay = root?.querySelector("[data-mobile-overlay]");
+      const openIcon = toggle?.querySelector('[data-menu-icon="open"]');
+      const closeIcon = toggle?.querySelector('[data-menu-icon="close"]');
+
+      if (!toggle || !root || !panel || !overlay) return;
+
+      html.classList.toggle("mobile-menu-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      root.setAttribute("aria-hidden", String(!open));
+      root.classList.toggle("pointer-events-none", !open);
+
+      overlay.classList.toggle("opacity-0", !open);
+      overlay.classList.toggle("opacity-100", open);
+
+      panel.classList.toggle("translate-x-full", !open);
+      panel.classList.toggle("opacity-0", !open);
+      panel.classList.toggle("scale-[0.98]", !open);
+
+      panel.classList.toggle("translate-x-0", open);
+      panel.classList.toggle("opacity-100", open);
+      panel.classList.toggle("scale-100", open);
+
+      openIcon?.classList.toggle("hidden", open);
+      closeIcon?.classList.toggle("hidden", !open);
+
+      if (open) {
+        requestAnimationFrame(() => {
+          const firstFocusable = panel.querySelector(focusableSelector);
+          firstFocusable?.focus();
+        });
+      } else if (options.restoreFocus) {
+        toggle.focus();
+      }
+    };
+
+    const handleMenuKeydown = (event) => {
+      if (!isMenuOpen()) return;
+      const panel = document.getElementById("mobile-menu-panel");
+      if (!panel) return;
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMobileMenuState(false, { restoreFocus: true });
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusables = [...panel.querySelectorAll(focusableSelector)].filter(
+        (element) =>
+          !element.hasAttribute("disabled") &&
+          element.getAttribute("tabindex") !== "-1" &&
+          element.offsetParent !== null,
+      );
+
+      if (!focusables.length) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    const setupMobileMenu = () => {
+      const toggle = document.getElementById("mobile-menu-toggle");
+      const root = document.getElementById("mobile-menu");
+      const panel = document.getElementById("mobile-menu-panel");
+      const close = document.getElementById("mobile-menu-close");
+      const overlay = root?.querySelector("[data-mobile-overlay]");
+      const mobileLinks = root?.querySelectorAll("[data-mobile-link]");
+
+      if (!toggle || !root || !panel || !close || !overlay || !mobileLinks) return;
+      if (toggle.dataset.bound === "true") return;
+
+      toggle.dataset.bound = "true";
+      close.dataset.bound = "true";
+
+      toggle.addEventListener("click", () => {
+        setMobileMenuState(!isMenuOpen(), { restoreFocus: false });
+      });
+      close.addEventListener("click", () => setMobileMenuState(false, { restoreFocus: true }));
+      overlay.addEventListener("click", () => setMobileMenuState(false, { restoreFocus: true }));
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => setMobileMenuState(false, { restoreFocus: false }));
+      });
+    };
+
+    const closeMobileMenuOnDesktop = () => {
+      if (window.innerWidth >= 768 && isMenuOpen()) {
+        setMobileMenuState(false, { restoreFocus: false });
+      }
+    };
+
     const applySavedTheme = () => {
       const saved = localStorage.getItem(storageKey);
       if (!saved) return;
@@ -143,10 +349,14 @@ const isActive = (href: string) => {
     if (!window.__themeToggleLifecycleBound) {
       document.addEventListener("astro:after-swap", applySavedTheme);
       document.addEventListener("astro:page-load", setupThemeToggle);
+      document.addEventListener("astro:page-load", setupMobileMenu);
+      document.addEventListener("keydown", handleMenuKeydown);
+      window.addEventListener("resize", closeMobileMenuOnDesktop);
       window.__themeToggleLifecycleBound = true;
     }
 
     applySavedTheme();
     setupThemeToggle();
+    setupMobileMenu();
   })();
 </script>

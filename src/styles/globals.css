@@ -370,6 +370,38 @@
   transform-origin: left;
 }
 
+html.mobile-menu-open,
+html.mobile-menu-open body {
+  overflow: hidden;
+}
+
+.mobile-menu-item {
+  opacity: 0;
+  transform: translateX(14px);
+  transition:
+    opacity 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out);
+  transition-delay: var(--menu-item-delay, 0ms);
+}
+
+html.mobile-menu-open .mobile-menu-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  #mobile-menu [data-mobile-overlay],
+  #mobile-menu-panel {
+    transition: none !important;
+  }
+}
+
 /* Company name theming */
 .experience-company {
   color: var(--company-color);
