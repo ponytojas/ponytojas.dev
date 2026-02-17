@@ -1,0 +1,41 @@
+---
+import "@/styles/globals.css";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Daniel Villalobos",
+  description = "Software Engineer",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <ClientRouter />
+    <script is:inline>
+      (() => {
+        const html = document.documentElement;
+        html.classList.add("js");
+
+        const storageKey = "theme";
+        const saved = localStorage.getItem(storageKey);
+        const isDark =
+          saved === "dark" ||
+          (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        html.classList.toggle("dark", isDark);
+      })();
+    </script>
+  </head>
+  <body class="antialiased font-sans bg-background text-foreground">
+    <slot />
+  </body>
+</html>

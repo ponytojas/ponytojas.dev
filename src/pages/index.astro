@@ -1,0 +1,88 @@
+---
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import BlogList from "@/components/site/BlogList.astro";
+import { getLatestBlogPosts } from "@/data/blog";
+
+const posts = getLatestBlogPosts(3).map(({ slug, title, date, excerpt, readTime, tags }) => ({
+  slug,
+  title,
+  date,
+  excerpt,
+  readTime,
+  tags,
+}));
+---
+
+<SiteLayout>
+  <section class="relative min-h-[80vh] flex flex-col justify-center px-6 sm:px-8 lg:px-12 overflow-hidden">
+    <div class="absolute inset-0 opacity-40" style="background-image: linear-gradient(to right, var(--border) 1px, transparent 1px),linear-gradient(to bottom, var(--border) 1px, transparent 1px); background-size: 60px 60px;"></div>
+
+    <div class="max-w-7xl relative z-10">
+      <h1
+        class="text-7xl sm:text-8xl md:text-[8rem] lg:text-[10rem] xl:text-[12rem] font-heading font-medium tracking-tight mb-8 leading-[0.8] text-reveal"
+        data-text-reveal
+      >
+        Daniel<br />Villalobos
+      </h1>
+
+      <p
+        class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-muted-foreground mb-10 text-reveal"
+        style="--reveal-delay: 90ms;"
+        data-text-reveal
+      >
+        Software Engineer
+      </p>
+
+      <p
+        class="text-xl sm:text-2xl text-brand-accent max-w-3xl leading-relaxed text-reveal"
+        style="--reveal-delay: 160ms;"
+        data-text-reveal
+      >
+        Building resilient distributed systems and crafting elegant solutions.
+      </p>
+
+      <div class="mt-10">
+        <a
+          href="#blog"
+          class="inline-flex items-center gap-3 text-sm font-mono uppercase tracking-widest font-semibold text-muted-foreground hover:text-brand-accent transition-colors text-reveal"
+          style="--reveal-delay: 230ms;"
+          data-text-reveal
+        >
+          Explore ↓
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog" class="py-24 md:py-32">
+    <div class="container-custom">
+      <div class="mb-16 md:mb-20">
+        <span class="section-number text-sm font-mono text-brand-accent uppercase inline-block mb-6 text-reveal" data-text-reveal>
+          Blog
+        </span>
+        <h2
+          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground text-balance text-reveal"
+          style="--reveal-delay: 70ms;"
+          data-text-reveal
+        >
+          Latest writing
+        </h2>
+        <p
+          class="mt-6 text-muted-foreground text-pretty max-w-2xl text-reveal"
+          style="--reveal-delay: 130ms;"
+          data-text-reveal
+        >
+          Notes on engineering, product thinking, and the small details that make software feel calm and dependable.
+        </p>
+      </div>
+
+      <BlogList posts={posts} />
+
+      <div class="mt-10">
+        <a href="/blog" class="inline-flex items-center text-sm font-medium text-foreground link-subtle">
+          View all posts
+        </a>
+      </div>
+    </div>
+  </section>
+</SiteLayout>

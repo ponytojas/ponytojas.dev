@@ -1,7 +1,7 @@
-import { lazy } from "react";
-import type { ComponentType } from "react";
+import PostDontKnow from "@/mdx/blog/dont-know-how-many-screws.mdx";
+import PostEverythingPossible from "@/mdx/blog/everything-possible-doesnt-mean-everything-right.mdx";
 
-type MDXProps = { className?: string };
+type MdxComponent = (...args: any[]) => any;
 
 export type BlogPost = {
   slug: string;
@@ -10,8 +10,10 @@ export type BlogPost = {
   excerpt: string;
   readTime: string;
   tags?: string[];
-  load: () => Promise<{ default: ComponentType<MDXProps> }>;
+  Component: MdxComponent;
 };
+
+const asComponent = (component: unknown) => component as MdxComponent;
 
 export const blogPosts: BlogPost[] = [
   {
@@ -21,7 +23,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "When having data doesn't mean understanding anything",
     readTime: "4 min read",
     tags: ["Product", "Data", "BI"],
-    load: () => import("@/content/blog/dont-know-how-many-screws.mdx"),
+    Component: asComponent(PostDontKnow),
   },
   {
     slug: "everything-possible-doesnt-mean-everything-right",
@@ -32,15 +34,9 @@ export const blogPosts: BlogPost[] = [
       "Stop asking “what should we add next?” and start asking “what for?”, because every new feature brings new support… and sometimes it doesn't even bring real usage.",
     readTime: "5 min read",
     tags: ["Product", "Engineering", "Build"],
-    load: () =>
-      import("@/content/blog/everything-possible-doesnt-mean-everything-right.mdx"),
+    Component: asComponent(PostEverythingPossible),
   },
 ];
-
-export const blogPostComponentsBySlug: Record<
-  string,
-  ComponentType<MDXProps>
-> = Object.fromEntries(blogPosts.map((p) => [p.slug, lazy(p.load)]));
 
 const byDateDesc = (a: BlogPost, b: BlogPost) =>
   new Date(b.date).getTime() - new Date(a.date).getTime();

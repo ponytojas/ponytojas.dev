@@ -1,78 +1,91 @@
 "use client";
 
-import Image, { type ImageProps } from "next/image";
+import type React from "react";
 import { Cambio } from "cambio";
 import { cn } from "@/lib/utils";
 import styles from "./styles.module.css";
 
-export interface ImageWithModalProps extends ImageProps {
-    fullSrc?: ImageProps["src"];
-    modalClassName?: string;
-    triggerClassName?: string;
+export interface ImageWithModalProps
+  extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src"> {
+  src: string;
+  fullSrc?: string;
+  modalClassName?: string;
+  triggerClassName?: string;
+  fill?: boolean;
+  priority?: boolean;
 }
 
 export const ImageWithModal: React.FC<ImageWithModalProps> = ({
-    fullSrc,
-    modalClassName,
-    triggerClassName,
-    src,
-    alt,
-    className,
-    style,
-    fill,
-    width,
-    height,
-    sizes,
-    priority,
-    loading,
-    ...imageProps
+  fullSrc,
+  modalClassName,
+  triggerClassName,
+  src,
+  alt,
+  className,
+  style,
+  fill,
+  width,
+  height,
+  sizes,
+  loading,
+  priority,
+  ...imageProps
 }) => {
-    const triggerSrc = src;
-    const modalSrc = fullSrc ?? src;
-    const shouldFill = fill ?? (!width || !height);
-    const sharedStyle: NonNullable<ImageProps["style"]> = {
-        pointerEvents: "none",
-        objectFit: "contain",
-        ...style,
-    };
+  const triggerSrc = src;
+  const modalSrc = fullSrc ?? src;
+  const shouldFill = fill ?? (!width || !height);
 
-    const baseImageProps = shouldFill
-        ? { fill: true as const }
-        : { width, height };
+  const sharedStyle: React.CSSProperties = {
+    pointerEvents: "none",
+    objectFit: "contain",
+    ...style,
+  };
 
-    return (
-        <Cambio.Root motion="smooth">
-            <Cambio.Trigger className={cn(styles.trigger, triggerClassName)}>
-                <Image
-                    {...imageProps}
-                    {...baseImageProps}
-                    src={triggerSrc}
-                    alt={alt}
-                    className={className}
-                    style={sharedStyle}
-                    sizes={shouldFill ? sizes ?? "100vw" : sizes}
-                    priority={priority}
-                    loading={loading}
-                />
-            </Cambio.Trigger>
-            <Cambio.Portal>
-                <Cambio.Backdrop className={styles.backdrop} />
-                <Cambio.Popup className={cn(styles.popup, modalClassName)}>
-                    <Image
-                        {...imageProps}
-                        {...baseImageProps}
-                        src={modalSrc}
-                        alt={alt}
-                        className={className}
-                        style={sharedStyle}
-                        sizes={shouldFill ? sizes ?? "(min-width: 768px) 60vw, 90vw" : sizes}
-                        priority={false}
-                        loading="lazy"
-                    />
+  const imageAttrs = shouldFill
+    ? {
+        style: {
+          ...sharedStyle,
+          position: "absolute" as const,
+          inset: 0,
+          width: "100%",
+          height: "100%",
+        },
+      }
+    : {
+        width,
+        height,
+        style: sharedStyle,
+      };
 
-                </Cambio.Popup>
-            </Cambio.Portal>
-        </Cambio.Root>
-
-    );
-}
+  return (
+    <Cambio.Root motion="smooth">
+      <Cambio.Trigger className={cn(styles.trigger, triggerClassName)}>
+        <img
+          {...imageProps}
+          {...imageAttrs}
+          src={triggerSrc}
+          alt={alt}
+          className={className}
+          sizes={sizes}
+          loading={priority ? "eager" : loading}
+          decoding="async"
+        />
+      </Cambio.Trigger>
+      <Cambio.Portal>
+        <Cambio.Backdrop className={styles.backdrop} />
+        <Cambio.Popup className={cn(styles.popup, modalClassName)}>
+          <img
+            {...imageProps}
+            {...imageAttrs}
+            src={modalSrc}
+            alt={alt}
+            className={className}
+            sizes={sizes ?? "(min-width: 768px) 60vw, 90vw"}
+            loading="lazy"
+            decoding="async"
+          />
+        </Cambio.Popup>
+      </Cambio.Portal>
+    </Cambio.Root>
+  );
+};
