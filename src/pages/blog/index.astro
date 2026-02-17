@@ -1,0 +1,42 @@
+---
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import BlogList from "@/components/site/BlogList.astro";
+import { getAllBlogPosts } from "@/data/blog";
+
+const posts = getAllBlogPosts().map(({ slug, title, date, excerpt, readTime, tags }) => ({
+  slug,
+  title,
+  date,
+  excerpt,
+  readTime,
+  tags,
+}));
+---
+
+<SiteLayout title="Blog | Daniel Villalobos" description="Blog posts by Daniel Villalobos">
+  <div class="py-24 md:py-32">
+    <div class="container-custom">
+      <div class="mb-16 md:mb-20">
+        <span class="section-number text-sm font-mono text-brand-accent uppercase inline-block mb-6 text-reveal" data-text-reveal>
+          Thoughts
+        </span>
+        <h1
+          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground text-balance text-reveal"
+          style="--reveal-delay: 90ms;"
+          data-text-reveal
+        >
+          All posts
+        </h1>
+        <p
+          class="mt-6 text-muted-foreground text-pretty max-w-2xl text-reveal"
+          style="--reveal-delay: 150ms;"
+          data-text-reveal
+        >
+          Essays, notes, and small observations on engineering, product, and building with care.
+        </p>
+      </div>
+
+      <BlogList posts={posts} />
+    </div>
+  </div>
+</SiteLayout>

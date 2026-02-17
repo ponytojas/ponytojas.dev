@@ -1,5 +1,6 @@
-import dynamic from "next/dynamic";
-import type { ComponentType } from "react";
+import V2xPublication from "@/app/publications/v2x.mdx";
+
+type MdxComponent = (...args: any[]) => any;
 
 export type PublicationMetadata = {
   title: string;
@@ -10,11 +11,10 @@ export type PublicationMetadata = {
 export type PublicationEntry = {
   id: string;
   metadata: PublicationMetadata;
-  Content: ComponentType;
+  Content: MdxComponent;
 };
 
-const loadMdx = (loader: () => Promise<{ default: ComponentType }>) =>
-  dynamic(loader, { ssr: false, loading: () => null });
+const asComponent = (component: unknown) => component as MdxComponent;
 
 export const publications: PublicationEntry[] = [
   {
@@ -25,6 +25,6 @@ export const publications: PublicationEntry[] = [
       time: "December 2024",
       link: "https://ieeexplore.ieee.org/abstract/document/10796909",
     },
-    Content: loadMdx(() => import("@/app/publications/v2x.mdx")),
+    Content: asComponent(V2xPublication),
   },
 ];

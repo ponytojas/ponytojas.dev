@@ -1,5 +1,11 @@
-import dynamic from "next/dynamic";
-import type { ComponentType } from "react";
+import LumibitExperience from "@/app/experiences/lumibit.mdx";
+import EtraExperience from "@/app/experiences/etra.mdx";
+import BounselExperience from "@/app/experiences/bounsel.mdx";
+import ThermohumanExperience from "@/app/experiences/thermohuman.mdx";
+import AnovaExperience from "@/app/experiences/anova.mdx";
+import NarrativaExperience from "@/app/experiences/narrativa.mdx";
+
+type MdxComponent = (...args: any[]) => any;
 
 export type ExperienceTag = {
   technology: string;
@@ -19,14 +25,10 @@ export type ExperienceMetadata = {
 export type ExperienceEntry = {
   id: string;
   metadata: ExperienceMetadata;
-  Component: ComponentType;
-  preload?: () => Promise<{ default: ComponentType }>;
+  Component: MdxComponent;
 };
 
-const mdx = (loader: () => Promise<{ default: ComponentType }>) => {
-  const C = dynamic(loader, { ssr: true, loading: () => null });
-  return { Component: C, preload: loader };
-};
+const asComponent = (component: unknown) => component as MdxComponent;
 
 export const experiences: ExperienceEntry[] = [
   {
@@ -39,7 +41,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2024 - Present",
       link: "https://lumibit.io",
     },
-    ...mdx(() => import("@/app/experiences/lumibit.mdx")),
+    Component: asComponent(LumibitExperience),
   },
   {
     id: "etra",
@@ -51,7 +53,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2023 - 2024",
       link: "https://www.grupoetra.com/",
     },
-    ...mdx(() => import("@/app/experiences/etra.mdx")),
+    Component: asComponent(EtraExperience),
   },
   {
     id: "bounsel",
@@ -63,7 +65,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2022 - 2023",
       link: "https://bounsel.com",
     },
-    ...mdx(() => import("@/app/experiences/bounsel.mdx")),
+    Component: asComponent(BounselExperience),
   },
   {
     id: "thermohuman",
@@ -75,7 +77,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2021 - 2022",
       link: "https://thermohuman.com",
     },
-    ...mdx(() => import("@/app/experiences/thermohuman.mdx")),
+    Component: asComponent(ThermohumanExperience),
   },
   {
     id: "anova",
@@ -87,7 +89,7 @@ export const experiences: ExperienceEntry[] = [
       time: "2019 - 2021",
       link: "https://www.anovagroup.es/",
     },
-    ...mdx(() => import("@/app/experiences/anova.mdx")),
+    Component: asComponent(AnovaExperience),
   },
   {
     id: "narrativa",
@@ -99,6 +101,6 @@ export const experiences: ExperienceEntry[] = [
       time: "2017 - 2019",
       link: "https://www.narrativa.com/",
     },
-    ...mdx(() => import("@/app/experiences/narrativa.mdx")),
+    Component: asComponent(NarrativaExperience),
   },
 ];

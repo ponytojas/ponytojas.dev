@@ -1,0 +1,32 @@
+---
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import AboutContent from "@/app/about/about.mdx";
+---
+
+<SiteLayout title="About | Daniel Villalobos" description="About Daniel Villalobos">
+  <div class="py-24 md:py-32">
+    <div class="container-custom">
+      <div class="mb-16 md:mb-20">
+        <span
+          class="section-number text-sm font-mono text-brand-accent uppercase tracking-widest inline-block mb-6 text-reveal"
+          data-text-reveal
+        >
+          About
+        </span>
+        <h1
+          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground tracking-tight text-reveal"
+          style="--reveal-delay: 90ms;"
+          data-text-reveal
+        >
+          A bit about me
+        </h1>
+      </div>
+
+      <div class="border-t border-border pt-12 md:pt-16">
+        <div class="prose prose-lg dark:prose-invert max-w-3xl text-muted-foreground leading-relaxed">
+          <AboutContent client:load />
+        </div>
+      </div>
+    </div>
+  </div>
+</SiteLayout>

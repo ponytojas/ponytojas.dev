@@ -1,5 +1,9 @@
-import dynamic from "next/dynamic";
-import type { ComponentType } from "react";
+import LabtoolsProject from "@/app/projects/labtools.mdx";
+import DiunProject from "@/app/projects/diun.mdx";
+import FlappyBallProject from "@/app/projects/flappy-ball.mdx";
+import MyTasksProject from "@/app/projects/my-tasks.mdx";
+
+type MdxComponent = (...args: any[]) => any;
 
 export type ProjectMetadata = {
   title: string;
@@ -12,11 +16,10 @@ export type ProjectMetadata = {
 export type ProjectEntry = {
   id: string;
   metadata: ProjectMetadata;
-  Content: ComponentType;
+  Content: MdxComponent;
 };
 
-const loadMdx = (loader: () => Promise<{ default: ComponentType }>) =>
-  dynamic(loader, { ssr: false, loading: () => null });
+const asComponent = (component: unknown) => component as MdxComponent;
 
 export const projects: ProjectEntry[] = [
   {
@@ -26,7 +29,7 @@ export const projects: ProjectEntry[] = [
       subtitle: "Inventory & IoT Monitoring for a Neuroscience Lab",
       type: "Personal Project",
     },
-    Content: loadMdx(() => import("@/app/projects/labtools.mdx")),
+    Content: asComponent(LabtoolsProject),
   },
   {
     id: "diun",
@@ -35,7 +38,7 @@ export const projects: ProjectEntry[] = [
       subtitle: "Stay Updated with the Latest Docker Images",
       type: "Personal Project",
     },
-    Content: loadMdx(() => import("@/app/projects/diun.mdx")),
+    Content: asComponent(DiunProject),
   },
   {
     id: "flappy-ball",
@@ -44,7 +47,7 @@ export const projects: ProjectEntry[] = [
       subtitle: "A Reinforcement Learning Demo",
       type: "Personal Project",
     },
-    Content: loadMdx(() => import("@/app/projects/flappy-ball.mdx")),
+    Content: asComponent(FlappyBallProject),
   },
   {
     id: "my-tasks",
@@ -53,6 +56,6 @@ export const projects: ProjectEntry[] = [
       subtitle: "A Personal Task Logging and Summarization Tool",
       type: "Personal Project",
     },
-    Content: loadMdx(() => import("@/app/projects/my-tasks.mdx")),
+    Content: asComponent(MyTasksProject),
   },
 ];

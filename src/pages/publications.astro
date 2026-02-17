@@ -1,0 +1,77 @@
+---
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { publications } from "@/data/publications";
+---
+
+<SiteLayout title="Publications | Daniel Villalobos" description="Publications by Daniel Villalobos">
+  <div class="py-24 md:py-32">
+    <div class="container-custom">
+      <div class="mb-16 md:mb-20">
+        <span
+          class="section-number text-sm font-mono text-brand-accent uppercase tracking-widest inline-flex items-center gap-2 mb-6 text-reveal"
+          data-text-reveal
+        >
+          <span class="bauhaus-triangle bauhaus-triangle-animated"></span>
+          Publications
+        </span>
+        <h1
+          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground tracking-tight text-reveal"
+          style="--reveal-delay: 90ms;"
+          data-text-reveal
+        >
+          Research & publications
+        </h1>
+      </div>
+
+      <div class="border-t border-border">
+        {
+          publications.map((publication) => {
+            const Content = publication.Content;
+            const { metadata } = publication;
+
+            return (
+              <details class="group collapsible border-b border-border py-6 md:py-8">
+                <summary class="list-none cursor-pointer">
+                  <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-4 md:gap-8 items-start">
+                    <div>
+                      <span class="text-sm font-mono text-muted-foreground">{metadata.time}</span>
+                    </div>
+                    <div class="flex items-start justify-between gap-4">
+                      <h3 class="text-xl md:text-2xl font-medium text-foreground">{metadata.title}</h3>
+                      <span class="collapse-icon text-brand-accent text-lg shrink-0" aria-hidden="true">+</span>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="collapse-panel">
+                  <div class="collapse-panel-inner pt-6 md:pt-8 grid grid-cols-1 md:grid-cols-[180px_1fr] gap-4 md:gap-8">
+                    <div></div>
+                    <div class="flex flex-col gap-6">
+                      <div class="prose prose-sm dark:prose-invert max-w-none text-muted-foreground">
+                        <Content />
+                      </div>
+
+                      {
+                        metadata.link ? (
+                          <a
+                            href={metadata.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-brand-accent transition-colors w-fit"
+                          >
+                            <span>Read publication</span>
+                            <span aria-hidden="true">↗</span>
+                          </a>
+                        ) : null
+                      }
+                    </div>
+                  </div>
+                </div>
+              </details>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+</SiteLayout>

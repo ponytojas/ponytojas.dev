@@ -1,0 +1,152 @@
+---
+const navItems = [
+  { label: "Thoughts", href: "/blog" },
+  { label: "Work", href: "/experience" },
+  { label: "Publications", href: "/publications" },
+  { label: "Projects", href: "/projects" },
+  { label: "About", href: "/about" },
+];
+
+const normalizePath = (path: string) =>
+  path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path;
+
+const pathname = normalizePath(Astro.url.pathname || "/");
+const isActive = (href: string) => {
+  const normalizedHref = normalizePath(href);
+  return normalizedHref === "/"
+    ? pathname === "/"
+    : pathname === normalizedHref || pathname.startsWith(`${normalizedHref}/`);
+};
+---
+
+<header class="fixed top-0 left-0 w-full z-50 border-b border-border/50 bg-background/85 backdrop-blur-xl">
+  <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-3 flex items-center justify-between gap-4">
+    <a
+      href="/"
+      class="group relative text-sm font-medium text-foreground hover:text-brand-accent transition-colors rounded-md px-2 py-1 -ml-2"
+    >
+      <span class="relative flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+        DV
+      </span>
+    </a>
+
+    <nav class="flex items-center gap-1 overflow-x-auto">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+            class:list={[
+              "top-nav-link px-3 py-2 text-sm font-mono rounded-md transition-colors whitespace-nowrap",
+              isActive(item.href)
+                ? "top-nav-link-active text-foreground"
+                : "text-muted-foreground hover:text-foreground",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <button
+      id="theme-toggle"
+      type="button"
+      class="inline-flex items-center justify-center rounded-full border border-border p-2 text-muted-foreground hover:text-foreground hover:border-brand-accent transition-colors"
+      aria-label="Toggle theme"
+    >
+      <svg
+        data-theme-icon="sun"
+        class="h-4 w-4 hidden"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2.5"></path>
+        <path d="M12 19.5V22"></path>
+        <path d="M4.93 4.93 6.7 6.7"></path>
+        <path d="m17.3 17.3 1.77 1.77"></path>
+        <path d="M2 12h2.5"></path>
+        <path d="M19.5 12H22"></path>
+        <path d="m4.93 19.07 1.77-1.77"></path>
+        <path d="m17.3 6.7 1.77-1.77"></path>
+      </svg>
+      <svg
+        data-theme-icon="moon"
+        class="h-4 w-4 hidden"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+      </svg>
+      <span class="sr-only">Toggle theme</span>
+    </button>
+  </div>
+</header>
+
+<script is:inline>
+  (() => {
+    const html = document.documentElement;
+    const storageKey = "theme";
+
+    const syncThemeButton = () => {
+      const button = document.getElementById("theme-toggle");
+      if (!button) return;
+
+      const dark = html.classList.contains("dark");
+      const sun = button.querySelector('[data-theme-icon="sun"]');
+      const moon = button.querySelector('[data-theme-icon="moon"]');
+
+      sun?.classList.toggle("hidden", !dark);
+      moon?.classList.toggle("hidden", dark);
+      button.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    };
+
+    const applyTheme = (isDark) => {
+      html.classList.toggle("dark", isDark);
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      syncThemeButton();
+    };
+
+    const toggleTheme = () => {
+      const isDark = !html.classList.contains("dark");
+      applyTheme(isDark);
+    };
+
+    const setupThemeToggle = () => {
+      const button = document.getElementById("theme-toggle");
+      if (!button || button.dataset.bound === "true") return;
+
+      button.dataset.bound = "true";
+      button.addEventListener("click", toggleTheme);
+      syncThemeButton();
+    };
+
+    const applySavedTheme = () => {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) return;
+      html.classList.toggle("dark", saved === "dark");
+      syncThemeButton();
+    };
+
+    if (!window.__themeToggleLifecycleBound) {
+      document.addEventListener("astro:after-swap", applySavedTheme);
+      document.addEventListener("astro:page-load", setupThemeToggle);
+      window.__themeToggleLifecycleBound = true;
+    }
+
+    applySavedTheme();
+    setupThemeToggle();
+  })();
+</script>
