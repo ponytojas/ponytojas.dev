@@ -1,0 +1,51 @@
+---
+const navItems = [
+  { label: "Work", href: "/work" },
+  { label: "Notes", href: "/notes" },
+  { label: "Experiments", href: "/experiments" },
+  { label: "About", href: "/about" },
+];
+---
+
+<header class="page-container py-6">
+  <nav class="flex items-center justify-between" aria-label="Primary navigation">
+    <a href="/" class="flex items-center gap-4" aria-label="Dani Villalobos home">
+      <img src="/illustrations/eye.svg" alt="" aria-hidden="true" class="size-8 shrink-0" />
+      <span class="font-mono text-[14px] font-medium uppercase tracking-[0.05em] text-ink">
+        Dani Villalobos
+      </span>
+    </a>
+
+    <div class="hidden items-center gap-8 md:flex">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="font-mono text-[14px] font-medium text-ink underline-offset-4 hover:underline"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <svg
+        aria-hidden="true"
+        role="presentation"
+        class="size-5 text-cobalt"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 1.5c.7 6 1.5 8.3 10.5 10.5-9 2.2-9.8 4.5-10.5 10.5C11.3 16.5 10.5 14.2 1.5 12 10.5 9.8 11.3 7.5 12 1.5Z" />
+      </svg>
+    </div>
+
+    <button
+      class="inline-flex size-10 items-center justify-center text-ink md:hidden"
+      type="button"
+      aria-label="Open navigation menu"
+    >
+      <svg aria-hidden="true" role="presentation" class="size-6" viewBox="0 0 24 24" fill="none">
+        <path d="M3 6.5h18M3 12h18M3 17.5h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" />
+      </svg>
+    </button>
+  </nav>
+</header>

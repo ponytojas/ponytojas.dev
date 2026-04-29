@@ -1,0 +1,229 @@
+<main>
+    <section class="hero page-container relative pb-20 pt-4 md:pb-28 md:pt-10">
+        <div
+            class="relative z-10 grid grid-cols-[minmax(0,1fr)] items-center gap-10 md:grid-cols-[minmax(0,3fr)_minmax(280px,2fr)] md:gap-6"
+        >
+            <div class="min-w-0 max-w-190">
+                <h1 class="hero-title font-serif text-ink">
+                    <span class="hero-title-line"> DANIEL </span>
+                    <span class="hero-title-line">VILLALOBOS</span>
+                </h1>
+
+                <p
+                    class="hero-copy mt-8 max-w-130 font-mono text-[16px] leading-normal text-ink"
+                >
+                    Software engineer building internal tools, mobility systems
+                    and
+                    <span class="hero-underline">visual interfaces.</span>
+                </p>
+            </div>
+        </div>
+        <div class="hero-art absolute right-0 md:right-[-5em] top-50">
+            <img
+                src="/illustrations/cherub.svg"
+                alt=""
+                aria-hidden="true"
+                class="cherub-img w-full max-w-70 md:max-w-120"
+            />
+        </div>
+    </section>
+</main>
+
+<style>
+    .hero {
+        min-height: calc(100vh - 84px);
+    }
+
+    .hero-title {
+        font-size: clamp(52px, 10.4vw, 180px);
+        font-weight: 800;
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+    }
+
+    .hero-title-line {
+        position: relative;
+        display: block;
+        width: fit-content;
+    }
+
+    .title-sparkle {
+        position: absolute;
+        top: 0.52em;
+        right: -0.58em;
+        width: 0.22em;
+        height: 0.22em;
+    }
+
+    .hero-underline {
+        text-decoration: underline;
+        text-decoration-thickness: 1.5px;
+        text-underline-offset: 4px;
+        text-decoration-color: var(--cobalt);
+    }
+
+    .hero-copy,
+    .tag-list {
+        width: 100%;
+    }
+
+    .tag-chip {
+        display: inline-flex;
+        min-height: 34px;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        padding: 8px 14px;
+        background: transparent;
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    .hero-art {
+        transform: translateY(4px);
+        z-index: 0;
+    }
+
+    .hero-mark,
+    .ink-dot {
+        position: absolute;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .hero-mark-blue-large {
+        top: 70px;
+        right: 74px;
+        width: 80px;
+        height: 80px;
+        color: var(--cobalt);
+    }
+
+    .hero-ring {
+        top: 220px;
+        right: 56px;
+        width: 60px;
+        height: 60px;
+        color: var(--cobalt);
+    }
+
+    .hero-spark {
+        color: var(--ink);
+    }
+
+    .hero-spark-a {
+        top: 92px;
+        right: 340px;
+        width: 28px;
+        height: 28px;
+    }
+
+    .hero-spark-b {
+        top: 250px;
+        right: 448px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .hero-spark-c {
+        top: 142px;
+        right: 160px;
+        width: 14px;
+        height: 14px;
+    }
+
+    .ink-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--ink);
+    }
+
+    @media (max-width: 767px) {
+        .hero {
+            min-height: auto;
+            padding-bottom: 250px;
+        }
+
+        .title-sparkle {
+            right: -0.82em;
+            width: 0.3em;
+            height: 0.3em;
+        }
+
+        .hero-art {
+            top: 240px;
+            right: 90px;
+            transform: none;
+            width: 280px;
+        }
+
+        .cherub-img {
+            max-width: 280px;
+        }
+
+        .hero-copy,
+        .tag-list {
+            max-width: min(100%, 327px);
+        }
+
+        .hero-mark-blue-large {
+            top: 116px;
+            right: 24px;
+            width: 58px;
+            height: 58px;
+        }
+
+        .hero-ring {
+            top: 250px;
+            right: 30px;
+            width: 54px;
+            height: 54px;
+        }
+
+        .hero-spark-a {
+            top: 72px;
+            right: 145px;
+            width: 24px;
+            height: 24px;
+        }
+
+        .hero-spark-b {
+            top: 205px;
+            right: 220px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .hero-spark-c {
+            top: 88px;
+            right: 66px;
+            width: 13px;
+            height: 13px;
+        }
+
+        .dot-a {
+            top: 82px;
+            right: 110px;
+        }
+
+        .dot-b {
+            top: 192px;
+            right: 24px;
+        }
+
+        .dot-c {
+            top: 155px;
+            right: 162px;
+        }
+
+        .dot-d {
+            top: 288px;
+            right: 112px;
+        }
+    }
+</style>
