@@ -13,29 +13,27 @@ const posts = getAllBlogPosts().map(({ slug, title, date, excerpt, readTime, tag
 }));
 ---
 
-<SiteLayout title="Blog | Daniel Villalobos" description="Blog posts by Daniel Villalobos">
-  <div class="py-24 md:py-32">
-    <div class="container-custom">
-      <div class="mb-16 md:mb-20">
-        <span class="section-number text-sm font-mono text-brand-accent uppercase inline-block mb-6 text-reveal" data-text-reveal>
-          Thoughts
-        </span>
-        <h1
-          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground text-balance text-reveal"
-          style="--reveal-delay: 90ms;"
-          data-text-reveal
-        >
-          All posts
-        </h1>
-        <p
-          class="mt-6 text-muted-foreground text-pretty max-w-2xl text-reveal"
-          style="--reveal-delay: 150ms;"
-          data-text-reveal
-        >
-          Essays, notes, and small observations on engineering, product, and building with care.
-        </p>
-      </div>
+<SiteLayout title="Writing | Daniel Villalobos" description="Blog posts by Daniel Villalobos">
+  <div class="py-16 md:py-24">
+    <header class="container-custom mb-12 md:mb-20">
+      <p class="meta-label mb-6 text-reveal" data-text-reveal>Writing</p>
+      <h1
+        class="display-type text-[clamp(3rem,9vw,8rem)] text-reveal"
+        style="--reveal-delay: 80ms;"
+        data-text-reveal
+      >
+        Notes &amp; <span class="serif-accent text-accent">essays</span>
+      </h1>
+      <p
+        class="serif-accent mt-8 max-w-2xl text-xl md:text-2xl text-muted-foreground text-pretty text-reveal"
+        style="--reveal-delay: 150ms;"
+        data-text-reveal
+      >
+        On engineering, product thinking, and the small details that make software feel calm and dependable.
+      </p>
+    </header>
 
+    <div class="container-custom">
       <BlogList posts={posts} />
     </div>
   </div>

@@ -2,7 +2,7 @@
 import Document from "@/layouts/Document.astro";
 import Header from "@/components/site/Header.astro";
 import Footer from "@/components/site/Footer.astro";
-import { slide } from "astro:transitions";
+import { fade } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -10,20 +10,20 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const pageSlide = slide({ duration: "0.55s" });
+const pageFade = fade({ duration: "0.3s" });
 ---
 
 <Document title={title} description={description}>
   <a
     href="#main-content"
-    class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-200 focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:ring-2 focus:ring-foreground focus:rounded"
+    class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-foreground focus:text-background"
   >
     Skip to content
   </a>
 
-  <main class="relative flex flex-col min-h-screen w-full bg-background text-foreground">
+  <main class="relative flex flex-col min-h-dvh w-full bg-background text-foreground">
     <Header />
-    <div id="main-content" class="flex-1 w-full pt-20" transition:animate={pageSlide}>
+    <div id="main-content" class="flex-1 w-full pt-16" transition:animate={pageFade}>
       <slot />
     </div>
     <Footer />

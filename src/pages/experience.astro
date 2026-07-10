@@ -4,84 +4,65 @@ import { experiences } from "@/data/experiences";
 ---
 
 <SiteLayout title="Experience | Daniel Villalobos" description="Experience of Daniel Villalobos">
-  <div class="py-24 md:py-32">
-    <div class="container-custom">
-      <div class="mb-16 md:mb-20">
-        <span
-          class="section-number text-sm font-mono text-brand-accent uppercase tracking-widest inline-flex items-center gap-2 mb-6 text-reveal"
-          data-text-reveal
-        >
-          <span class="bauhaus-square bauhaus-square-animated"></span>
-          Experience
-        </span>
-        <h1
-          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground tracking-tight text-reveal"
-          style="--reveal-delay: 90ms;"
-          data-text-reveal
-        >
-          Where I&apos;ve worked
-        </h1>
-      </div>
+  <div class="py-16 md:py-24">
+    <header class="container-custom mb-12 md:mb-20">
+      <p class="meta-label mb-6 text-reveal" data-text-reveal>Experience</p>
+      <h1
+        class="display-type text-[clamp(3rem,9vw,8rem)] text-reveal"
+        style="--reveal-delay: 80ms;"
+        data-text-reveal
+      >
+        Where I&apos;ve <span class="serif-accent text-accent">worked</span>
+      </h1>
+    </header>
 
-      <div class="border-t border-border">
+    <div class="container-custom">
+      <div class="index-list border-t border-border">
         {
           experiences.map((experience) => {
             const Component = experience.Component;
             const { metadata } = experience;
 
             return (
-              <details class="group collapsible border-b border-border py-6 md:py-8">
-                <summary class="list-none cursor-pointer">
-                  <div class="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-4 md:gap-8 items-start">
-                    <div class="flex flex-col gap-1">
-                      <span class="text-sm font-mono text-muted-foreground">{metadata.time}</span>
-                      {
-                        metadata.link ? (
-                          <a
-                            href={metadata.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="inline-flex items-center gap-1 text-xs text-muted-foreground/60 hover:text-foreground transition-colors"
-                          >
-                            <span>Visit</span>
-                            <span aria-hidden="true">↗</span>
-                          </a>
-                        ) : null
-                      }
+              <details class="collapsible index-row border-b border-border">
+                <summary class="cursor-pointer list-none py-7 md:py-9">
+                  <div class="grid grid-cols-1 md:grid-cols-[10rem_1fr_auto] gap-2 md:gap-10 items-baseline">
+                    <span class="meta-label tabular-nums">{metadata.time}</span>
+
+                    <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 min-w-0">
+                      <h2 class="display-type text-2xl md:text-4xl">{metadata.title}</h2>
+                      <p class="serif-accent text-lg md:text-xl text-muted-foreground">{metadata.position}</p>
                     </div>
 
-                    <div class="flex items-start justify-between gap-4">
-                      <div class="flex flex-col gap-1">
-                        <h3 class="text-xl md:text-2xl font-medium text-foreground">{metadata.position}</h3>
-                        <p
-                          class="experience-company"
-                          style={`--company-color: ${metadata.color}; --company-color-dark: ${metadata.darkColor ?? metadata.color};`}
-                        >
-                          {metadata.title}
-                        </p>
-                      </div>
-                      <span class="collapse-icon text-brand-accent text-lg shrink-0" aria-hidden="true">+</span>
-                    </div>
+                    <span class="collapse-icon justify-self-end text-2xl text-accent" aria-hidden="true">
+                      +
+                    </span>
                   </div>
                 </summary>
 
                 <div class="collapse-panel">
-                  <div class="collapse-panel-inner pt-6 md:pt-8 grid grid-cols-1 md:grid-cols-[180px_1fr] gap-4 md:gap-8">
-                    <div></div>
-                    <div class="flex flex-col gap-6">
-                      {
-                        metadata.tags && metadata.tags.length > 0 ? (
-                          <div class="flex flex-wrap gap-2 mt-2">
-                            {metadata.tags.map((tag) => (
-                              <span class="tech-badge text-xs font-mono px-3 py-1.5 rounded-full border border-border text-muted-foreground">
-                                {tag.technology}
-                              </span>
-                            ))}
-                          </div>
-                        ) : null
-                      }
+                  <div class="collapse-panel-inner grid grid-cols-1 md:grid-cols-[10rem_1fr] gap-2 md:gap-10 pb-10">
+                    <div>
+                      {metadata.link ? (
+                        <a
+                          href={metadata.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="link-line meta-label hover:text-foreground transition-colors"
+                        >
+                          Visit site &nearr;
+                        </a>
+                      ) : null}
+                    </div>
 
-                      <div class="prose prose-sm dark:prose-invert max-w-none text-muted-foreground">
+                    <div class="flex flex-col gap-6 max-w-3xl">
+                      {metadata.tags && metadata.tags.length > 0 ? (
+                        <p class="meta-label">
+                          {metadata.tags.map((tag) => tag.technology).join(" · ")}
+                        </p>
+                      ) : null}
+
+                      <div class="prose max-w-none">
                         <Component />
                       </div>
                     </div>

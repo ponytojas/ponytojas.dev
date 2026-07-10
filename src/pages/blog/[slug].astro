@@ -19,43 +19,45 @@ const Content = post.Component;
 ---
 
 <SiteLayout title={`${post.title} | Daniel Villalobos`} description={post.excerpt}>
-  <div class="py-24 md:py-32">
+  <div class="py-16 md:py-24">
     <div class="container-custom">
-      <div class="mb-10">
-        <a href="/blog" class="text-sm font-medium text-muted-foreground link-subtle">Back to blog</a>
-      </div>
+      <nav class="mb-12">
+        <a href="/blog" class="link-line meta-label hover:text-foreground transition-colors">
+          &larr; All writing
+        </a>
+      </nav>
 
-      <header class="mb-12 md:mb-16">
-        <div class="flex flex-wrap items-center gap-4 text-reveal" data-text-reveal>
-          <time class="text-xs font-mono text-muted-foreground tabular-nums" datetime={post.date}>
+      <header class="mb-14 md:mb-20 border-b border-border pb-12 md:pb-16">
+        <div class="flex flex-wrap items-center gap-x-8 gap-y-2 text-reveal" data-text-reveal>
+          <time class="meta-label tabular-nums" datetime={post.date}>
             {formatDate(post.date)}
           </time>
-          <span class="text-xs font-mono text-muted-foreground/70 tabular-nums">{post.readTime}</span>
+          <span class="meta-label tabular-nums">{post.readTime}</span>
+          {
+            post.tags && post.tags.length > 0 ? (
+              <span class="meta-label">{post.tags.join(" · ")}</span>
+            ) : null
+          }
         </div>
+
         <h1
-          class="mt-4 text-4xl sm:text-5xl md:text-6xl font-heading font-bold text-foreground text-balance text-reveal"
+          class="display-type mt-8 text-[clamp(2.5rem,7vw,6rem)] text-balance text-reveal"
           style="--reveal-delay: 80ms;"
           data-text-reveal
         >
           {post.title}
         </h1>
-        <p class="mt-4 text-muted-foreground text-pretty max-w-2xl text-reveal" style="--reveal-delay: 140ms;" data-text-reveal>
+
+        <p
+          class="serif-accent mt-8 max-w-2xl text-xl md:text-2xl text-muted-foreground text-pretty text-reveal"
+          style="--reveal-delay: 150ms;"
+          data-text-reveal
+        >
           {post.excerpt}
         </p>
-        {
-          post.tags && post.tags.length > 0 ? (
-            <div class="mt-6 flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span class="text-xs font-mono text-muted-foreground/70 border border-border rounded-full px-3 py-1">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          ) : null
-        }
       </header>
 
-      <article class="prose prose-lg dark:prose-invert max-w-none text-pretty prose-headings:text-balance">
+      <article class="prose prose-lg max-w-3xl text-pretty">
         <Content />
       </article>
     </div>
