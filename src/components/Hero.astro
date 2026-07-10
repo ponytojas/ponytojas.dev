@@ -1,229 +1,378 @@
-<main>
-    <section class="hero page-container relative pb-20 pt-4 md:pb-28 md:pt-10">
-        <div
-            class="relative z-10 grid grid-cols-[minmax(0,1fr)] items-center gap-10 md:grid-cols-[minmax(0,3fr)_minmax(280px,2fr)] md:gap-6"
-        >
-            <div class="min-w-0 max-w-190">
-                <h1 class="hero-title font-serif text-ink">
-                    <span class="hero-title-line"> DANIEL </span>
-                    <span class="hero-title-line">VILLALOBOS</span>
-                </h1>
+<section class="hero" id="top">
+  <div class="shell hero-shell">
+    <div class="hero-intro">
+      <p>Senior software engineer</p>
+      <p>Spain · <span data-local-time>--:--</span> CET</p>
+      <p class="hero-intro-right">Product-minded<br />systems builder</p>
+    </div>
 
-                <p
-                    class="hero-copy mt-8 max-w-130 font-mono text-[16px] leading-normal text-ink"
-                >
-                    Software engineer building internal tools, mobility systems
-                    and
-                    <span class="hero-underline">visual interfaces.</span>
-                </p>
-            </div>
+    <div class="hero-type" aria-label="Dani Villalobos">
+      <span class="hero-name hero-name-one">DANI</span>
+      <span class="hero-name hero-name-two">VILLALOBOS</span>
+
+      <div class="hero-orbit" aria-hidden="true">
+        <div class="orbit-line orbit-line-one"></div>
+        <div class="orbit-line orbit-line-two"></div>
+        <div class="orbit-core">
+          <span>BUILD</span>
+          <span>USE</span>
+          <span>LEARN</span>
         </div>
-        <div class="hero-art absolute right-0 md:right-[-5em] top-50">
-            <img
-                src="/illustrations/cherub.svg"
-                alt=""
-                aria-hidden="true"
-                class="cherub-img w-full max-w-70 md:max-w-120"
-            />
-        </div>
-    </section>
-</main>
+        <span class="orbit-moon"></span>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <p class="hero-statement">
+        I build software that holds up in the real world—<span class="serif-accent">clear, useful, resilient.</span>
+      </p>
+      <div class="hero-actions">
+        <a class="hero-cv" href="/cv-danielVillalobos.pdf" target="_blank" rel="noreferrer">
+          View CV <span aria-hidden="true">↗</span>
+        </a>
+        <a class="hero-scroll" href="#work">
+          <span>Scroll to explore</span>
+          <svg viewBox="0 0 30 30" aria-hidden="true">
+            <path d="M15 3v22M7 17l8 8 8-8" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Distributed systems</span><i>✦</i><span>Product engineering</span><i>✦</i><span>Geospatial data</span><i>✦</i><span>Useful interfaces</span><i>✦</i>
+      <span>Distributed systems</span><i>✦</i><span>Product engineering</span><i>✦</i><span>Geospatial data</span><i>✦</i><span>Useful interfaces</span><i>✦</i>
+    </div>
+  </div>
+</section>
 
 <style>
-    .hero {
-        min-height: calc(100vh - 84px);
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .hero-shell {
+    display: flex;
+    min-height: calc(100svh - 3.25rem);
+    padding-top: 7rem;
+    padding-bottom: clamp(2rem, 4vw, 4rem);
+    flex-direction: column;
+  }
+
+  .hero-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    font-size: 0.66rem;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .hero-intro p {
+    margin: 0;
+  }
+
+  .hero-intro p:nth-child(2) {
+    text-align: center;
+  }
+
+  .hero-intro-right {
+    text-align: right;
+  }
+
+  .hero-type {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    min-height: clamp(21rem, 53vw, 42rem);
+    margin-top: clamp(1.8rem, 4vw, 4rem);
+    place-content: center;
+  }
+
+  .hero-name {
+    position: relative;
+    z-index: 2;
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(5.4rem, 13.8vw, 14.2rem);
+    font-weight: 900;
+    letter-spacing: -0.09em;
+    line-height: 0.7;
+    white-space: nowrap;
+    text-shadow: 0 0.035em 0.055em rgba(23, 23, 20, 0.09);
+    animation: name-enter 900ms 120ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-name-one {
+    transform: translateX(-10vw);
+  }
+
+  .hero-name-two {
+    transform: translateX(2vw);
+    animation-delay: 210ms;
+  }
+
+  .hero-orbit {
+    position: absolute;
+    z-index: 1;
+    top: 38%;
+    left: 50%;
+    width: clamp(16rem, 34vw, 33rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbit-enter 900ms 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .orbit-line {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .orbit-line-one {
+    transform: rotate(18deg) scaleY(0.34);
+  }
+
+  .orbit-line-two {
+    transform: rotate(-46deg) scaleY(0.25);
+  }
+
+  .orbit-core {
+    position: absolute;
+    inset: 12%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    background: var(--orange);
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-weight: 900;
+    letter-spacing: -0.08em;
+    line-height: 0.72;
+    transform: rotate(-8deg);
+    animation: orbit-float 6s ease-in-out infinite;
+  }
+
+  .orbit-moon {
+    position: absolute;
+    top: 3%;
+    right: 4%;
+    width: 12%;
+    aspect-ratio: 1;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    background: var(--acid);
+    animation: moon-float 5s ease-in-out infinite reverse;
+  }
+
+  .hero-bottom {
+    position: relative;
+    z-index: 4;
+    display: grid;
+    align-items: end;
+    grid-template-columns: minmax(0, 2fr) 1fr;
+    gap: 2rem;
+    margin-top: auto;
+  }
+
+  .hero-statement {
+    max-width: 29ch;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.6vw, 2.7rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .hero-statement .serif-accent {
+    color: var(--orange);
+    font-size: 1.12em;
+    font-style: italic;
+  }
+
+  .hero-scroll {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    gap: 1rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    gap: clamp(1rem, 2.5vw, 2.5rem);
+  }
+
+  .hero-cv {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.25rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .hero-cv span {
+    transition: transform 180ms ease;
+  }
+
+  .hero-cv:hover span {
+    transform: translate(0.18rem, -0.18rem);
+  }
+
+  .hero-scroll svg {
+    width: 2.8rem;
+    height: 2.8rem;
+    padding: 0.55rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .hero-scroll:hover svg {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .ticker {
+    height: 3.25rem;
+    overflow: hidden;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background: var(--acid);
+  }
+
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    height: 100%;
+    align-items: center;
+    gap: 1.7rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    animation: ticker 22s linear infinite;
+  }
+
+  .ticker-track i {
+    font-size: 1.1rem;
+    font-style: normal;
+  }
+
+  @keyframes orbit-float {
+    50% { transform: rotate(-4deg) translateY(-0.8rem); }
+  }
+
+  @keyframes moon-float {
+    50% { transform: translate(0.5rem, 0.8rem); }
+  }
+
+  @keyframes ticker {
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes name-enter {
+    from {
+      opacity: 0;
+      translate: 0 3rem;
+    }
+  }
+
+  @keyframes orbit-enter {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.72) rotate(-12deg);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .hero-shell {
+      min-height: calc(100svh - 3.25rem);
+      padding-top: 6.7rem;
+      padding-bottom: 1.6rem;
     }
 
-    .hero-title {
-        font-size: clamp(52px, 10.4vw, 180px);
-        font-weight: 800;
-        line-height: 0.92;
-        letter-spacing: -0.02em;
+    .hero-intro {
+      grid-template-columns: 1fr 1fr;
     }
 
-    .hero-title-line {
-        position: relative;
-        display: block;
-        width: fit-content;
+    .hero-intro p:nth-child(2) {
+      text-align: right;
     }
 
-    .title-sparkle {
-        position: absolute;
-        top: 0.52em;
-        right: -0.58em;
-        width: 0.22em;
-        height: 0.22em;
+    .hero-intro-right {
+      display: none;
     }
 
-    .hero-underline {
-        text-decoration: underline;
-        text-decoration-thickness: 1.5px;
-        text-underline-offset: 4px;
-        text-decoration-color: var(--cobalt);
+    .hero-type {
+      display: flex;
+      min-height: 25rem;
+      margin-top: 1rem;
+      justify-content: center;
+      flex-direction: column;
     }
 
-    .hero-copy,
-    .tag-list {
-        width: 100%;
+    .hero-name {
+      width: 100%;
+      font-size: clamp(3.7rem, 15.5vw, 5.5rem);
+      line-height: 0.78;
+      text-align: center;
     }
 
-    .tag-chip {
-        display: inline-flex;
-        min-height: 34px;
-        align-items: center;
-        gap: 8px;
-        border: 1px solid var(--rule);
-        border-radius: 6px;
-        padding: 8px 14px;
-        background: transparent;
-        color: var(--ink);
-        font-family: var(--font-mono);
-        font-size: 13px;
-        font-weight: 500;
-        line-height: 1;
+    .hero-name-one {
+      transform: translateX(-15vw);
     }
 
-    .hero-art {
-        transform: translateY(4px);
-        z-index: 0;
+    .hero-name-two {
+      transform: translateX(0);
     }
 
-    .hero-mark,
-    .ink-dot {
-        position: absolute;
-        z-index: 0;
-        pointer-events: none;
+    .hero-orbit {
+      top: 48%;
+      width: min(69vw, 21rem);
     }
 
-    .hero-mark-blue-large {
-        top: 70px;
-        right: 74px;
-        width: 80px;
-        height: 80px;
-        color: var(--cobalt);
+    .orbit-core {
+      font-size: clamp(2.4rem, 12vw, 4rem);
     }
 
-    .hero-ring {
-        top: 220px;
-        right: 56px;
-        width: 60px;
-        height: 60px;
-        color: var(--cobalt);
+    .orbit-core span {
+      display: none;
     }
 
-    .hero-spark {
-        color: var(--ink);
+    .hero-bottom {
+      display: block;
     }
 
-    .hero-spark-a {
-        top: 92px;
-        right: 340px;
-        width: 28px;
-        height: 28px;
+    .hero-statement {
+      font-size: 1.55rem;
     }
 
-    .hero-spark-b {
-        top: 250px;
-        right: 448px;
-        width: 18px;
-        height: 18px;
+    .hero-actions {
+      justify-content: flex-start;
+      margin-top: 1.2rem;
     }
 
-    .hero-spark-c {
-        top: 142px;
-        right: 160px;
-        width: 14px;
-        height: 14px;
+    .hero-scroll {
+      display: none;
     }
-
-    .ink-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 999px;
-        background: var(--ink);
-    }
-
-    @media (max-width: 767px) {
-        .hero {
-            min-height: auto;
-            padding-bottom: 250px;
-        }
-
-        .title-sparkle {
-            right: -0.82em;
-            width: 0.3em;
-            height: 0.3em;
-        }
-
-        .hero-art {
-            top: 240px;
-            right: 90px;
-            transform: none;
-            width: 280px;
-        }
-
-        .cherub-img {
-            max-width: 280px;
-        }
-
-        .hero-copy,
-        .tag-list {
-            max-width: min(100%, 327px);
-        }
-
-        .hero-mark-blue-large {
-            top: 116px;
-            right: 24px;
-            width: 58px;
-            height: 58px;
-        }
-
-        .hero-ring {
-            top: 250px;
-            right: 30px;
-            width: 54px;
-            height: 54px;
-        }
-
-        .hero-spark-a {
-            top: 72px;
-            right: 145px;
-            width: 24px;
-            height: 24px;
-        }
-
-        .hero-spark-b {
-            top: 205px;
-            right: 220px;
-            width: 18px;
-            height: 18px;
-        }
-
-        .hero-spark-c {
-            top: 88px;
-            right: 66px;
-            width: 13px;
-            height: 13px;
-        }
-
-        .dot-a {
-            top: 82px;
-            right: 110px;
-        }
-
-        .dot-b {
-            top: 192px;
-            right: 24px;
-        }
-
-        .dot-c {
-            top: 155px;
-            right: 162px;
-        }
-
-        .dot-d {
-            top: 288px;
-            right: 112px;
-        }
-    }
+  }
 </style>

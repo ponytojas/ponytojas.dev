@@ -1,0 +1,60 @@
+---
+import NoteCard from "@/components/NoteCard.astro";
+import { getAllBlogPosts } from "@/data/blog";
+
+const posts = getAllBlogPosts();
+---
+
+<section class="notes-section" id="notes">
+  <div class="shell">
+    <div class="notes-heading" data-reveal>
+      <p class="section-kicker">Notes · Thinking in public</p>
+      <h2 class="display-heading">Things worth<br /><span class="serif-accent">pausing for.</span></h2>
+    </div>
+
+    <div class="notes-grid">
+      {posts.map((post, index) => <NoteCard post={post} index={index} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .notes-section {
+    padding: clamp(5rem, 10vw, 10rem) 0;
+    border-top: 1px solid var(--ink);
+    background: var(--acid);
+  }
+
+  .notes-heading {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) 3fr;
+    gap: 2rem;
+    margin-bottom: clamp(3.5rem, 8vw, 7rem);
+  }
+
+  .notes-heading .section-kicker { color: var(--blue); }
+  .notes-heading h2 { max-width: 11ch; }
+
+  .notes-heading .serif-accent {
+    color: var(--orange-dark);
+    font-style: italic;
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--ink);
+  }
+
+  @media (max-width: 800px) {
+    .notes-heading { display: block; }
+    .notes-heading h2 { margin-top: 2rem; }
+    .notes-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 550px) {
+    .notes-section { padding-block: 5.5rem; }
+    .notes-heading { margin-bottom: 3rem; }
+  }
+</style>
