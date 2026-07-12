@@ -200,7 +200,7 @@ export const careerEntries: CareerEntry[] = [
     time: "2017 — 2019",
     summary:
       "Worked between software and data science on NLG systems that transformed live football data into automated sports journalism.",
-    website: "",
+    website: "https://www.narrativa.com/",
     tags: ["Python", "NLG", "ETL", "Data", "Matlab", "AI"],
   },
 ];
