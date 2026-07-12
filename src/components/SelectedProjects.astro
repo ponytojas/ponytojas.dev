@@ -7,21 +7,25 @@ import { featuredProjects } from "@/data/site";
   <div class="shell work-heading" data-reveal>
     <p class="section-kicker">Selected work · 2025–26</p>
     <div class="work-title-row">
-      <h2 class="display-heading">Work that<br /><span class="serif-accent">earns its keep.</span></h2>
-      <p>Tools, systems and experiments built around a real need—not a framework looking for an excuse.</p>
+      <h2 class="display-heading">
+        Work that<br /><span class="serif-accent">earns its keep.</span>
+      </h2>
+      <p>Tools, systems and experiments built around a real need.</p>
     </div>
   </div>
 
   <div class="mobile-rail-label shell" aria-hidden="true">
     <span>Swipe to explore</span>
-    <span>01 — 04 →</span>
+    <span>01 — {String(featuredProjects.length).padStart(2, "0")} →</span>
   </div>
 
   <div class="projects-rail">
     <div class="shell projects-grid">
-      {featuredProjects.map((project) => (
-        <ProjectCard project={project} total={featuredProjects.length} />
-      ))}
+      {
+        featuredProjects.map((project) => (
+          <ProjectCard project={project} total={featuredProjects.length} />
+        ))
+      }
     </div>
   </div>
 </section>
@@ -49,7 +53,9 @@ import { featuredProjects } from "@/data/site";
     gap: 3rem;
   }
 
-  .work-title-row h2 { max-width: 12ch; }
+  .work-title-row h2 {
+    max-width: 12ch;
+  }
 
   .work-title-row .serif-accent {
     color: var(--orange);
@@ -74,8 +80,12 @@ import { featuredProjects } from "@/data/site";
   }
 
   @media (max-width: 920px) {
-    .work-title-row { display: block; }
-    .work-title-row > p { margin-top: 2rem; }
+    .work-title-row {
+      display: block;
+    }
+    .work-title-row > p {
+      margin-top: 2rem;
+    }
   }
 
   @media (max-width: 700px) {
@@ -109,7 +119,9 @@ import { featuredProjects } from "@/data/site";
       scroll-snap-type: x mandatory;
     }
 
-    .projects-rail::-webkit-scrollbar { display: none; }
+    .projects-rail::-webkit-scrollbar {
+      display: none;
+    }
 
     .projects-grid {
       display: flex;

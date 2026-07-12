@@ -1,39 +1,63 @@
+---
+const firstName = [..."DANIEL"];
+const lastName = [..."VILLALOBOS"];
+---
+
 <section class="hero" id="top">
   <div class="shell hero-shell">
     <div class="hero-intro">
-      <p>Senior software engineer</p>
-      <p>Spain · <span data-local-time>--:--</span> CET</p>
-      <p class="hero-intro-right">Product-minded<br />systems builder</p>
+      <p>Senior software engineer focused on Product and business</p>
     </div>
 
-    <div class="hero-type" aria-label="Dani Villalobos">
-      <span class="hero-name hero-name-one">DANI</span>
-      <span class="hero-name hero-name-two">VILLALOBOS</span>
-
-      <div class="hero-orbit" aria-hidden="true">
-        <div class="orbit-line orbit-line-one"></div>
-        <div class="orbit-line orbit-line-two"></div>
-        <div class="orbit-core">
-          <span>BUILD</span>
-          <span>USE</span>
-          <span>LEARN</span>
-        </div>
-        <span class="orbit-moon"></span>
+    <div class="hero-type" data-hero-type aria-label="Daniel Villalobos">
+      <div class="hero-name-set" aria-hidden="true">
+        <span class="hero-name hero-name-one">
+          {
+            firstName.map((letter, index) => (
+              <span class="hero-letter" style={`--letter-index: ${index}`}>
+                {letter}
+              </span>
+            ))
+          }
+        </span>
+        <span class="hero-name hero-name-two">
+          {
+            lastName.map((letter, index) => (
+              <span
+                class="hero-letter"
+                style={`--letter-index: ${firstName.length + index}`}
+              >
+                {letter}
+              </span>
+            ))
+          }
+        </span>
       </div>
     </div>
 
     <div class="hero-bottom">
       <p class="hero-statement">
-        I build software that holds up in the real world—<span class="serif-accent">clear, useful, resilient.</span>
+        I build software that <br />holds up in the <span class="serif-accent"
+          >real world.</span
+        >
       </p>
       <div class="hero-actions">
-        <a class="hero-cv" href="/cv-danielVillalobos.pdf" target="_blank" rel="noreferrer">
+        <a
+          class="hero-cv"
+          href="/cv-danielVillalobos.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
           View CV <span aria-hidden="true">↗</span>
         </a>
         <a class="hero-scroll" href="#work">
           <span>Scroll to explore</span>
           <svg viewBox="0 0 30 30" aria-hidden="true">
-            <path d="M15 3v22M7 17l8 8 8-8" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+            <path
+              d="M15 3v22M7 17l8 8 8-8"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"></path>
           </svg>
         </a>
       </div>
@@ -42,11 +66,108 @@
 
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
-      <span>Distributed systems</span><i>✦</i><span>Product engineering</span><i>✦</i><span>Geospatial data</span><i>✦</i><span>Useful interfaces</span><i>✦</i>
-      <span>Distributed systems</span><i>✦</i><span>Product engineering</span><i>✦</i><span>Geospatial data</span><i>✦</i><span>Useful interfaces</span><i>✦</i>
+      <span>Distributed systems</span>
+      <i>✦</i>
+      <span>Product engineering</span>
+      <i>✦</i>
+      <span>Geospatial data</span>
+      <i>✦</i>
+      <span>Useful interfaces</span>
+      <i>✦</i>
+      <span>Product design</span>
+      <i>✦</i>
+      <span>Testing</span>
+      <i>✦</i>
+      <span>Technical leading</span>
+      <i>✦</i>
+      <span>Mentorship</span>
+      <i>✦</i>
     </div>
   </div>
 </section>
+
+<script>
+  const initializeHeroType = () => {
+    const stage = document.querySelector<HTMLElement>("[data-hero-type]");
+    if (!stage || stage.dataset.ready === "true") return;
+
+    stage.dataset.ready = "true";
+    const letters = Array.from(
+      stage.querySelectorAll<HTMLElement>(".hero-letter"),
+    );
+    let frame = 0;
+
+    const resetLetters = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        letters.forEach((letter) => {
+          letter.style.removeProperty("--letter-y");
+          letter.style.removeProperty("--letter-rotate");
+          letter.style.removeProperty("--letter-scale");
+          letter.style.removeProperty("--letter-color");
+        });
+      });
+    };
+
+    stage.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch") return;
+
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const radius = Math.min(300, Math.max(170, stage.clientWidth * 0.2));
+        let nearestLetterIndex = -1;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        letters.forEach((letter, index) => {
+          const bounds = letter.getBoundingClientRect();
+          const centerX = bounds.left + bounds.width / 2;
+          const centerY = bounds.top + bounds.height / 2;
+          const deltaX = event.clientX - centerX;
+          const deltaY = event.clientY - centerY;
+          const distance = Math.hypot(deltaX, deltaY);
+          const influence = Math.max(0, 1 - distance / radius);
+
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestLetterIndex = index;
+          }
+
+          letter.style.setProperty("--letter-y", `${-influence * 30}px`);
+          letter.style.setProperty(
+            "--letter-rotate",
+            `${(-deltaX / radius) * influence * 7}deg`,
+          );
+          letter.style.setProperty(
+            "--letter-scale",
+            String(1 + influence * 0.14),
+          );
+          letter.style.setProperty("--letter-color", "var(--ink)");
+        });
+
+        const nearestLetter = letters[nearestLetterIndex];
+        if (nearestLetter && nearestDistance < radius) {
+          nearestLetter.style.setProperty("--letter-color", "var(--orange)");
+        }
+      });
+    });
+
+    stage.addEventListener("pointerleave", resetLetters);
+
+    const resetFromOutside = (event: PointerEvent) => {
+      if (!stage.contains(event.target as Node)) resetLetters();
+    };
+
+    document.addEventListener("pointermove", resetFromOutside);
+    document.addEventListener(
+      "astro:before-swap",
+      () => document.removeEventListener("pointermove", resetFromOutside),
+      { once: true },
+    );
+  };
+
+  document.addEventListener("astro:page-load", initializeHeroType);
+  if (document.readyState !== "loading") initializeHeroType();
+</script>
 
 <style>
   .hero {
@@ -65,9 +186,6 @@
   }
 
   .hero-intro {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
     font-size: 0.66rem;
     line-height: 1.5;
     text-transform: uppercase;
@@ -75,14 +193,6 @@
 
   .hero-intro p {
     margin: 0;
-  }
-
-  .hero-intro p:nth-child(2) {
-    text-align: center;
-  }
-
-  .hero-intro-right {
-    text-align: right;
   }
 
   .hero-type {
@@ -94,86 +204,55 @@
     place-content: center;
   }
 
+  .hero-name-set {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
   .hero-name {
     position: relative;
-    z-index: 2;
-    display: block;
+    display: flex;
     font-family: var(--font-display);
     font-size: clamp(5.4rem, 13.8vw, 14.2rem);
     font-weight: 900;
-    letter-spacing: -0.09em;
     line-height: 0.7;
     white-space: nowrap;
     text-shadow: 0 0.035em 0.055em rgba(23, 23, 20, 0.09);
-    animation: name-enter 900ms 120ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-letter {
+    --letter-color: var(--ink);
+    --letter-rotate: 0deg;
+    --letter-scale: 1;
+    --letter-y: 0px;
+    display: inline-block;
+    margin-right: -0.09em;
+    color: var(--letter-color);
+    transform: translateY(var(--letter-y)) rotate(var(--letter-rotate))
+      scaleY(var(--letter-scale));
+    transform-origin: center bottom;
+    transition:
+      color 180ms ease,
+      transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: letter-enter 720ms calc(90ms + var(--letter-index) * 28ms)
+      cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-letter:last-child {
+    margin-right: 0;
   }
 
   .hero-name-one {
-    transform: translateX(-10vw);
+    transform: translateX(-6vw);
   }
 
   .hero-name-two {
     transform: translateX(2vw);
-    animation-delay: 210ms;
-  }
-
-  .hero-orbit {
-    position: absolute;
-    z-index: 1;
-    top: 38%;
-    left: 50%;
-    width: clamp(16rem, 34vw, 33rem);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: orbit-enter 900ms 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  .orbit-line {
-    position: absolute;
-    inset: 0;
-    border: 1px solid var(--ink);
-    border-radius: 50%;
-  }
-
-  .orbit-line-one {
-    transform: rotate(18deg) scaleY(0.34);
-  }
-
-  .orbit-line-two {
-    transform: rotate(-46deg) scaleY(0.25);
-  }
-
-  .orbit-core {
-    position: absolute;
-    inset: 12%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border: 1px solid var(--ink);
-    border-radius: 50%;
-    background: var(--orange);
-    color: var(--cream);
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6vw, 6rem);
-    font-weight: 900;
-    letter-spacing: -0.08em;
-    line-height: 0.72;
-    transform: rotate(-8deg);
-    animation: orbit-float 6s ease-in-out infinite;
-  }
-
-  .orbit-moon {
-    position: absolute;
-    top: 3%;
-    right: 4%;
-    width: 12%;
-    aspect-ratio: 1;
-    border: 1px solid var(--ink);
-    border-radius: 50%;
-    background: var(--acid);
-    animation: moon-float 5s ease-in-out infinite reverse;
   }
 
   .hero-bottom {
@@ -244,7 +323,9 @@
     padding: 0.55rem;
     border: 1px solid currentColor;
     border-radius: 50%;
-    transition: background 180ms ease, color 180ms ease;
+    transition:
+      background 180ms ease,
+      color 180ms ease;
   }
 
   .hero-scroll:hover svg {
@@ -277,29 +358,16 @@
     font-style: normal;
   }
 
-  @keyframes orbit-float {
-    50% { transform: rotate(-4deg) translateY(-0.8rem); }
-  }
-
-  @keyframes moon-float {
-    50% { transform: translate(0.5rem, 0.8rem); }
-  }
-
   @keyframes ticker {
-    to { transform: translateX(-50%); }
-  }
-
-  @keyframes name-enter {
-    from {
-      opacity: 0;
-      translate: 0 3rem;
+    to {
+      transform: translateX(-50%);
     }
   }
 
-  @keyframes orbit-enter {
+  @keyframes letter-enter {
     from {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.72) rotate(-12deg);
+      translate: 0 0.8em;
     }
   }
 
@@ -310,24 +378,9 @@
       padding-bottom: 1.6rem;
     }
 
-    .hero-intro {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .hero-intro p:nth-child(2) {
-      text-align: right;
-    }
-
-    .hero-intro-right {
-      display: none;
-    }
-
     .hero-type {
-      display: flex;
       min-height: 25rem;
       margin-top: 1rem;
-      justify-content: center;
-      flex-direction: column;
     }
 
     .hero-name {
@@ -338,24 +391,11 @@
     }
 
     .hero-name-one {
-      transform: translateX(-15vw);
+      transform: translateX(-3vw);
     }
 
     .hero-name-two {
       transform: translateX(0);
-    }
-
-    .hero-orbit {
-      top: 48%;
-      width: min(69vw, 21rem);
-    }
-
-    .orbit-core {
-      font-size: clamp(2.4rem, 12vw, 4rem);
-    }
-
-    .orbit-core span {
-      display: none;
     }
 
     .hero-bottom {

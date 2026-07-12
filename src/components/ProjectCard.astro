@@ -11,9 +11,7 @@ interface Props {
 const { project, total } = Astro.props;
 ---
 
-<article
-  class:list={["project-card", `project-${project.tone}`]}
->
+<article class="project-card" data-project-tone={project.tone}>
   <header class="project-meta">
     <span>{project.number} / {String(total).padStart(2, "0")}</span>
     <span>{project.category}</span>
@@ -50,15 +48,11 @@ const { project, total } = Astro.props;
     min-width: 0;
     min-height: 47rem;
     padding: clamp(1rem, 2.4vw, 2.2rem);
-    color: var(--ink);
+    color: var(--project-tone-fg);
+    background: var(--project-tone-bg);
     grid-template-rows: auto auto 1fr auto;
     overflow: hidden;
   }
-
-  .project-cream { background: var(--cream); }
-  .project-orange { background: var(--orange); }
-  .project-acid { background: var(--acid); }
-  .project-blue { background: var(--blue); color: var(--cream); }
 
   .project-meta {
     display: grid;
@@ -105,12 +99,8 @@ const { project, total } = Astro.props;
     background:
       linear-gradient(currentColor 1px, transparent 1px),
       linear-gradient(90deg, currentColor 1px, transparent 1px);
+    background-color: var(--project-tone-wash);
     background-size: 2rem 2rem;
-  }
-
-  .project-orange .project-media,
-  .project-blue .project-media {
-    background-color: rgba(255, 255, 255, 0.08);
   }
 
   footer {

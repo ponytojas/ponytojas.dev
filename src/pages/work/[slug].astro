@@ -5,7 +5,9 @@ import { projects } from "@/data/projects";
 import { featuredProjects } from "@/data/site";
 
 export function getStaticPaths() {
-  return featuredProjects.map((project) => ({ params: { slug: project.slug } }));
+  return featuredProjects.map((project) => ({
+    params: { slug: project.slug },
+  }));
 }
 
 const slug = Astro.params.slug ?? "";
@@ -17,16 +19,26 @@ if (!project || !detail) {
 }
 
 const currentIndex = featuredProjects.findIndex((item) => item.slug === slug);
-const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.length];
+const nextProject =
+  featuredProjects[(currentIndex + 1) % featuredProjects.length];
 const Content = detail.Content;
 ---
 
-<BaseLayout title={`${project.title} — Dani Villalobos`} description={project.description}>
-  <header class:list={["case-header", `tone-${project.tone}`]}>
+<BaseLayout
+  title={`${project.title} — Daniel Villalobos`}
+  description={project.description}
+>
+  <header class="case-header" data-project-tone={project.tone}>
     <nav class="shell case-nav" aria-label="Project navigation">
-      <a class="case-home" href="/" aria-label="Dani Villalobos home">DV</a>
+      <a class="case-home" href="/" aria-label="Daniel Villalobos home">
+        Daniel Villalobos
+      </a>
       <a href="/#work">← Selected work</a>
-      <span>{project.number} / {String(featuredProjects.length).padStart(2, "0")}</span>
+      <span
+        >{project.number} / {
+          String(featuredProjects.length).padStart(2, "0")
+        }</span
+      >
     </nav>
 
     <div class="shell case-hero">
@@ -40,20 +52,32 @@ const Content = detail.Content;
       <div class="case-intro">
         <p>{project.description}</p>
         <TagList tags={project.tags} label={`${project.title} technologies`} />
-        {project.href && (
-          <a class="case-external" href={project.href} target="_blank" rel="noreferrer">
-            {project.cta} <span aria-hidden="true">↗</span>
-          </a>
-        )}
+        {
+          project.href && (
+            <a
+              class="case-external"
+              href={project.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {project.cta} <span aria-hidden="true">↗</span>
+            </a>
+          )
+        }
       </div>
 
-      <div class="case-cover">
+      <button
+        class="case-cover"
+        type="button"
+        data-image-modal
+        data-full-src={project.image}
+        aria-label={`Open image viewer: ${project.imageAlt}`}
+      >
         <div class="case-cover-bar" aria-hidden="true">
           <span></span><span></span><span></span>
-          <small>{project.slug}.dev</small>
         </div>
         <img src={project.image} alt={project.imageAlt} />
-      </div>
+      </button>
     </div>
   </header>
 
@@ -70,7 +94,11 @@ const Content = detail.Content;
       </article>
     </div>
 
-    <a class:list={["next-project", `tone-${nextProject.tone}`]} href={`/work/${nextProject.slug}`}>
+    <a
+      class="next-project"
+      data-project-tone={nextProject.tone}
+      href={`/work/${nextProject.slug}`}
+    >
       <div class="shell next-project-inner">
         <span>Next project · {nextProject.number}</span>
         <strong>{nextProject.title}</strong>
@@ -80,25 +108,150 @@ const Content = detail.Content;
   </main>
 
   <footer class="case-footer shell">
-    <span>© <span data-year>2026</span> Dani Villalobos</span>
+    <span>© <span data-year>2026</span> Daniel Villalobos</span>
     <a href="mailto:daniel.villalobosdel@icloud.com">Discuss this project ↗</a>
   </footer>
+
+  <dialog class="image-lightbox" data-image-lightbox aria-label="Image viewer">
+    <div class="image-lightbox-toolbar">
+      <span data-lightbox-label>Image viewer</span>
+      <div class="image-lightbox-controls">
+        <button type="button" data-lightbox-zoom-out aria-label="Zoom out">−</button>
+        <button type="button" data-lightbox-reset aria-label="Reset zoom">100%</button>
+        <button type="button" data-lightbox-zoom-in aria-label="Zoom in">+</button>
+        <button type="button" data-lightbox-close aria-label="Close image viewer">Close ×</button>
+      </div>
+    </div>
+    <div class="image-lightbox-stage" data-lightbox-stage>
+      <img data-lightbox-image src="" alt="" />
+    </div>
+  </dialog>
 </BaseLayout>
+
+<script>
+  let destroyLightbox = () => {};
+
+  const initializeLightbox = () => {
+    destroyLightbox();
+
+    const lightbox = document.querySelector<HTMLDialogElement>("[data-image-lightbox]");
+    if (!lightbox) return;
+
+    const controller = new AbortController();
+    const listenerOptions = { signal: controller.signal };
+    destroyLightbox = () => controller.abort();
+
+    const image = lightbox.querySelector<HTMLImageElement>("[data-lightbox-image]");
+    const label = lightbox.querySelector<HTMLElement>("[data-lightbox-label]");
+    const stage = lightbox.querySelector<HTMLElement>("[data-lightbox-stage]");
+    const resetButton = lightbox.querySelector<HTMLButtonElement>("[data-lightbox-reset]");
+    let scale = 1;
+    let offsetX = 0;
+    let offsetY = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+    let dragging = false;
+
+    const renderTransform = () => {
+      if (!image || !resetButton) return;
+      image.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) scale(${scale})`;
+      image.dataset.zoomed = String(scale > 1);
+      resetButton.textContent = `${Math.round(scale * 100)}%`;
+    };
+
+    const setZoom = (nextScale: number) => {
+      scale = Math.min(4, Math.max(1, nextScale));
+      if (scale === 1) {
+        offsetX = 0;
+        offsetY = 0;
+      }
+      renderTransform();
+    };
+
+    const resetViewer = () => {
+      scale = 1;
+      offsetX = 0;
+      offsetY = 0;
+      renderTransform();
+    };
+
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const trigger = event.target.closest<HTMLElement>("[data-image-modal]");
+      if (!trigger || !image || !label) return;
+
+      const source = trigger.dataset.fullSrc;
+      const preview = trigger.querySelector<HTMLImageElement>("img");
+      if (!source || !preview) return;
+
+      image.src = source;
+      image.alt = preview.alt;
+      label.textContent = preview.alt || "Image viewer";
+      resetViewer();
+      lightbox.showModal();
+    }, listenerOptions);
+
+    lightbox.querySelector("[data-lightbox-close]")?.addEventListener("click", () => lightbox.close(), listenerOptions);
+    lightbox.querySelector("[data-lightbox-zoom-in]")?.addEventListener("click", () => setZoom(scale + 0.5), listenerOptions);
+    lightbox.querySelector("[data-lightbox-zoom-out]")?.addEventListener("click", () => setZoom(scale - 0.5), listenerOptions);
+    resetButton?.addEventListener("click", resetViewer, listenerOptions);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) lightbox.close();
+    }, listenerOptions);
+
+    image?.addEventListener("dblclick", () => setZoom(scale > 1 ? 1 : 2), listenerOptions);
+    stage?.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      setZoom(scale + (event.deltaY < 0 ? 0.25 : -0.25));
+    }, { ...listenerOptions, passive: false });
+
+    image?.addEventListener("pointerdown", (event) => {
+      if (scale === 1) {
+        setZoom(2);
+        return;
+      }
+      dragging = true;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      image.setPointerCapture(event.pointerId);
+    }, listenerOptions);
+
+    image?.addEventListener("pointermove", (event) => {
+      if (!dragging) return;
+      offsetX += event.clientX - pointerX;
+      offsetY += event.clientY - pointerY;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      renderTransform();
+    }, listenerOptions);
+
+    const stopDragging = (event: PointerEvent) => {
+      dragging = false;
+      if (image?.hasPointerCapture(event.pointerId)) {
+        image.releasePointerCapture(event.pointerId);
+      }
+    };
+
+    image?.addEventListener("pointerup", stopDragging, listenerOptions);
+    image?.addEventListener("pointercancel", stopDragging, listenerOptions);
+
+    lightbox.addEventListener("close", resetViewer, listenerOptions);
+  };
+
+  initializeLightbox();
+  document.addEventListener("astro:page-load", initializeLightbox);
+</script>
 
 <style>
   :global(body) {
     background: var(--cream);
   }
 
-  .tone-cream { --case-bg: var(--cream); --case-fg: var(--ink); }
-  .tone-orange { --case-bg: var(--orange); --case-fg: var(--ink); }
-  .tone-acid { --case-bg: var(--acid); --case-fg: var(--ink); }
-  .tone-blue { --case-bg: var(--blue); --case-fg: var(--cream); }
-
   .case-header {
     padding-bottom: clamp(3rem, 7vw, 7rem);
-    color: var(--case-fg);
-    background: var(--case-bg);
+    color: var(--project-tone-fg);
+    background: var(--project-tone-bg);
   }
 
   .case-nav {
@@ -117,14 +270,8 @@ const Content = detail.Content;
   }
 
   .case-home {
-    display: grid;
-    width: 2.4rem;
-    aspect-ratio: 1;
-    place-items: center;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    background: var(--case-fg);
-    color: var(--case-bg);
+    justify-self: start;
+    letter-spacing: 0.02em;
   }
 
   .case-hero {
@@ -179,9 +326,14 @@ const Content = detail.Content;
   }
 
   .case-cover {
+    display: block;
+    width: 100%;
+    padding: 0;
     border: 1px solid var(--ink);
     background: #f7f4ec;
     color: var(--ink);
+    cursor: zoom-in;
+    text-align: initial;
   }
 
   .case-cover-bar {
@@ -326,7 +478,11 @@ const Content = detail.Content;
     margin: 2rem 0 0.8rem;
     border: 1px solid var(--ink);
     background: var(--cream-deep);
+    color: var(--ink);
+    cursor: zoom-in;
     overflow: hidden;
+    padding: 0;
+    text-align: initial;
   }
 
   .project-prose :global(.case-image-link img) {
@@ -353,6 +509,136 @@ const Content = detail.Content;
     text-transform: uppercase;
   }
 
+  .image-lightbox {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(23, 23, 20, 0.96);
+    color: var(--cream);
+    overflow: hidden;
+  }
+
+  .image-lightbox[open] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .image-lightbox::backdrop {
+    background: rgba(23, 23, 20, 0.82);
+  }
+
+  .image-lightbox-toolbar {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 4rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.65rem var(--page-gutter);
+    border-bottom: 1px solid rgba(242, 238, 227, 0.35);
+    background: var(--ink);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+  }
+
+  .image-lightbox-toolbar > span {
+    max-width: min(42rem, 48vw);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .image-lightbox-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .image-lightbox-controls button {
+    min-width: 2.3rem;
+    min-height: 2.3rem;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid currentColor;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+  }
+
+  .image-lightbox-controls button:hover,
+  .image-lightbox-controls button:focus-visible {
+    background: var(--acid);
+    color: var(--ink);
+  }
+
+  .image-lightbox-stage {
+    display: grid;
+    min-height: 0;
+    place-items: center;
+    padding: clamp(1rem, 3vw, 3rem);
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .image-lightbox-stage img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    cursor: zoom-in;
+    object-fit: contain;
+    transform-origin: center;
+    transition: transform 180ms ease;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .image-lightbox-stage img[data-zoomed="true"] {
+    cursor: grab;
+  }
+
+  .image-lightbox-stage img[data-zoomed="true"]:active {
+    cursor: grabbing;
+    transition: none;
+  }
+
+  @media (max-width: 42rem) {
+    .image-lightbox-toolbar {
+      justify-content: flex-end;
+      padding-inline: 0.75rem;
+    }
+
+    .image-lightbox-toolbar > span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .image-lightbox-controls {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .image-lightbox-controls button {
+      padding-inline: 0.55rem;
+    }
+
+    .image-lightbox-controls [data-lightbox-close] {
+      margin-left: auto;
+    }
+  }
+
   .project-prose :global(.case-inline-link) {
     display: inline-flex;
     align-items: center;
@@ -373,8 +659,8 @@ const Content = detail.Content;
 
   .next-project {
     display: block;
-    color: var(--case-fg);
-    background: var(--case-bg);
+    color: var(--project-tone-fg);
+    background: var(--project-tone-bg);
   }
 
   .next-project-inner {
@@ -427,7 +713,9 @@ const Content = detail.Content;
       grid-template-columns: 1fr auto;
     }
 
-    .case-nav > span { display: none; }
+    .case-nav > span {
+      display: none;
+    }
 
     h1 {
       font-size: clamp(3.7rem, 17vw, 6.5rem);
@@ -447,8 +735,12 @@ const Content = detail.Content;
       width: fit-content;
     }
 
-    .case-cover-bar { height: 2.2rem; }
-    .case-cover img { min-height: 13rem; }
+    .case-cover-bar {
+      height: 2.2rem;
+    }
+    .case-cover img {
+      min-height: 13rem;
+    }
 
     .case-layout {
       display: block;
@@ -470,8 +762,12 @@ const Content = detail.Content;
       margin: 0;
     }
 
-    .case-rail strong { font-size: 2rem; }
-    .case-rail p { text-align: right; }
+    .case-rail strong {
+      font-size: 2rem;
+    }
+    .case-rail p {
+      text-align: right;
+    }
 
     .project-prose :global(h3) {
       margin-top: 4rem;

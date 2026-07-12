@@ -21,12 +21,12 @@ export const ImageWithModal: React.FC<ImageWithModalProps> = ({
   height,
   ...props
 }) => (
-  <a
+  <button
+    type="button"
     className={["case-image-link", triggerClassName].filter(Boolean).join(" ")}
-    href={fullSrc ?? src}
-    target="_blank"
-    rel="noreferrer"
-    aria-label={alt ? `Open image: ${alt}` : "Open image"}
+    data-image-modal
+    data-full-src={fullSrc ?? src}
+    aria-label={alt ? `Open image viewer: ${alt}` : "Open image viewer"}
   >
     <img
       {...props}
@@ -38,6 +38,6 @@ export const ImageWithModal: React.FC<ImageWithModalProps> = ({
       loading={priority ? "eager" : "lazy"}
       decoding="async"
     />
-    <span className="case-image-action" aria-hidden="true">View full size ↗</span>
-  </a>
+    <span className="case-image-action" aria-hidden="true">Zoom image +</span>
+  </button>
 );

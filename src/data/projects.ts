@@ -2,6 +2,7 @@ import LabtoolsProject from "@/app/projects/labtools.mdx";
 import DiunProject from "@/app/projects/diun.mdx";
 import FlappyBallProject from "@/app/projects/flappy-ball.mdx";
 import MyTasksProject from "@/app/projects/my-tasks.mdx";
+import ShioriProject from "@/app/projects/shiori.mdx";
 
 type MdxComponent = (...args: any[]) => any;
 
@@ -57,5 +58,15 @@ export const projects: ProjectEntry[] = [
       type: "Personal Project",
     },
     Content: asComponent(MyTasksProject),
+  },
+  {
+    id: "shiori",
+    metadata: {
+      title: "Shiori",
+      subtitle: "A Self-Hosted Operational Reading Workflow",
+      type: "Personal Project",
+      link: "https://github.com/ponytojas/shiori",
+    },
+    Content: asComponent(ShioriProject),
   },
 ];

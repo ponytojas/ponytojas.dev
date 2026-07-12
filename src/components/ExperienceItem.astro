@@ -32,7 +32,24 @@ const panelId = `experience-panel-${index}`;
   <div class="experience-panel" id={panelId} aria-hidden={!expanded}>
     <div class="experience-panel-inner">
       <div class="experience-detail">
-        <p>{item.summary}</p>
+        <p>
+          {item.summary}
+          {
+            item.website && (
+              <>
+                <br />
+                <a
+                  class="experience-website"
+                  href={item.website}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Visit website <span aria-hidden="true">↗</span>
+                </a>
+              </>
+            )
+          }
+        </p>
         <TagList tags={item.tags} label={`${item.company} focus areas`} />
       </div>
     </div>
@@ -151,17 +168,46 @@ const panelId = `experience-panel-${index}`;
 
   .experience-detail {
     display: grid;
-    grid-template-columns: 4rem 2fr 2.2fr;
-    gap: 1rem;
-    padding: 0.25rem 3rem 2.75rem 0;
+    grid-template-areas: "copy tags";
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    padding: 0.25rem 3rem 2.75rem 5rem;
   }
 
   .experience-detail p {
-    grid-column: 2;
+    grid-area: copy;
+    min-width: 0;
     max-width: 62ch;
     margin: 0;
     font-size: 0.8rem;
     line-height: 1.7;
+  }
+
+  .experience-detail :global(.tag-list) {
+    grid-area: tags;
+    min-width: 0;
+    align-self: start;
+  }
+
+  .experience-website {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 1.2rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.25rem;
+    color: var(--orange-dark);
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .experience-website span {
+    transition: transform 180ms ease;
+  }
+
+  .experience-website:hover span {
+    transform: translate(0.18rem, -0.18rem);
   }
 
   @media (max-width: 850px) {
@@ -182,13 +228,13 @@ const panelId = `experience-panel-${index}`;
     }
 
     .experience-detail {
-      grid-template-columns: 2.2rem 1fr;
+      grid-template-areas:
+        "copy"
+        "tags";
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.3rem;
+      padding-left: 3.2rem;
       padding-right: 0;
-    }
-
-    .experience-detail p,
-    .experience-detail :global(.tag-list) {
-      grid-column: 2;
     }
   }
 

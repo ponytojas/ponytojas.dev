@@ -7,13 +7,17 @@ import { careerEntries } from "@/data/site";
   <div class="shell">
     <div class="experience-heading" data-reveal>
       <p class="section-kicker">Experience · 2017–Now</p>
-      <h2 class="display-heading">Nine years<br />in the <span class="serif-accent">making.</span></h2>
+      <h2 class="display-heading">
+        Nine years<br />in the <span class="serif-accent">making.</span>
+      </h2>
     </div>
 
     <div class="experience-list" data-accordion>
-      {careerEntries.map((item, index) => (
-        <ExperienceItem item={item} index={index} expanded={index === 0} />
-      ))}
+      {
+        careerEntries.map((item, index) => (
+          <ExperienceItem item={item} index={index} expanded={index === 0} />
+        ))
+      }
     </div>
 
     <a
@@ -23,37 +27,49 @@ import { careerEntries } from "@/data/site";
       rel="noreferrer"
       data-reveal
     >
-      <span class="publication-label">Also published · IEEE · Dec 2024</span>
-      <strong>Evaluating V2X communications in the CARLA simulator for collaborative planning</strong>
+      <span class="publication-label">Published Article · IEEE · Dec 2024</span>
+      <strong
+        >Evaluating V2X communications in the CARLA simulator for collaborative
+        planning</strong
+      >
       <span class="publication-arrow" aria-hidden="true">↗</span>
     </a>
   </div>
 </section>
 
 <script>
-  document.querySelectorAll<HTMLElement>("[data-accordion]").forEach((accordion) => {
-    const items = Array.from(accordion.querySelectorAll<HTMLElement>(".experience-item"));
+  document
+    .querySelectorAll<HTMLElement>("[data-accordion]")
+    .forEach((accordion) => {
+      const items = Array.from(
+        accordion.querySelectorAll<HTMLElement>(".experience-item"),
+      );
 
-    items.forEach((item) => {
-      const button = item.querySelector<HTMLButtonElement>(".experience-summary");
-      const panel = item.querySelector<HTMLElement>(".experience-panel");
-      if (!button || !panel) return;
+      items.forEach((item) => {
+        const button = item.querySelector<HTMLButtonElement>(
+          ".experience-summary",
+        );
+        const panel = item.querySelector<HTMLElement>(".experience-panel");
+        if (!button || !panel) return;
 
-      button.addEventListener("click", () => {
-        const shouldOpen = button.getAttribute("aria-expanded") !== "true";
+        button.addEventListener("click", () => {
+          const shouldOpen = button.getAttribute("aria-expanded") !== "true";
 
-        items.forEach((otherItem) => {
-          const otherButton = otherItem.querySelector<HTMLButtonElement>(".experience-summary");
-          const otherPanel = otherItem.querySelector<HTMLElement>(".experience-panel");
-          const isTarget = otherItem === item && shouldOpen;
+          items.forEach((otherItem) => {
+            const otherButton = otherItem.querySelector<HTMLButtonElement>(
+              ".experience-summary",
+            );
+            const otherPanel =
+              otherItem.querySelector<HTMLElement>(".experience-panel");
+            const isTarget = otherItem === item && shouldOpen;
 
-          otherItem.dataset.open = String(isTarget);
-          otherButton?.setAttribute("aria-expanded", String(isTarget));
-          otherPanel?.setAttribute("aria-hidden", String(!isTarget));
+            otherItem.dataset.open = String(isTarget);
+            otherButton?.setAttribute("aria-expanded", String(isTarget));
+            otherPanel?.setAttribute("aria-hidden", String(!isTarget));
+          });
         });
       });
     });
-  });
 </script>
 
 <style>
@@ -70,8 +86,12 @@ import { careerEntries } from "@/data/site";
     margin-bottom: clamp(3.5rem, 8vw, 7rem);
   }
 
-  .experience-heading .section-kicker { color: var(--orange); }
-  .experience-heading h2 { max-width: 10ch; }
+  .experience-heading .section-kicker {
+    color: var(--orange);
+  }
+  .experience-heading h2 {
+    max-width: 10ch;
+  }
 
   .experience-heading .serif-accent {
     color: var(--blue);
@@ -108,7 +128,9 @@ import { careerEntries } from "@/data/site";
     transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .publication:hover::before { transform: scale(1.6); }
+  .publication:hover::before {
+    transform: scale(1.6);
+  }
 
   .publication-label {
     font-size: 0.62rem;
@@ -132,11 +154,17 @@ import { careerEntries } from "@/data/site";
     transition: transform 180ms ease;
   }
 
-  .publication:hover .publication-arrow { transform: translate(0.35rem, -0.35rem); }
+  .publication:hover .publication-arrow {
+    transform: translate(0.35rem, -0.35rem);
+  }
 
   @media (max-width: 850px) {
-    .experience-heading { display: block; }
-    .experience-heading h2 { margin-top: 2rem; }
+    .experience-heading {
+      display: block;
+    }
+    .experience-heading h2 {
+      margin-top: 2rem;
+    }
 
     .publication {
       grid-template-columns: 1fr auto;
@@ -154,8 +182,14 @@ import { careerEntries } from "@/data/site";
   }
 
   @media (max-width: 550px) {
-    .experience-section { padding-block: 5.5rem; }
-    .experience-heading { margin-bottom: 3rem; }
-    .publication { gap: 1rem; }
+    .experience-section {
+      padding-block: 5.5rem;
+    }
+    .experience-heading {
+      margin-bottom: 3rem;
+    }
+    .publication {
+      gap: 1rem;
+    }
   }
 </style>

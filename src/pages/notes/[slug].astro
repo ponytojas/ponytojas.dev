@@ -18,9 +18,9 @@ const { post } = Astro.props;
 const { Component } = post;
 ---
 
-<BaseLayout title={`${post.title} — Dani Villalobos`} description={post.excerpt}>
+<BaseLayout title={`${post.title} — Daniel Villalobos`} description={post.excerpt}>
   <header class="note-nav shell">
-    <a href="/" aria-label="Back to Dani Villalobos home">DV</a>
+    <a href="/" aria-label="Back to Daniel Villalobos home">Daniel Villalobos</a>
     <a href="/#notes">← All notes</a>
   </header>
 
@@ -67,13 +67,7 @@ const { Component } = post;
   }
 
   .note-nav a:first-child {
-    display: grid;
-    width: 2.4rem;
-    height: 2.4rem;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--ink);
-    color: var(--cream);
+    letter-spacing: 0.02em;
   }
 
   .note-hero {

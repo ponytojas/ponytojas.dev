@@ -9,20 +9,25 @@ const navItems = [
 
 <header class="site-header">
   <nav class="shell nav-shell" aria-label="Primary navigation">
-    <a class="wordmark" href="#top" aria-label="Dani Villalobos, back to top">
-      <span class="wordmark-mark" aria-hidden="true">DV</span>
-      <span>Dani Villalobos</span>
+    <a class="wordmark" href="#top" aria-label="Daniel Villalobos, back to top">
+      <span>Daniel Villalobos</span>
     </a>
 
     <div class="nav-links" id="nav-links">
       <div class="nav-menu-items">
-        {navItems.map((item, index) => (
-          <a href={item.href} data-index={String(index + 1).padStart(2, "0")}>{item.label}</a>
-        ))}
+        {
+          navItems.map((item, index) => (
+            <a href={item.href} data-index={String(index + 1).padStart(2, "0")}>
+              {item.label}
+            </a>
+          ))
+        }
       </div>
       <div class="mobile-menu-footer">
         <span>Spain · Remote friendly</span>
-        <a href="mailto:daniel.villalobosdel@icloud.com">Start a conversation ↗</a>
+        <a href="mailto:daniel.villalobosdel@icloud.com"
+          >Start a conversation ↗</a
+        >
       </div>
     </div>
 
@@ -44,40 +49,54 @@ const navItems = [
 </header>
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
-  const links = document.querySelector<HTMLElement>("#nav-links");
-
   const closeMenu = () => {
+    const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+    const links = document.querySelector<HTMLElement>("#nav-links");
     toggle?.setAttribute("aria-expanded", "false");
     links?.classList.remove("is-open");
     document.body.classList.remove("menu-open");
   };
 
-  toggle?.addEventListener("click", () => {
-    const isOpen = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", String(!isOpen));
-    links?.classList.toggle("is-open", !isOpen);
-    document.body.classList.toggle("menu-open", !isOpen);
-  });
+  const initializeMenu = () => {
+    const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+    const links = document.querySelector<HTMLElement>("#nav-links");
+    if (!toggle || !links || toggle.dataset.ready === "true") return;
 
-  links?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+    toggle.dataset.ready = "true";
+    toggle.addEventListener("click", () => {
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+      links.classList.toggle("is-open", !isOpen);
+      document.body.classList.toggle("menu-open", !isOpen);
+    });
+
+    links
+      .querySelectorAll("a")
+      .forEach((link) => link.addEventListener("click", closeMenu));
+  };
+
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeMenu();
   });
+  document.addEventListener("astro:page-load", initializeMenu);
 
-  window.matchMedia("(min-width: 801px)").addEventListener("change", (event) => {
-    if (event.matches) closeMenu();
-  });
+  window
+    .matchMedia("(min-width: 801px)")
+    .addEventListener("change", (event) => {
+      if (event.matches) closeMenu();
+    });
 </script>
 
 <style>
   .site-header {
-    position: absolute;
+    position: sticky;
     z-index: 100;
     top: 0;
     right: 0;
     left: 0;
     color: var(--ink);
+    background: var(--cream);
+    box-shadow: 0 1px 0 0 var(--line);
   }
 
   .nav-shell {
@@ -97,18 +116,6 @@ const navItems = [
     font-weight: 700;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-  }
-
-  .wordmark-mark {
-    display: grid;
-    width: 2.3rem;
-    height: 2.3rem;
-    place-items: center;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    background: var(--ink);
-    color: var(--cream);
-    font-size: 0.62rem;
   }
 
   .nav-links {
@@ -200,8 +207,12 @@ const navItems = [
   }
 
   @keyframes status-pulse {
-    70% { box-shadow: 0 0 0 0.5rem rgba(243, 75, 36, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(243, 75, 36, 0); }
+    70% {
+      box-shadow: 0 0 0 0.5rem rgba(243, 75, 36, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(243, 75, 36, 0);
+    }
   }
 
   @media (max-width: 800px) {
@@ -289,7 +300,9 @@ const navItems = [
       content: attr(data-index);
     }
 
-    .nav-menu-items a::after { display: none; }
+    .nav-menu-items a::after {
+      display: none;
+    }
 
     .mobile-menu-footer {
       display: flex;

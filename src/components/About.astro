@@ -6,40 +6,61 @@ import { engineeringPrinciples } from "@/data/site";
   <div class="shell about-grid">
     <div class="about-copy" data-reveal>
       <p class="section-kicker">About · Human, mostly</p>
-      <h2 class="display-heading">Pragmatic<br /><span class="serif-accent">by design.</span></h2>
+      <h2 class="display-heading">
+        Pragmatic<br /><span class="serif-accent">by design.</span>
+      </h2>
 
       <p class="about-intro">
-        I&apos;m Dani, a senior software engineer in Spain. I treat architecture as a living system—how things communicate, change and fail without taking everything down.
+        I&apos;m Daniel, a senior software engineer in Spain. I treat
+        architecture as a living system. I focus on how things communicate,
+        change and fail without taking everything down.
       </p>
 
       <div class="principles" aria-label="Engineering principles">
-        {engineeringPrinciples.map((principle) => (
-          <article class="principle-card">
-            <span>{principle.number}</span>
-            <strong>{principle.title}</strong>
-            <p>{principle.detail}</p>
-          </article>
-        ))}
+        {
+          engineeringPrinciples.map((principle) => (
+            <article class="principle-card">
+              <span>{principle.number}</span>
+              <strong>{principle.title}</strong>
+              <p>{principle.detail}</p>
+            </article>
+          ))
+        }
       </div>
 
-      <a class="arrow-link" href="/cv-danielVillalobos.pdf" target="_blank" rel="noreferrer">
+      <a
+        class="arrow-link"
+        href="/cv-danielVillalobos.pdf"
+        target="_blank"
+        rel="noreferrer"
+      >
         Read my CV <span aria-hidden="true">↗</span>
       </a>
     </div>
 
     <div class="about-visual" data-reveal>
       <div class="portrait-card portrait-main">
-        <img src="/juno-min/photo2.webp" alt="Juno, Dani's lop-eared rabbit" loading="lazy" />
+        <img
+          src="/juno-min/photo5.webp"
+          alt="Juno, Daniel's lop-eared rabbit"
+          loading="lazy"
+        />
       </div>
       <div class="portrait-card portrait-small">
-        <img src="/juno-min/photo5.webp" alt="Juno resting at home" loading="lazy" />
+        <img
+          src="/otis-min/photo1.webp"
+          alt="Otis, Daniel's white rabbit, resting beside his hay tray"
+          loading="lazy"
+        />
       </div>
       <div class="about-stamp" aria-hidden="true">
         <span>HOUSEHOLD</span>
-        <strong>CEO</strong>
-        <span>JUNO · 24/7</span>
+        <strong>CEOS</strong>
+        <span>JUNO + OTIS · 24/7</span>
       </div>
-      <p class="rabbit-caption">I write the software.<br />She runs the household.</p>
+      <p class="rabbit-caption">
+        I write the software.<br />They run the household.
+      </p>
     </div>
   </div>
 </section>
@@ -95,7 +116,10 @@ import { engineeringPrinciples } from "@/data/site";
     flex-direction: column;
     border-right: 1px solid currentColor;
     border-bottom: 1px solid currentColor;
-    transition: color 220ms ease, background 220ms ease, transform 220ms ease;
+    transition:
+      color 220ms ease,
+      background 220ms ease,
+      transform 220ms ease;
   }
 
   .principle-card:hover {
@@ -145,8 +169,8 @@ import { engineeringPrinciples } from "@/data/site";
   .portrait-main {
     top: 0;
     right: 0;
-    width: 78%;
-    height: 70%;
+    width: 65%;
+    height: 65%;
     transform: rotate(3deg);
   }
 
@@ -186,14 +210,14 @@ import { engineeringPrinciples } from "@/data/site";
 
   .rabbit-caption {
     position: absolute;
-    top: 9%;
+    top: 20%;
     left: 0;
     margin: 0;
     color: var(--ink);
     font-size: 0.62rem;
     line-height: 1.5;
     text-transform: uppercase;
-    transform: rotate(-90deg) translateX(-100%);
+    transform: rotate(-40deg) translateX(35%);
     transform-origin: left top;
   }
 
@@ -242,8 +266,8 @@ import { engineeringPrinciples } from "@/data/site";
     }
 
     .portrait-main {
-      width: 85%;
-      height: 70%;
+      width: 65%;
+      height: 65%;
     }
 
     .portrait-small {

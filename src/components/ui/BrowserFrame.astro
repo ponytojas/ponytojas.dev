@@ -6,13 +6,11 @@ interface Props {
 }
 
 const { src, alt, title } = Astro.props;
-const address = `${title.toLowerCase().replaceAll(" ", "-")}.dev`;
 ---
 
 <div class="browser-frame">
   <div class="browser-bar" aria-hidden="true">
     <span></span><span></span><span></span>
-    <small>{address}</small>
   </div>
   <img src={src} alt={alt} loading="lazy" />
 </div>
