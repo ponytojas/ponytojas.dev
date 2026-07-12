@@ -8,6 +8,9 @@
     "start": "astro preview",
     "lint": "astro check"
   },
+  "engines" : { 
+    "node" : ">=24.0.0"
+  },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",
     "clsx": "^2.1.1",
