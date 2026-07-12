@@ -2,7 +2,11 @@
 import { ArrowUpRight } from "lucide-react";
 ---
 
-<footer class="contact-section" id="contact">
+<footer
+  class="contact-section"
+  id="contact"
+  data-browser-theme="#171714"
+>
   <div class="shell contact-shell">
     <div class="contact-top">
       <p class="section-kicker">Have a useful problem?</p>
@@ -32,14 +36,18 @@ import { ArrowUpRight } from "lucide-react";
 <style>
   .contact-section {
     min-height: 80svh;
-    padding: clamp(3rem, 6vw, 6rem) 0 1.5rem;
+    padding: clamp(3rem, 6vw, 6rem) 0
+      calc(1.5rem + env(safe-area-inset-bottom, 0px));
     color: var(--cream);
     background: var(--ink);
   }
 
   .contact-shell {
     display: flex;
-    min-height: calc(80svh - clamp(4.5rem, 8vw, 7.5rem));
+    min-height: calc(
+      80svh - clamp(4.5rem, 8vw, 7.5rem) -
+        env(safe-area-inset-bottom, 0px)
+    );
     flex-direction: column;
   }
 

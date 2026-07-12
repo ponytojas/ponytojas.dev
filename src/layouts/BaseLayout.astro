@@ -17,9 +17,12 @@ const {
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f2eee3" />
+    <meta name="theme-color" content="#f2eee3" data-default-color="#f2eee3" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -62,6 +65,31 @@ const {
         document.querySelectorAll("[data-year]").forEach((element) => {
           element.textContent = String(new Date().getFullYear());
         });
+
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        const themedSections = document.querySelectorAll("[data-browser-theme]");
+
+        if (themeMeta && themedSections.length > 0) {
+          const defaultColor =
+            themeMeta.getAttribute("data-default-color") ?? "#f2eee3";
+          themeMeta.setAttribute("content", defaultColor);
+
+          const themeObserver = new IntersectionObserver((entries) => {
+            const activeSection = entries.find((entry) => entry.isIntersecting);
+            themeMeta.setAttribute(
+              "content",
+              activeSection?.target.getAttribute("data-browser-theme") ??
+                defaultColor,
+            );
+          });
+
+          themedSections.forEach((section) => themeObserver.observe(section));
+          document.addEventListener(
+            "astro:before-swap",
+            () => themeObserver.disconnect(),
+            { once: true },
+          );
+        }
       };
 
       document.addEventListener("astro:page-load", initializePage);
