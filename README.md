@@ -24,3 +24,13 @@ pnpm start
 - React 19
 - Tailwind CSS v4
 - MDX (via Vite `@mdx-js/rollup`)
+
+## Source layout
+
+- `src/pages` — Astro routes
+- `src/content` — authored MDX grouped by domain (`projects`, `experiences`, `publications`, and `notes`)
+- `src/components` — reusable Astro and React UI components
+- `src/layouts` — shared page layouts
+- `src/data` — presentation metadata and content indexes
+- `src/lib` — shared utilities
+- `src/styles` — global styles

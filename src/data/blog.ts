@@ -1,5 +1,5 @@
-import PostDontKnow from "@/mdx/blog/dont-know-how-many-screws.mdx";
-import PostEverythingPossible from "@/mdx/blog/everything-possible-doesnt-mean-everything-right.mdx";
+import PostDontKnow from "@/content/notes/dont-know-how-many-screws.mdx";
+import PostEverythingPossible from "@/content/notes/everything-possible-doesnt-mean-everything-right.mdx";
 
 type MdxComponent = (...args: any[]) => any;
 

@@ -1,0 +1,201 @@
+---
+import BrowserFrame from "@/components/ui/BrowserFrame.astro";
+import TagList from "@/components/ui/TagList.astro";
+import type { FeaturedProject } from "@/data/site";
+
+interface Props {
+  project: FeaturedProject;
+  total: number;
+}
+
+const { project, total } = Astro.props;
+---
+
+<article class="project-card" data-project-tone={project.tone}>
+  <header class="project-meta">
+    <span>{project.number} / {String(total).padStart(2, "0")}</span>
+    <span>{project.category}</span>
+    <span>{project.year}</span>
+  </header>
+
+  <div class="project-copy">
+    <h3>{project.title}</h3>
+    <p>{project.description}</p>
+    <TagList tags={project.tags} label={`${project.title} technologies`} />
+  </div>
+
+  <div class="project-media">
+    <BrowserFrame src={project.image} alt={project.imageAlt} title={project.title} />
+  </div>
+
+  <footer>
+    <a class="case-study-link" href={`/work/${project.slug}`}>
+      View case study <span aria-hidden="true">→</span>
+    </a>
+    {project.href ? (
+      <a class="arrow-link" href={project.href} target="_blank" rel="noreferrer">
+        {project.cta}<span aria-hidden="true">↗</span>
+      </a>
+    ) : (
+      <span class="project-private">Private working environment</span>
+    )}
+  </footer>
+</article>
+
+<style>
+  .project-card {
+    display: grid;
+    min-width: 0;
+    min-height: 47rem;
+    padding: clamp(1rem, 2.4vw, 2.2rem);
+    color: var(--project-tone-fg);
+    background: var(--project-tone-bg);
+    grid-template-rows: auto auto 1fr auto;
+    overflow: hidden;
+  }
+
+  .project-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid currentColor;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .project-meta span:nth-child(2) { text-align: center; }
+  .project-meta span:last-child { text-align: right; }
+
+  .project-copy {
+    padding: clamp(2rem, 4vw, 4.2rem) 0 clamp(2rem, 3vw, 3rem);
+  }
+
+  .project-copy h3 {
+    max-width: 10ch;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.7rem, 5.2vw, 5.6rem);
+    font-weight: 900;
+    letter-spacing: -0.075em;
+    line-height: 0.84;
+    text-wrap: balance;
+    text-transform: uppercase;
+  }
+
+  .project-copy > p {
+    max-width: 46ch;
+    margin: 1.5rem 0;
+    font-size: 0.76rem;
+    line-height: 1.65;
+  }
+
+  .project-media {
+    display: flex;
+    min-height: 17rem;
+    align-items: center;
+    padding: clamp(0.8rem, 2vw, 2rem);
+    border: 1px solid currentColor;
+    background:
+      linear-gradient(currentColor 1px, transparent 1px),
+      linear-gradient(90deg, currentColor 1px, transparent 1px);
+    background-color: var(--project-tone-wash);
+    background-size: 2rem 2rem;
+  }
+
+  footer {
+    display: flex;
+    min-height: 4.5rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+
+  .case-study-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.25rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  footer :global(.arrow-link) {
+    flex: 0 0 auto;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .case-study-link span {
+    transition: transform 180ms ease;
+  }
+
+  .case-study-link:hover span {
+    transform: translateX(0.25rem);
+  }
+
+  .project-private {
+    max-width: 28ch;
+    font-size: 0.58rem;
+    line-height: 1.35;
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 920px) {
+    .project-card {
+      min-height: 42rem;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .project-card {
+      width: min(84vw, 24rem);
+      min-height: 34rem;
+      flex: 0 0 min(84vw, 24rem);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
+    .project-meta {
+      font-size: 0.52rem;
+    }
+
+    .project-copy {
+      padding: 1.6rem 0 1.4rem;
+    }
+
+    .project-copy h3 {
+      font-size: clamp(2.35rem, 11vw, 3.4rem);
+    }
+
+    .project-copy > p {
+      margin: 1rem 0;
+      font-size: 0.68rem;
+      line-height: 1.55;
+    }
+
+    .project-media {
+      min-height: 14.2rem;
+      padding: 0.7rem;
+      background-size: 1.4rem 1.4rem;
+    }
+
+    footer {
+      min-height: 4rem;
+      align-items: center;
+      flex-wrap: nowrap;
+      padding-top: 0.75rem;
+    }
+
+    .case-study-link,
+    :global(.arrow-link) {
+      font-size: 0.58rem;
+    }
+  }
+</style>

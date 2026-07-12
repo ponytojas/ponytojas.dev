@@ -1,9 +1,9 @@
-import LumibitExperience from "@/app/experiences/lumibit.mdx";
-import EtraExperience from "@/app/experiences/etra.mdx";
-import BounselExperience from "@/app/experiences/bounsel.mdx";
-import ThermohumanExperience from "@/app/experiences/thermohuman.mdx";
-import AnovaExperience from "@/app/experiences/anova.mdx";
-import NarrativaExperience from "@/app/experiences/narrativa.mdx";
+import LumibitExperience from "@/content/experiences/lumibit.mdx";
+import EtraExperience from "@/content/experiences/etra.mdx";
+import BounselExperience from "@/content/experiences/bounsel.mdx";
+import ThermohumanExperience from "@/content/experiences/thermohuman.mdx";
+import AnovaExperience from "@/content/experiences/anova.mdx";
+import NarrativaExperience from "@/content/experiences/narrativa.mdx";
 
 type MdxComponent = (...args: any[]) => any;
 

@@ -1,0 +1,418 @@
+---
+const firstName = [..."DANIEL"];
+const lastName = [..."VILLALOBOS"];
+---
+
+<section class="hero" id="top">
+  <div class="shell hero-shell">
+    <div class="hero-intro">
+      <p>Senior software engineer focused on Product and business</p>
+    </div>
+
+    <div class="hero-type" data-hero-type aria-label="Daniel Villalobos">
+      <div class="hero-name-set" aria-hidden="true">
+        <span class="hero-name hero-name-one">
+          {
+            firstName.map((letter, index) => (
+              <span class="hero-letter" style={`--letter-index: ${index}`}>
+                {letter}
+              </span>
+            ))
+          }
+        </span>
+        <span class="hero-name hero-name-two">
+          {
+            lastName.map((letter, index) => (
+              <span
+                class="hero-letter"
+                style={`--letter-index: ${firstName.length + index}`}
+              >
+                {letter}
+              </span>
+            ))
+          }
+        </span>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <p class="hero-statement">
+        I build software that <br />holds up in the <span class="serif-accent"
+          >real world.</span
+        >
+      </p>
+      <div class="hero-actions">
+        <a
+          class="hero-cv"
+          href="/cv-danielVillalobos.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          View CV <span aria-hidden="true">↗</span>
+        </a>
+        <a class="hero-scroll" href="#work">
+          <span>Scroll to explore</span>
+          <svg viewBox="0 0 30 30" aria-hidden="true">
+            <path
+              d="M15 3v22M7 17l8 8 8-8"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Distributed systems</span>
+      <i>✦</i>
+      <span>Product engineering</span>
+      <i>✦</i>
+      <span>Geospatial data</span>
+      <i>✦</i>
+      <span>Useful interfaces</span>
+      <i>✦</i>
+      <span>Product design</span>
+      <i>✦</i>
+      <span>Testing</span>
+      <i>✦</i>
+      <span>Technical leading</span>
+      <i>✦</i>
+      <span>Mentorship</span>
+      <i>✦</i>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initializeHeroType = () => {
+    const stage = document.querySelector<HTMLElement>("[data-hero-type]");
+    if (!stage || stage.dataset.ready === "true") return;
+
+    stage.dataset.ready = "true";
+    const letters = Array.from(
+      stage.querySelectorAll<HTMLElement>(".hero-letter"),
+    );
+    let frame = 0;
+
+    const resetLetters = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        letters.forEach((letter) => {
+          letter.style.removeProperty("--letter-y");
+          letter.style.removeProperty("--letter-rotate");
+          letter.style.removeProperty("--letter-scale");
+          letter.style.removeProperty("--letter-color");
+        });
+      });
+    };
+
+    stage.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch") return;
+
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const radius = Math.min(300, Math.max(170, stage.clientWidth * 0.2));
+        let nearestLetterIndex = -1;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        letters.forEach((letter, index) => {
+          const bounds = letter.getBoundingClientRect();
+          const centerX = bounds.left + bounds.width / 2;
+          const centerY = bounds.top + bounds.height / 2;
+          const deltaX = event.clientX - centerX;
+          const deltaY = event.clientY - centerY;
+          const distance = Math.hypot(deltaX, deltaY);
+          const influence = Math.max(0, 1 - distance / radius);
+
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestLetterIndex = index;
+          }
+
+          letter.style.setProperty("--letter-y", `${-influence * 30}px`);
+          letter.style.setProperty(
+            "--letter-rotate",
+            `${(-deltaX / radius) * influence * 7}deg`,
+          );
+          letter.style.setProperty(
+            "--letter-scale",
+            String(1 + influence * 0.14),
+          );
+          letter.style.setProperty("--letter-color", "var(--ink)");
+        });
+
+        const nearestLetter = letters[nearestLetterIndex];
+        if (nearestLetter && nearestDistance < radius) {
+          nearestLetter.style.setProperty("--letter-color", "var(--orange)");
+        }
+      });
+    });
+
+    stage.addEventListener("pointerleave", resetLetters);
+
+    const resetFromOutside = (event: PointerEvent) => {
+      if (!stage.contains(event.target as Node)) resetLetters();
+    };
+
+    document.addEventListener("pointermove", resetFromOutside);
+    document.addEventListener(
+      "astro:before-swap",
+      () => document.removeEventListener("pointermove", resetFromOutside),
+      { once: true },
+    );
+  };
+
+  document.addEventListener("astro:page-load", initializeHeroType);
+  if (document.readyState !== "loading") initializeHeroType();
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .hero-shell {
+    display: flex;
+    min-height: calc(100svh - 3.25rem);
+    padding-top: 7rem;
+    padding-bottom: clamp(2rem, 4vw, 4rem);
+    flex-direction: column;
+  }
+
+  .hero-intro {
+    font-size: 0.66rem;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .hero-intro p {
+    margin: 0;
+  }
+
+  .hero-type {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    min-height: clamp(21rem, 53vw, 42rem);
+    margin-top: clamp(1.8rem, 4vw, 4rem);
+    place-content: center;
+  }
+
+  .hero-name-set {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .hero-name {
+    position: relative;
+    display: flex;
+    font-family: var(--font-display);
+    font-size: clamp(5.4rem, 13.8vw, 14.2rem);
+    font-weight: 900;
+    line-height: 0.7;
+    white-space: nowrap;
+    text-shadow: 0 0.035em 0.055em rgba(23, 23, 20, 0.09);
+  }
+
+  .hero-letter {
+    --letter-color: var(--ink);
+    --letter-rotate: 0deg;
+    --letter-scale: 1;
+    --letter-y: 0px;
+    display: inline-block;
+    margin-right: -0.09em;
+    color: var(--letter-color);
+    transform: translateY(var(--letter-y)) rotate(var(--letter-rotate))
+      scaleY(var(--letter-scale));
+    transform-origin: center bottom;
+    transition:
+      color 180ms ease,
+      transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: letter-enter 720ms calc(90ms + var(--letter-index) * 28ms)
+      cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-letter:last-child {
+    margin-right: 0;
+  }
+
+  .hero-name-one {
+    transform: translateX(-6vw);
+  }
+
+  .hero-name-two {
+    transform: translateX(2vw);
+  }
+
+  .hero-bottom {
+    position: relative;
+    z-index: 4;
+    display: grid;
+    align-items: end;
+    grid-template-columns: minmax(0, 2fr) 1fr;
+    gap: 2rem;
+    margin-top: auto;
+  }
+
+  .hero-statement {
+    max-width: 29ch;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.6vw, 2.7rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .hero-statement .serif-accent {
+    color: var(--orange);
+    font-size: 1.12em;
+    font-style: italic;
+  }
+
+  .hero-scroll {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    gap: 1rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    gap: clamp(1rem, 2.5vw, 2.5rem);
+  }
+
+  .hero-cv {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.25rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .hero-cv span {
+    transition: transform 180ms ease;
+  }
+
+  .hero-cv:hover span {
+    transform: translate(0.18rem, -0.18rem);
+  }
+
+  .hero-scroll svg {
+    width: 2.8rem;
+    height: 2.8rem;
+    padding: 0.55rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    transition:
+      background 180ms ease,
+      color 180ms ease;
+  }
+
+  .hero-scroll:hover svg {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .ticker {
+    height: 3.25rem;
+    overflow: hidden;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background: var(--acid);
+  }
+
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    height: 100%;
+    align-items: center;
+    gap: 1.7rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    animation: ticker 22s linear infinite;
+  }
+
+  .ticker-track i {
+    font-size: 1.1rem;
+    font-style: normal;
+  }
+
+  @keyframes ticker {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes letter-enter {
+    from {
+      opacity: 0;
+      translate: 0 0.8em;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .hero-shell {
+      min-height: calc(100svh - 3.25rem);
+      padding-top: 6.7rem;
+      padding-bottom: 1.6rem;
+    }
+
+    .hero-type {
+      min-height: 25rem;
+      margin-top: 1rem;
+    }
+
+    .hero-name {
+      width: 100%;
+      font-size: clamp(3.7rem, 15.5vw, 5.5rem);
+      line-height: 0.78;
+      text-align: center;
+    }
+
+    .hero-name-one {
+      transform: translateX(-3vw);
+    }
+
+    .hero-name-two {
+      transform: translateX(0);
+    }
+
+    .hero-bottom {
+      display: block;
+    }
+
+    .hero-statement {
+      font-size: 1.55rem;
+    }
+
+    .hero-actions {
+      justify-content: flex-start;
+      margin-top: 1.2rem;
+    }
+
+    .hero-scroll {
+      display: none;
+    }
+  }
+</style>

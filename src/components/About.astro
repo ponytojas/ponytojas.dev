@@ -1,0 +1,285 @@
+---
+import { engineeringPrinciples } from "@/data/site";
+---
+
+<section class="about-section" id="about">
+  <div class="shell about-grid">
+    <div class="about-copy" data-reveal>
+      <p class="section-kicker">About · Human, mostly</p>
+      <h2 class="display-heading">
+        Pragmatic<br /><span class="serif-accent">by design.</span>
+      </h2>
+
+      <p class="about-intro">
+        I&apos;m Daniel, a senior software engineer in Spain. I treat
+        architecture as a living system. I focus on how things communicate,
+        change and fail without taking everything down.
+      </p>
+
+      <div class="principles" aria-label="Engineering principles">
+        {
+          engineeringPrinciples.map((principle) => (
+            <article class="principle-card">
+              <span>{principle.number}</span>
+              <strong>{principle.title}</strong>
+              <p>{principle.detail}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <a
+        class="arrow-link"
+        href="/cv-danielVillalobos.pdf"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Read my CV <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <div class="about-visual" data-reveal>
+      <div class="portrait-card portrait-main">
+        <img
+          src="/juno-min/photo5.webp"
+          alt="Juno, Daniel's lop-eared rabbit"
+          loading="lazy"
+        />
+      </div>
+      <div class="portrait-card portrait-small">
+        <img
+          src="/otis-min/photo1.webp"
+          alt="Otis, Daniel's white rabbit, resting beside his hay tray"
+          loading="lazy"
+        />
+      </div>
+      <div class="about-stamp" aria-hidden="true">
+        <span>HOUSEHOLD</span>
+        <strong>CEOS</strong>
+        <span>JUNO + OTIS · 24/7</span>
+      </div>
+      <p class="rabbit-caption">
+        I write the software.<br />They run the household.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    padding: clamp(5rem, 10vw, 10rem) 0;
+    color: var(--cream);
+    background: var(--orange);
+    overflow: hidden;
+  }
+
+  .about-grid {
+    display: grid;
+    align-items: center;
+    grid-template-columns: minmax(0, 1.05fr) minmax(25rem, 0.95fr);
+    gap: clamp(3rem, 8vw, 9rem);
+  }
+
+  .about-copy .section-kicker {
+    margin-bottom: clamp(2rem, 5vw, 5rem);
+    color: var(--ink);
+  }
+
+  .about-copy h2 {
+    max-width: 9ch;
+  }
+
+  .about-copy .serif-accent {
+    color: var(--acid);
+    font-style: italic;
+  }
+
+  .about-intro {
+    max-width: 54ch;
+    margin: clamp(2.5rem, 5vw, 5rem) 0 2rem;
+    font-size: 0.8rem;
+    line-height: 1.75;
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 2.5rem;
+    border-top: 1px solid currentColor;
+    border-left: 1px solid currentColor;
+  }
+
+  .principle-card {
+    display: flex;
+    min-height: 9rem;
+    padding: 0.9rem;
+    flex-direction: column;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transition:
+      color 220ms ease,
+      background 220ms ease,
+      transform 220ms ease;
+  }
+
+  .principle-card:hover {
+    color: var(--ink);
+    background: var(--acid);
+    transform: translateY(-0.35rem);
+  }
+
+  .principle-card span {
+    font-size: 0.52rem;
+  }
+
+  .principle-card strong {
+    margin-top: auto;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.6vw, 1.45rem);
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+
+  .principle-card p {
+    margin: 0;
+    font-size: 0.55rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .about-visual {
+    position: relative;
+    min-height: clamp(33rem, 50vw, 46rem);
+  }
+
+  .portrait-card {
+    position: absolute;
+    overflow: hidden;
+    border: 1px solid var(--ink);
+    background: var(--cream);
+  }
+
+  .portrait-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.72) contrast(1.05);
+  }
+
+  .portrait-main {
+    top: 0;
+    right: 0;
+    width: 65%;
+    height: 65%;
+    transform: rotate(3deg);
+  }
+
+  .portrait-small {
+    bottom: 2rem;
+    left: 0;
+    width: 44%;
+    height: 40%;
+    transform: rotate(-5deg);
+  }
+
+  .about-stamp {
+    position: absolute;
+    right: 2%;
+    bottom: 5%;
+    display: flex;
+    width: clamp(8.5rem, 14vw, 13rem);
+    aspect-ratio: 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    background: var(--acid);
+    color: var(--ink);
+    font-size: 0.52rem;
+    text-align: center;
+    transform: rotate(8deg);
+  }
+
+  .about-stamp strong {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 3.6rem);
+    letter-spacing: -0.08em;
+    line-height: 0.9;
+  }
+
+  .rabbit-caption {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.62rem;
+    line-height: 1.5;
+    text-transform: uppercase;
+    transform: rotate(-40deg) translateX(35%);
+    transform-origin: left top;
+  }
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-visual {
+      min-height: 40rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .about-section {
+      padding-top: 5.5rem;
+      padding-bottom: 5rem;
+    }
+
+    .about-intro {
+      margin-block: 2.4rem 1.8rem;
+      font-size: 0.74rem;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border: 0;
+      margin-right: 0;
+    }
+
+    .principle-card {
+      min-width: 0;
+      min-height: 7.5rem;
+      border: 1px solid currentColor;
+      border-right: 0;
+      padding: 0.65rem;
+    }
+
+    .principle-card:last-child {
+      border-right: 1px solid currentColor;
+    }
+
+    .about-visual {
+      min-height: 26rem;
+    }
+
+    .portrait-main {
+      width: 65%;
+      height: 65%;
+    }
+
+    .portrait-small {
+      width: 48%;
+      height: 37%;
+    }
+
+    .about-stamp {
+      right: 1rem;
+      bottom: 1rem;
+      width: 7.5rem;
+      transform: rotate(4deg);
+    }
+  }
+</style>

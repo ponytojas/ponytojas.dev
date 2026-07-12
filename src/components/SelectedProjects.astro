@@ -1,0 +1,140 @@
+---
+import ProjectCard from "@/components/ProjectCard.astro";
+import { featuredProjects } from "@/data/site";
+---
+
+<section class="work-section" id="work">
+  <div class="shell work-heading" data-reveal>
+    <p class="section-kicker">Selected work · 2025–26</p>
+    <div class="work-title-row">
+      <h2 class="display-heading">
+        Work that<br /><span class="serif-accent">earns its keep.</span>
+      </h2>
+      <p>Tools, systems and experiments built around a real need.</p>
+    </div>
+  </div>
+
+  <div class="mobile-rail-label shell" aria-hidden="true">
+    <span>Swipe to explore</span>
+    <span>01 — {String(featuredProjects.length).padStart(2, "0")} →</span>
+  </div>
+
+  <div class="projects-rail">
+    <div class="shell projects-grid">
+      {
+        featuredProjects.map((project) => (
+          <ProjectCard project={project} total={featuredProjects.length} />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .work-section {
+    padding: clamp(5rem, 10vw, 10rem) 0;
+    color: var(--cream);
+    background: var(--ink);
+  }
+
+  .work-heading {
+    margin-bottom: clamp(3rem, 7vw, 6rem);
+  }
+
+  .work-heading .section-kicker {
+    margin-bottom: clamp(2rem, 5vw, 5rem);
+    color: var(--acid);
+  }
+
+  .work-title-row {
+    display: grid;
+    align-items: end;
+    grid-template-columns: minmax(0, 3fr) minmax(17rem, 1fr);
+    gap: 3rem;
+  }
+
+  .work-title-row h2 {
+    max-width: 12ch;
+  }
+
+  .work-title-row .serif-accent {
+    color: var(--orange);
+    font-style: italic;
+  }
+
+  .work-title-row > p {
+    max-width: 34ch;
+    margin: 0;
+    font-size: 0.83rem;
+    line-height: 1.7;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .mobile-rail-label {
+    display: none;
+  }
+
+  @media (max-width: 920px) {
+    .work-title-row {
+      display: block;
+    }
+    .work-title-row > p {
+      margin-top: 2rem;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .work-section {
+      padding-bottom: 5.5rem;
+    }
+
+    .work-heading {
+      margin-bottom: 2.4rem;
+    }
+
+    .work-title-row > p {
+      max-width: 31ch;
+      font-size: 0.72rem;
+    }
+
+    .mobile-rail-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      color: var(--acid);
+      font-size: 0.55rem;
+      text-transform: uppercase;
+    }
+
+    .projects-rail {
+      overflow-x: auto;
+      scrollbar-width: none;
+      overscroll-behavior-inline: contain;
+      scroll-padding-inline: var(--page-gutter);
+      scroll-snap-type: x mandatory;
+    }
+
+    .projects-rail::-webkit-scrollbar {
+      display: none;
+    }
+
+    .projects-grid {
+      display: flex;
+      width: max-content;
+      margin: 0;
+      padding-inline: var(--page-gutter);
+      gap: 0.75rem;
+    }
+
+    .projects-grid::after {
+      width: calc(var(--page-gutter) - 0.75rem);
+      flex: 0 0 calc(var(--page-gutter) - 0.75rem);
+      content: "";
+    }
+  }
+</style>

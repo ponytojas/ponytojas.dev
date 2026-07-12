@@ -1,0 +1,195 @@
+---
+import ExperienceItem from "@/components/ExperienceItem.astro";
+import { careerEntries } from "@/data/site";
+---
+
+<section class="experience-section" id="experience">
+  <div class="shell">
+    <div class="experience-heading" data-reveal>
+      <p class="section-kicker">Experience · 2017–Now</p>
+      <h2 class="display-heading">
+        Nine years<br />in the <span class="serif-accent">making.</span>
+      </h2>
+    </div>
+
+    <div class="experience-list" data-accordion>
+      {
+        careerEntries.map((item, index) => (
+          <ExperienceItem item={item} index={index} expanded={index === 0} />
+        ))
+      }
+    </div>
+
+    <a
+      class="publication"
+      href="https://ieeexplore.ieee.org/abstract/document/10796909"
+      target="_blank"
+      rel="noreferrer"
+      data-reveal
+    >
+      <span class="publication-label">Published Article · IEEE · Dec 2024</span>
+      <strong
+        >Evaluating V2X communications in the CARLA simulator for collaborative
+        planning</strong
+      >
+      <span class="publication-arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
+</section>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>("[data-accordion]")
+    .forEach((accordion) => {
+      const items = Array.from(
+        accordion.querySelectorAll<HTMLElement>(".experience-item"),
+      );
+
+      items.forEach((item) => {
+        const button = item.querySelector<HTMLButtonElement>(
+          ".experience-summary",
+        );
+        const panel = item.querySelector<HTMLElement>(".experience-panel");
+        if (!button || !panel) return;
+
+        button.addEventListener("click", () => {
+          const shouldOpen = button.getAttribute("aria-expanded") !== "true";
+
+          items.forEach((otherItem) => {
+            const otherButton = otherItem.querySelector<HTMLButtonElement>(
+              ".experience-summary",
+            );
+            const otherPanel =
+              otherItem.querySelector<HTMLElement>(".experience-panel");
+            const isTarget = otherItem === item && shouldOpen;
+
+            otherItem.dataset.open = String(isTarget);
+            otherButton?.setAttribute("aria-expanded", String(isTarget));
+            otherPanel?.setAttribute("aria-hidden", String(!isTarget));
+          });
+        });
+      });
+    });
+</script>
+
+<style>
+  .experience-section {
+    padding: clamp(5rem, 10vw, 10rem) 0;
+    background: var(--cream);
+  }
+
+  .experience-heading {
+    display: grid;
+    align-items: start;
+    grid-template-columns: minmax(12rem, 1fr) 3fr;
+    gap: 2rem;
+    margin-bottom: clamp(3.5rem, 8vw, 7rem);
+  }
+
+  .experience-heading .section-kicker {
+    color: var(--orange);
+  }
+  .experience-heading h2 {
+    max-width: 10ch;
+  }
+
+  .experience-heading .serif-accent {
+    color: var(--blue);
+    font-style: italic;
+  }
+
+  .experience-list {
+    border-top: 1px solid var(--ink);
+  }
+
+  .publication {
+    position: relative;
+    display: grid;
+    align-items: end;
+    grid-template-columns: 1fr 2.5fr auto;
+    gap: 2rem;
+    margin-top: clamp(3rem, 7vw, 7rem);
+    padding: clamp(1.5rem, 3vw, 3rem);
+    background: var(--blue);
+    color: var(--cream);
+    overflow: hidden;
+  }
+
+  .publication::before {
+    position: absolute;
+    width: 12rem;
+    height: 12rem;
+    right: -6rem;
+    bottom: -8rem;
+    border: 1px solid var(--cream);
+    border-radius: 50%;
+    content: "";
+    opacity: 0.35;
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .publication:hover::before {
+    transform: scale(1.6);
+  }
+
+  .publication-label {
+    font-size: 0.62rem;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  .publication strong {
+    max-width: 28ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.2vw, 3.2rem);
+    letter-spacing: -0.045em;
+    line-height: 0.96;
+    text-transform: uppercase;
+  }
+
+  .publication-arrow {
+    position: relative;
+    z-index: 1;
+    font-size: 2rem;
+    transition: transform 180ms ease;
+  }
+
+  .publication:hover .publication-arrow {
+    transform: translate(0.35rem, -0.35rem);
+  }
+
+  @media (max-width: 850px) {
+    .experience-heading {
+      display: block;
+    }
+    .experience-heading h2 {
+      margin-top: 2rem;
+    }
+
+    .publication {
+      grid-template-columns: 1fr auto;
+    }
+
+    .publication strong {
+      grid-row: 2;
+      grid-column: 1;
+    }
+
+    .publication-arrow {
+      grid-row: 2;
+      grid-column: 2;
+    }
+  }
+
+  @media (max-width: 550px) {
+    .experience-section {
+      padding-block: 5.5rem;
+    }
+    .experience-heading {
+      margin-bottom: 3rem;
+    }
+    .publication {
+      gap: 1rem;
+    }
+  }
+</style>

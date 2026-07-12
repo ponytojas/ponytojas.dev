@@ -1,4 +1,4 @@
-import V2xPublication from "@/app/publications/v2x.mdx";
+import V2xPublication from "@/content/publications/v2x.mdx";
 
 type MdxComponent = (...args: any[]) => any;
 

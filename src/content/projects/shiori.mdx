@@ -1,0 +1,134 @@
+import { ImageWithModal } from '@/components/ImageWithModal/ImageWithModal';
+import { LinkArrow } from '@/components/LinkArrow/LinkArrow';
+
+**Shiori** is a customized fork of the original <i style={{color: 'var(--orange)'}}>[go-shiori/shiori](https://github.com/go-shiori/shiori)</i>, shaped into a self-hosted **operational reading** tool. The existing Go core still handles bookmark storage, offline archiving, multiple databases and single-binary distribution, while the web interface has been rebuilt around a more practical question: **what should I actually read today?**
+
+<div className="flex flex-col justify-center items-center my-8">
+  <ImageWithModal
+    src="/projects/shiori/inbox.webp"
+    alt="Shiori inbox showing active bookmarks, workflow filters and instant search"
+    width={1200}
+    height={790}
+    priority
+  />
+  <span>The operational reading inbox</span>
+</div>
+
+### Purpose and Overview
+
+Traditional bookmark managers are good at saving links but often leave the harder decision untouched: deciding what deserves attention next. This fork keeps Shiori bookmarks as the **single source of truth** and adds reading intent through ordinary tags instead of introducing a ranking model, scheduling engine or parallel queue.
+
+The redesigned application centers on three focused spaces:
+
+- **Inbox** for every active bookmark and the reading workflow.
+- **Archive** for completed or intentionally stored material.
+- **Maintenance** for fixing missing titles and offline snapshots in batches.
+
+### Operational Reading Model
+
+Four tags express what a bookmark is for:
+
+- **`read-today`** — the shortlist for today.
+- **`quickRead`** — short items that fit into small gaps.
+- **`focus`** — deeper material that needs concentrated time.
+- **`inspiration`** — references and ideas worth revisiting.
+
+The interface exposes those tags as filter chips with live counts. Selecting a workflow updates the URL, while the search field narrows the visible set by title, URL or tag.
+
+<div className="flex flex-col justify-center items-center my-8">
+  <ImageWithModal
+    src="/projects/shiori/inbox-today.webp"
+    alt="Shiori Today view filtered to bookmarks tagged for today's reading"
+    width={1200}
+    height={790}
+  />
+  <span>A focused Today shortlist built from existing bookmark tags</span>
+</div>
+
+### Capture, Archive and Maintenance
+
+The `+` action opens a compact quick-add field: paste a URL and it goes directly into the Inbox. PDFs can also be uploaded and served back inline as bookmarks.
+
+<div className="flex flex-col justify-center items-center my-8">
+  <ImageWithModal
+    src="/projects/shiori/quick-add.webp"
+    alt="Shiori quick-add field used to save a URL directly into the inbox"
+    width={1200}
+    height={790}
+  />
+  <span>Paste-to-save without leaving the reading surface</span>
+</div>
+
+Archived bookmarks are separated from active reading without being removed. They can be restored or deleted from their own view.
+
+<div className="flex flex-col justify-center items-center my-8">
+  <ImageWithModal
+    src="/projects/shiori/archive.webp"
+    alt="Shiori archive view with controls to restore or delete saved bookmarks"
+    width={1200}
+    height={790}
+  />
+  <span>Archive management outside the active inbox</span>
+</div>
+
+Maintenance turns incomplete metadata into explicit work. Two batch operations identify bookmarks whose title still matches the URL and bookmarks without an offline snapshot, then refresh only the affected records.
+
+<div className="flex flex-col justify-center items-center my-8">
+  <ImageWithModal
+    src="/projects/shiori/maintenance.webp"
+    alt="Shiori maintenance page showing batch actions for missing titles and archives"
+    width={1200}
+    height={790}
+  />
+  <span>Visible maintenance tasks with affected-bookmark counts</span>
+</div>
+
+### Automation and API
+
+The application keeps the original versioned **`/api/v1`** surface and adds a minimal shortcut endpoint for automation clients such as iPhone Shortcuts. Optional control-header authentication supports restricted automation without changing the bookmark model.
+
+A `refresh-inbox` CLI command updates title metadata and recalculates workflow tags for active bookmarks. A scheduler-friendly shell wrapper and user-level systemd timer can run that maintenance every two hours.
+
+### Architecture and Distribution
+
+- **Go backend** with layered auth, account, bookmark, archiver, storage and tag domains.
+- **React 18 + TypeScript frontend** built with Vite.
+- **TanStack Query** for server state and **React Router** for focused application views.
+- **Tailwind CSS**, Radix-style primitives and Lucide icons for the interface system.
+- **OpenAPI-generated client** for the versioned HTTP API.
+- **JWT authentication** with optional control-header protection and environment-driven owner bootstrapping.
+- **SQLite, PostgreSQL, MariaDB and MySQL** storage support.
+
+The production build is embedded into the Go application, preserving Shiori's useful deployment property: the server and web application still ship as a **single binary**.
+
+### Responsive Interface
+
+The same workflow remains available on smaller screens, with navigation and filtering wrapping into a touch-friendly mobile layout rather than reducing the feature set.
+
+<div className="flex flex-col justify-center items-center my-8">
+  <ImageWithModal
+    src="/projects/shiori/mobile-inbox.webp"
+    alt="Mobile Shiori inbox with wrapped workflow filters and bookmark rows"
+    width={420}
+    height={910}
+  />
+  <span>The complete inbox workflow on mobile</span>
+</div>
+
+### Authentication
+
+The owner account can be bootstrapped from environment variables on first launch. The rebuilt sign-in screen keeps authentication separate from the reading interface while using the same restrained visual language.
+
+<div className="flex flex-col justify-center items-center my-8">
+  <ImageWithModal
+    src="/projects/shiori/login.webp"
+    alt="Shiori sign-in screen with username and password fields"
+    width={1200}
+    height={790}
+  />
+  <span>Owner authentication for the self-hosted instance</span>
+</div>
+
+### Repository
+
+The project, setup instructions and configuration reference are available in the <LinkArrow url="https://github.com/ponytojas/shiori" inline={true} text="Shiori repository" />. It is distributed under the MIT license inherited from the upstream project.

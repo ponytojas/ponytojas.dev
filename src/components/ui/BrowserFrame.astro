@@ -1,0 +1,85 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  title: string;
+}
+
+const { src, alt, title } = Astro.props;
+---
+
+<div class="browser-frame">
+  <div class="browser-bar" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+  <img src={src} alt={alt} loading="lazy" />
+</div>
+
+<style>
+  .browser-frame {
+    width: 92%;
+    max-height: 21rem;
+    margin: auto;
+    border: 1px solid var(--ink);
+    background: #f7f4ec;
+    color: var(--ink);
+    overflow: hidden;
+    transform: rotate(-1.5deg);
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  :global(.project-card:nth-child(even)) .browser-frame {
+    transform: rotate(1.5deg);
+  }
+
+  :global(.project-card:hover) .browser-frame {
+    transform: rotate(0deg) translateY(-0.5rem);
+  }
+
+  .browser-bar {
+    display: flex;
+    height: 2rem;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0 0.65rem;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .browser-bar span {
+    width: 0.45rem;
+    height: 0.45rem;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .browser-bar small {
+    max-width: 70%;
+    margin-left: auto;
+    overflow: hidden;
+    font-size: 0.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  img {
+    width: 100%;
+    height: clamp(12rem, 20vw, 19rem);
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  @media (max-width: 700px) {
+    .browser-frame {
+      width: 94%;
+      transform: rotate(-1deg);
+    }
+
+    :global(.project-card:nth-child(even)) .browser-frame {
+      transform: rotate(1deg);
+    }
+
+    img {
+      height: 12.5rem;
+    }
+  }
+</style>
