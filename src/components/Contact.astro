@@ -36,19 +36,28 @@ import { ArrowUpRight } from "lucide-react";
 </footer>
 
 <style>
+  /* Safari fills the space outside its inset viewport with the page background. */
+  :global(html:has(.contact-section)),
+  :global(body:has(.contact-section)) {
+    background-color: var(--ink);
+  }
+
   .contact-section {
+    display: flex;
+    flex-direction: column;
     min-height: 80svh;
     padding: clamp(3rem, 6vw, 6rem) 0
-      calc(1.5rem + env(safe-area-inset-bottom, 0px));
+      calc(1.5rem + var(--safe-area-bottom));
     color: var(--cream);
     background: var(--ink);
   }
 
   .contact-shell {
     display: flex;
+    flex: 1;
     min-height: calc(
       80svh - clamp(4.5rem, 8vw, 7.5rem) -
-        env(safe-area-inset-bottom, 0px)
+        var(--safe-area-bottom)
     );
     flex-direction: column;
   }
@@ -151,9 +160,12 @@ import { ArrowUpRight } from "lucide-react";
   }
 
   @media (max-width: 700px) {
-    .contact-section,
+    .contact-section {
+      min-height: calc(100dvh - var(--header-offset));
+    }
+
     .contact-shell {
-      min-height: 70svh;
+      min-height: 0;
     }
 
     .contact-top > p:last-child {
