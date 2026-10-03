@@ -34,6 +34,8 @@
   --gold: #f5bf3f;
   --line: rgba(23, 23, 20, 0.28);
   --page-gutter: clamp(1rem, 3.1vw, 3rem);
+  --header-height: 4.5rem;
+  --section-space: clamp(4.5rem, 8vw, 8rem);
   --font-display: Arial, "Helvetica Neue", Helvetica, sans-serif;
   --font-serif: "DM Serif Display", Georgia, serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
@@ -199,7 +201,7 @@ main {
 
 section[id],
 footer[id] {
-  scroll-margin-top: 1rem;
+  scroll-margin-top: calc(var(--header-height) + 1rem);
 }
 
 a {
@@ -337,4 +339,23 @@ svg {
     opacity: 1;
     transform: none;
   }
+}
+
+/* Shared editorial rhythm and readable text. */
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+.skip-link {
+  position: fixed;
+  z-index: 200;
+  top: 1rem;
+  left: var(--page-gutter);
+  padding: 1rem;
+  background: var(--ink);
+  color: var(--cream);
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: none; }
+#main-content:focus { outline: none; }
+@media (forced-colors: active) {
+  .project-card, .note-card, .hero-work { border: 1px solid CanvasText; }
 }

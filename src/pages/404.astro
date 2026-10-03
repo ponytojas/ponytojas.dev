@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page not found — Daniel Villalobos" description="This page could not be found. Explore Daniel Villalobos's selected work and notes.">
+  <main class="shell missing-page" id="main-content" tabindex="-1">
+    <p class="section-kicker">404 · A loose end</p>
+    <h1 class="display-heading">Nothing<br /><span class="serif-accent">to see here.</span></h1>
+    <p>This page may have moved. There&apos;s still plenty to explore.</p>
+    <a class="arrow-link" href="/">Back to the good stuff <span aria-hidden="true">↗</span></a>
+  </main>
+</BaseLayout>
+
+<style>
+  .missing-page { min-height: 100svh; display: flex; align-items: start; justify-content: center; flex-direction: column; gap: 2.5rem; padding-block: 4rem; }
+  h1 { max-width: 12ch; }
+  .serif-accent { color: var(--orange-dark); }
+  .missing-page > p:not(.section-kicker) { max-width: 45ch; font-size: 0.9rem; line-height: 1.75; }
+</style>

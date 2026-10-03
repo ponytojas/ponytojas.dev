@@ -2,10 +2,14 @@
 
 This project is now built with [Astro](https://astro.build), React components, and Tailwind CSS v4.
 
+## Requirements
+
+Node.js 24 or newer and pnpm 10. The package manager version is recorded in `package.json`.
+
 ## Development
 
 ```bash
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
@@ -34,3 +38,7 @@ pnpm start
 - `src/data` — presentation metadata and content indexes
 - `src/lib` — shared utilities
 - `src/styles` — global styles
+
+## Checks and staging
+
+Run `pnpm lint` and `pnpm build` before deployment. The separate Coolify review site and VPS setup are documented in [docs/staging.md](docs/staging.md).

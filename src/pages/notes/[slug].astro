@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getAllBlogPosts, type BlogPost } from "@/data/blog";
 import { formatDate } from "@/lib/formatDate";
+import { CodeBlock } from "@/components/ui/CodeBlock";
 
 export function getStaticPaths() {
   return getAllBlogPosts().map((post) => ({
@@ -24,7 +25,7 @@ const { Component } = post;
     <a href="/#notes">← All notes</a>
   </header>
 
-  <main class="note-page">
+  <main class="note-page" id="main-content" tabindex="-1">
     <header class="note-hero shell">
       <div class="note-meta">
         <span>{formatDate(post.date)}</span>
@@ -40,7 +41,7 @@ const { Component } = post;
     </div>
 
     <article class="note-content shell prose">
-      <Component />
+      <Component components={{ pre: CodeBlock }} />
     </article>
   </main>
 

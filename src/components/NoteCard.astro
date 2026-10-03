@@ -18,7 +18,7 @@ const { post, index } = Astro.props;
   </div>
 
   <div class="note-title-block">
-    <span class="note-watermark" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+    <span class="note-watermark" aria-hidden="true" data-number={String(index + 1).padStart(2, "0")}></span>
     <h3>{post.title}</h3>
   </div>
 
@@ -36,7 +36,7 @@ const { post, index } = Astro.props;
   .note-card {
     position: relative;
     display: grid;
-    min-height: 34rem;
+    min-height: 30rem;
     padding: clamp(1.2rem, 2.6vw, 2.5rem);
     border-right: 1px solid var(--ink);
     border-bottom: 1px solid var(--ink);
@@ -74,7 +74,7 @@ const { post, index } = Astro.props;
     position: relative;
     z-index: 1;
     max-width: 14ch;
-    margin: clamp(2.5rem, 6vw, 6rem) 0 2rem;
+    margin: clamp(2rem, 4vw, 4rem) 0 2rem;
     font-family: var(--font-display);
     font-size: clamp(2.4rem, 4.5vw, 4.8rem);
     font-weight: 900;
@@ -104,8 +104,8 @@ const { post, index } = Astro.props;
     z-index: 1;
     max-width: 50ch;
     margin: 0;
-    font-size: 0.72rem;
-    line-height: 1.65;
+    font-size: 0.85rem;
+    line-height: 1.75;
   }
 
   .note-bottom {
@@ -167,7 +167,7 @@ const { post, index } = Astro.props;
     .note-card > p {
       display: -webkit-box;
       overflow: hidden;
-      font-size: 0.68rem;
+      font-size: 0.8rem;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 3;
     }
@@ -177,4 +177,5 @@ const { post, index } = Astro.props;
       font-size: 10rem;
     }
   }
+  .note-watermark::before { content: attr(data-number); }
 </style>

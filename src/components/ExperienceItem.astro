@@ -9,16 +9,11 @@ interface Props {
 }
 
 const { item, index, expanded = false } = Astro.props;
-const panelId = `experience-panel-${index}`;
+
 ---
 
-<article class="experience-item" data-open={String(expanded)} data-reveal>
-  <button
-    class="experience-summary"
-    type="button"
-    aria-expanded={expanded}
-    aria-controls={panelId}
-  >
+<details class="experience-item" name="career" open={expanded} data-reveal>
+  <summary class="experience-summary">
     <span class="experience-index">{String(index + 1).padStart(2, "0")}</span>
     <span class="company-block">
       <span class="experience-company">{item.company}</span>
@@ -27,9 +22,9 @@ const panelId = `experience-panel-${index}`;
     <span class="experience-role">{item.role}</span>
     <span class="experience-time">{item.time}</span>
     <span class="experience-toggle" aria-hidden="true"></span>
-  </button>
+  </summary>
 
-  <div class="experience-panel" id={panelId} aria-hidden={!expanded}>
+  <div class="experience-panel">
     <div class="experience-panel-inner">
       <div class="experience-detail">
         <p>
@@ -54,7 +49,7 @@ const panelId = `experience-panel-${index}`;
       </div>
     </div>
   </div>
-</article>
+</details>
 
 <style>
   .experience-item {
@@ -76,7 +71,7 @@ const panelId = `experience-panel-${index}`;
   }
 
   .experience-summary:hover .experience-company,
-  .experience-summary[aria-expanded="true"] .experience-company {
+  .experience-item[open] .experience-summary .experience-company {
     color: var(--orange);
   }
 
@@ -137,34 +132,19 @@ const panelId = `experience-panel-${index}`;
     transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .experience-summary[aria-expanded="true"] .experience-toggle {
+  .experience-item[open] .experience-summary .experience-toggle {
     background: var(--orange);
     color: var(--cream);
     transform: rotate(180deg);
   }
 
-  .experience-summary[aria-expanded="true"] .experience-toggle::after {
+  .experience-item[open] .experience-summary .experience-toggle::after {
     transform: translate(-50%, -50%) rotate(0deg);
   }
 
-  .experience-panel {
-    display: grid;
-    grid-template-rows: 0fr;
-    opacity: 0;
-    transition:
-      grid-template-rows 480ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 300ms ease;
-  }
-
-  .experience-panel-inner {
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .experience-item[data-open="true"] .experience-panel {
-    grid-template-rows: 1fr;
-    opacity: 1;
-  }
+  .experience-summary { list-style: none; }
+  .experience-summary::-webkit-details-marker { display: none; }
+  .experience-panel-inner { min-width: 0; }
 
   .experience-detail {
     display: grid;
@@ -179,8 +159,8 @@ const panelId = `experience-panel-${index}`;
     min-width: 0;
     max-width: 62ch;
     margin: 0;
-    font-size: 0.8rem;
-    line-height: 1.7;
+    font-size: 0.9rem;
+    line-height: 1.75;
   }
 
   .experience-detail :global(.tag-list) {
@@ -257,7 +237,7 @@ const panelId = `experience-panel-${index}`;
     .experience-time {
       align-self: start;
       padding-top: 1.55rem;
-      font-size: 0.52rem;
+      font-size: 0.6rem;
       white-space: nowrap;
     }
 
@@ -267,8 +247,8 @@ const panelId = `experience-panel-${index}`;
     }
 
     .experience-detail p {
-      font-size: 0.74rem;
-      line-height: 1.65;
+      font-size: 0.85rem;
+      line-height: 1.7;
     }
 
     .experience-detail :global(.tag-list) {

@@ -37,44 +37,11 @@ import { careerEntries } from "@/data/site";
   </div>
 </section>
 
-<script>
-  document
-    .querySelectorAll<HTMLElement>("[data-accordion]")
-    .forEach((accordion) => {
-      const items = Array.from(
-        accordion.querySelectorAll<HTMLElement>(".experience-item"),
-      );
 
-      items.forEach((item) => {
-        const button = item.querySelector<HTMLButtonElement>(
-          ".experience-summary",
-        );
-        const panel = item.querySelector<HTMLElement>(".experience-panel");
-        if (!button || !panel) return;
-
-        button.addEventListener("click", () => {
-          const shouldOpen = button.getAttribute("aria-expanded") !== "true";
-
-          items.forEach((otherItem) => {
-            const otherButton = otherItem.querySelector<HTMLButtonElement>(
-              ".experience-summary",
-            );
-            const otherPanel =
-              otherItem.querySelector<HTMLElement>(".experience-panel");
-            const isTarget = otherItem === item && shouldOpen;
-
-            otherItem.dataset.open = String(isTarget);
-            otherButton?.setAttribute("aria-expanded", String(isTarget));
-            otherPanel?.setAttribute("aria-hidden", String(!isTarget));
-          });
-        });
-      });
-    });
-</script>
 
 <style>
   .experience-section {
-    padding: clamp(5rem, 10vw, 10rem) 0;
+    padding: var(--section-space) 0;
     background: var(--cream);
   }
 
@@ -87,7 +54,7 @@ import { careerEntries } from "@/data/site";
   }
 
   .experience-heading .section-kicker {
-    color: var(--orange);
+    color: var(--orange-dark);
   }
   .experience-heading h2 {
     max-width: 10ch;
