@@ -21,7 +21,7 @@ const staging = import.meta.env.SITE_ENV === "staging";
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
+      content="width=device-width, initial-scale=1, viewport-fit=auto"
     />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -38,6 +38,16 @@ const staging = import.meta.env.SITE_ENV === "staging";
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <ClientRouter />
     <script is:inline>document.documentElement.classList.add("js");</script>
+    <script>
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Tab") {
+          document.documentElement.classList.add("keyboard-navigation");
+        }
+      }, { capture: true });
+      document.addEventListener("pointerdown", () => {
+        document.documentElement.classList.remove("keyboard-navigation");
+      }, { capture: true });
+    </script>
     <title>{title}</title>
   </head>
   <body>

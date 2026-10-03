@@ -357,12 +357,30 @@ p { text-wrap: pretty; }
   z-index: 200;
   top: calc(var(--safe-area-top) + 1rem);
   left: var(--gutter-left);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+html.keyboard-navigation .skip-link:focus,
+html:not(.js) .skip-link:focus-visible {
+  width: auto;
+  height: auto;
+  margin: 0;
   padding: 1rem;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+  opacity: 1;
+  pointer-events: auto;
   background: var(--ink);
   color: var(--cream);
-  transform: translateY(calc(-100% - var(--safe-area-top) - 2rem));
 }
-.skip-link:focus { transform: none; }
 #main-content:focus { outline: none; }
 @media (forced-colors: active) {
   .project-card, .note-card { border: 1px solid CanvasText; }
