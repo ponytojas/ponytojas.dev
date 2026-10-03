@@ -41,3 +41,7 @@ The separate verification runner at `/home/ubuntu/.local/share/website-tools/ver
 Keep work on the improvement branch. Run checks, push that branch, and deploy only the staging UUID above. Credentials belong in Coolify or a private local credential store. Do not place tokens in commands that print them, in repository files, or in PR descriptions.
 
 The owner must explicitly request production promotion before merging into `main` or deploying the production application (`u44ckosccsoc8k8ggoo4ccc8`). Review the changes on staging first. Do not copy `SITE_ENV=staging` or the indexing exclusions to production.
+
+## Dependency review (2026-10-03)
+
+Compatible dependency updates bring Astro to 7.3.5 and address 32 of the 33 advisory entries reported by the original lockfile, including the critical Astro advisory. One high advisory remains in `http-cache-semantics@4.2.0`, a direct Astro development dependency: [GHSA-ch52-4w7c-c8xp](https://github.com/advisories/GHSA-ch52-4w7c-c8xp). The package audit currently lists no patched release. This deployment serves static files through Nginx; it does not run Astro's Node server or HTTP cache in production. Reassess the advisory before enabling server rendering or shared HTTP caching, and update the lockfile when a patch is available.
