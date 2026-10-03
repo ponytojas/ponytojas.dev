@@ -43,7 +43,6 @@ const lastName = [..."VILLALOBOS"];
         >
       </p>
       <div class="hero-actions">
-        <a class="hero-work" href="#work">Selected work <span aria-hidden="true">↓</span></a>
         <a
           class="hero-cv"
           href="/cv-danielVillalobos.pdf"
@@ -52,7 +51,12 @@ const lastName = [..."VILLALOBOS"];
         >
           View CV <span aria-hidden="true">↗</span>
         </a>
-
+        <a class="hero-scroll" href="#work">
+          <span>Scroll to explore</span>
+          <svg viewBox="0 0 30 30" aria-hidden="true">
+            <path d="M15 3v22M7 17l8 8 8-8" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+          </svg>
+        </a>
       </div>
     </div>
   </div>
@@ -304,6 +308,29 @@ const lastName = [..."VILLALOBOS"];
     transform: translate(0.18rem, -0.18rem);
   }
 
+  .hero-scroll {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .hero-scroll svg {
+    width: 2.8rem;
+    height: 2.8rem;
+    padding: 0.55rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .hero-scroll:hover svg {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
   .ticker {
     height: 3.25rem;
     overflow: hidden;
@@ -377,23 +404,8 @@ const lastName = [..."VILLALOBOS"];
       width: 100%;
       margin-top: 1.2rem;
     }
-
+    .hero-scroll { display: none; }
   }
-
-  .hero-work {
-    display: inline-flex;
-    min-height: 3rem;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding: 0.85rem 1rem;
-    color: var(--cream);
-    background: var(--ink);
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-  .hero-work:hover { background: var(--orange-dark); }
   @media (max-width: 700px) {
     .hero-intro { flex-direction: column; gap: 0.5rem; font-size: 0.65rem; }
     .hero-intro > span { color: var(--muted); }
