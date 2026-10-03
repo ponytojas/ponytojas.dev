@@ -18,7 +18,7 @@ const { src, alt, title } = Astro.props;
 
 <style>
   .browser-frame {
-    width: 92%;
+    width: 96%;
     max-height: 21rem;
     margin: auto;
     border: 1px solid var(--ink);
@@ -33,7 +33,8 @@ const { src, alt, title } = Astro.props;
     transform: rotate(1.5deg);
   }
 
-  :global(.project-card:hover) .browser-frame {
+  :global(.project-card:hover) .browser-frame,
+  :global(.project-card:focus-within) .browser-frame {
     transform: rotate(0deg) translateY(-0.5rem);
   }
 
@@ -71,7 +72,7 @@ const { src, alt, title } = Astro.props;
 
   @media (max-width: 700px) {
     .browser-frame {
-      width: 94%;
+    width: 96%;
       transform: rotate(-1deg);
     }
 

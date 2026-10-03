@@ -1,6 +1,7 @@
 # Website development
 
 - Follow the existing editorial style: cream/ink backgrounds, bold sans headings, serif accents, monospace labels, and the established accent palette.
+- Preserve the animated hero name and mobile menu entrance during refactors, with reduced-motion support. The owner rejected the added prominent hero work button; retain the CV link and original desktop scroll cue.
 - Use Node.js 24 or newer and pnpm 10. Install dependencies with `pnpm install --frozen-lockfile`.
 - Run `pnpm lint` and `pnpm build` before publishing changes. TypeScript 5.9 is retained for compatibility with the Astro checker’s language-service API.
 - Prefer native semantic HTML for navigation, disclosures, and dialogs. Verify keyboard operation and mobile layout, including navigation back from case studies and notes.

@@ -91,14 +91,15 @@ const { project, total } = Astro.props;
   }
 
   .project-media {
+    --grid-line: color-mix(in srgb, var(--project-tone-fg) 18%, transparent);
     display: flex;
     min-height: 17rem;
     align-items: center;
     padding: clamp(0.8rem, 2vw, 2rem);
     border: 1px solid currentColor;
     background:
-      linear-gradient(currentColor 1px, transparent 1px),
-      linear-gradient(90deg, currentColor 1px, transparent 1px);
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-color: var(--project-tone-wash);
     background-size: 2rem 2rem;
   }
@@ -124,6 +125,9 @@ const { project, total } = Astro.props;
     white-space: nowrap;
     text-transform: uppercase;
   }
+
+  .case-study-link:focus-visible,
+  footer :global(.arrow-link:focus-visible) { outline-color: currentColor; }
 
   footer :global(.arrow-link) {
     flex: 0 0 auto;
@@ -155,16 +159,20 @@ const { project, total } = Astro.props;
 
   @media (max-width: 700px) {
     .project-card {
-      width: min(84vw, 24rem);
+      width: min(88vw, 25rem);
       min-height: 34rem;
-      flex: 0 0 min(84vw, 24rem);
+      flex: 0 0 min(88vw, 25rem);
       scroll-snap-align: center;
       scroll-snap-stop: always;
     }
 
     .project-meta {
-      font-size: 0.52rem;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem 1rem;
+      font-size: 0.6rem;
     }
+    .project-meta span:nth-child(2) { grid-row: 2; grid-column: 1 / -1; text-align: left; }
+    .project-meta span:last-child { grid-row: 1; grid-column: 2; }
 
     .project-copy {
       padding: 1.6rem 0 1.4rem;
@@ -195,7 +203,8 @@ const { project, total } = Astro.props;
 
     .case-study-link,
     :global(.arrow-link) {
-      font-size: 0.58rem;
+      font-size: 0.65rem;
+      min-height: 2.75rem;
     }
   }
 

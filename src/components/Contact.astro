@@ -5,7 +5,6 @@ import { ArrowUpRight } from "lucide-react";
 <footer
   class="contact-section"
   id="contact"
-  data-browser-theme="#171714"
 >
   <div class="shell contact-shell">
     <div class="contact-top">
@@ -22,7 +21,10 @@ import { ArrowUpRight } from "lucide-react";
     </a>
 
     <div class="contact-bottom">
-      <p>Spain · Remote friendly</p>
+      <div class="contact-details">
+        <a href="mailto:daniel.villalobosdel@icloud.com">daniel.villalobosdel@icloud.com</a>
+        <p>Spain · Remote friendly</p>
+      </div>
       <div class="social-links">
         <a href="https://github.com/ponytojas" target="_blank" rel="noreferrer">GitHub ↗</a>
         <a href="https://www.linkedin.com/in/ponytojas/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
@@ -134,10 +136,15 @@ import { ArrowUpRight } from "lucide-react";
     text-align: right;
   }
 
+  .contact-details { min-width: 0; }
+  .contact-details a { display: inline-flex; min-height: 2.75rem; align-items: center; font-size: 0.7rem; overflow-wrap: anywhere; text-transform: none; }
+  .contact-details p:last-child { text-align: left; }
+
   .social-links {
     display: flex;
     gap: 1.5rem;
   }
+  .social-links a { display: inline-flex; min-height: 2.75rem; align-items: center; font-size: 0.7rem; }
 
   .social-links a:hover {
     color: var(--acid);

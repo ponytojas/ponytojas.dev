@@ -80,7 +80,7 @@ const staging = import.meta.env.SITE_ENV === "staging";
         const themeMeta = document.querySelector('meta[name="theme-color"]');
         const themedSections = document.querySelectorAll("[data-browser-theme]");
 
-        if (themeMeta && themedSections.length > 0 && "IntersectionObserver" in window) {
+        if (themeMeta && !document.querySelector(".site-header") && themedSections.length > 0 && "IntersectionObserver" in window) {
           const defaultColor =
             themeMeta.getAttribute("data-default-color") ?? "#f2eee3";
           themeMeta.setAttribute("content", defaultColor);

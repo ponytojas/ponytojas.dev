@@ -36,6 +36,14 @@ Run `pnpm lint` and `pnpm build`; use `SITE_ENV=staging pnpm build` when checkin
 
 The separate verification runner at `/home/ubuntu/.local/share/website-tools/verify.mjs` checks all eight content routes at 320, 390, 768, and 1440 pixel widths; automated WCAG checks at 390 and 1440 pixels; image loading; disclosures; navigation between pages; modal image zoom; mobile menu behavior; project browsing controls; and navigation without JavaScript. Run it with Node and an optional base URL. Its report and before/after screenshots are stored under `/home/ubuntu/website-review` and are excluded from the repository.
 
+## iPhone layout and design refinement
+
+The homepage header is fixed at mobile widths and includes `env(safe-area-inset-top)` in its height. The page reserves that full height, and section anchor offsets use the same value. Shared left/right insets protect content in landscape; case studies and notes also inset their top navigation. The browser theme stays cream to match the header and switches to acid while the mobile menu is open. This follows [WebKit's safe-area guidance](https://webkit.org/blog/7929/designing-websites-for-iphone-x/).
+
+The separate `verify-safe-area.mjs` runner checks Chromium and WebKit with simulated portrait and landscape insets, section anchors, menu controls, accessibility, and return navigation. Results and screenshots are in `/home/ubuntu/website-review`. Desktop WebKit does not reproduce the physical iPhone's Safari toolbar; confirm the final notch appearance on an actual iPhone during review.
+
+The latest design pass adds an active-section navigation indicator, softer project preview grids, larger mobile project labels and previews, numbered About principle rows, keyboard focus treatments for cards, and a visible footer email address. It preserves the original hero scroll cue, animated name, and mobile menu entrance animation.
+
 ## Future changes
 
 Keep work on the improvement branch. Run checks, push that branch, and deploy only the staging UUID above. Credentials belong in Coolify or a private local credential store. Do not place tokens in commands that print them, in repository files, or in PR descriptions.

@@ -250,6 +250,7 @@ const Content = detail.Content;
   }
 
   .case-header {
+    padding-top: var(--safe-area-top);
     padding-bottom: clamp(3rem, 7vw, 7rem);
     color: var(--project-tone-fg);
     background: var(--project-tone-bg);
@@ -269,6 +270,7 @@ const Content = detail.Content;
   .case-nav > span {
     justify-self: end;
   }
+  .case-nav > a { display: inline-flex; min-height: 2.75rem; align-items: center; }
 
   .case-home {
     justify-self: start;
