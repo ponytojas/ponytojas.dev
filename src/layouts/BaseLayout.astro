@@ -39,14 +39,23 @@ const staging = import.meta.env.SITE_ENV === "staging";
     <ClientRouter />
     <script is:inline>document.documentElement.classList.add("js");</script>
     <script>
+      let keyboardNavigation = false;
+      const updateInputState = () => {
+        document.documentElement.classList.add("js");
+        document.documentElement.classList.toggle("keyboard-navigation", keyboardNavigation);
+      };
       document.addEventListener("keydown", (event) => {
         if (event.key === "Tab") {
-          document.documentElement.classList.add("keyboard-navigation");
+          keyboardNavigation = true;
+          updateInputState();
         }
       }, { capture: true });
       document.addEventListener("pointerdown", () => {
-        document.documentElement.classList.remove("keyboard-navigation");
+        keyboardNavigation = false;
+        updateInputState();
       }, { capture: true });
+      document.addEventListener("astro:after-swap", updateInputState);
+      updateInputState();
     </script>
     <title>{title}</title>
   </head>
