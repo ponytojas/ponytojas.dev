@@ -7,6 +7,8 @@ import remarkFrontmatter from "remark-frontmatter";
 import { fileURLToPath } from "node:url";
 
 export default defineConfig({
+  site: "https://ponytojas.dev",
+  devToolbar: { enabled: false },
   integrations: [react()],
   vite: {
     plugins: [

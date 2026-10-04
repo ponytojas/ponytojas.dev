@@ -14,12 +14,16 @@ import { featuredProjects } from "@/data/site";
     </div>
   </div>
 
-  <div class="mobile-rail-label shell" aria-hidden="true">
-    <span>Swipe to explore</span>
-    <span>01 — {String(featuredProjects.length).padStart(2, "0")} →</span>
+  <div class="mobile-rail-label shell">
+    <span>Swipe or browse</span>
+    <div class="rail-controls">
+      <button type="button" data-project-prev aria-label="Previous project">←</button>
+      <span data-project-count aria-live="polite" aria-atomic="true">01 / {String(featuredProjects.length).padStart(2, "0")}</span>
+      <button type="button" data-project-next aria-label="Next project">→</button>
+    </div>
   </div>
 
-  <div class="projects-rail">
+  <div class="projects-rail" role="region" aria-label="Selected projects">
     <div class="shell projects-grid">
       {
         featuredProjects.map((project) => (
@@ -30,9 +34,46 @@ import { featuredProjects } from "@/data/site";
   </div>
 </section>
 
+<script>
+  const initializeRail = () => {
+    const rail = document.querySelector<HTMLElement>(".projects-rail");
+    if (!rail || rail.dataset.ready) return;
+    rail.dataset.ready = "true";
+    const cards = Array.from(rail.querySelectorAll<HTMLElement>(".project-card"));
+    const previous = document.querySelector<HTMLButtonElement>("[data-project-prev]");
+    const next = document.querySelector<HTMLButtonElement>("[data-project-next]");
+    const count = document.querySelector<HTMLElement>("[data-project-count]");
+    const selectedIndex = () => {
+      const middle = rail.getBoundingClientRect().left + rail.clientWidth / 2;
+      return cards.reduce((best, card, index) => {
+        const bounds = card.getBoundingClientRect();
+        const bestBounds = cards[best].getBoundingClientRect();
+        return Math.abs(bounds.left + bounds.width / 2 - middle) < Math.abs(bestBounds.left + bestBounds.width / 2 - middle) ? index : best;
+      }, 0);
+    };
+    const update = () => {
+      const index = selectedIndex();
+      if (count) count.textContent = `${String(index + 1).padStart(2, "0")} / ${String(cards.length).padStart(2, "0")}`;
+      if (previous) previous.disabled = index === 0;
+      if (next) next.disabled = index === cards.length - 1;
+    };
+    const move = (direction: number) => {
+      const card = cards[Math.max(0, Math.min(cards.length - 1, selectedIndex() + direction))];
+      rail.scrollTo({ left: card.offsetLeft - (rail.clientWidth - card.clientWidth) / 2, behavior: "auto" });
+      update();
+    };
+    previous?.addEventListener("click", () => move(-1));
+    next?.addEventListener("click", () => move(1));
+    rail.addEventListener("scroll", update, { passive: true });
+    update();
+  };
+  document.addEventListener("astro:page-load", initializeRail);
+  initializeRail();
+</script>
+
 <style>
   .work-section {
-    padding: clamp(5rem, 10vw, 10rem) 0;
+    padding: var(--section-space) 0;
     color: var(--cream);
     background: var(--ink);
   }
@@ -137,4 +178,9 @@ import { featuredProjects } from "@/data/site";
       content: "";
     }
   }
+  .rail-controls { display: flex; align-items: center; gap: 0.8rem; }
+  .rail-controls button { width: 2.75rem; height: 2.75rem; border: 1px solid currentColor; border-radius: 50%; color: var(--acid); background: transparent; font-size: 1.1rem; cursor: pointer; }
+  .rail-controls button:disabled { opacity: 0.4; cursor: default; }
+  .rail-controls span { font-variant-numeric: tabular-nums; }
+  @media (max-width: 700px) { .mobile-rail-label { align-items: center; font-size: 0.65rem; } }
 </style>

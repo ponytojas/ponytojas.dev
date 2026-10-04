@@ -34,6 +34,15 @@
   --gold: #f5bf3f;
   --line: rgba(23, 23, 20, 0.28);
   --page-gutter: clamp(1rem, 3.1vw, 3rem);
+  --header-height: 4.5rem;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --header-offset: calc(var(--header-height) + var(--safe-area-top) + 1px);
+  --gutter-left: max(var(--page-gutter), var(--safe-area-left));
+  --gutter-right: max(var(--page-gutter), var(--safe-area-right));
+  --section-space: clamp(4.5rem, 8vw, 8rem);
   --font-display: Arial, "Helvetica Neue", Helvetica, sans-serif;
   --font-serif: "DM Serif Display", Georgia, serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
@@ -111,7 +120,7 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--cream);
 }
 
@@ -184,7 +193,7 @@ html[data-astro-transition="back"]::view-transition-new(root) {
 
 body::after {
   position: fixed;
-  z-index: 9999;
+  z-index: 99;
   inset: 0;
   pointer-events: none;
   content: "";
@@ -193,13 +202,18 @@ body::after {
   mix-blend-mode: multiply;
 }
 
+/* Keep the viewport edge opaque for Safari's fixed-header color sampling. */
+body:has(.site-header)::after {
+  top: var(--header-offset);
+}
+
 main {
   display: block;
 }
 
 section[id],
 footer[id] {
-  scroll-margin-top: 1rem;
+  scroll-margin-top: calc(var(--header-offset) + 1rem);
 }
 
 a {
@@ -236,7 +250,8 @@ svg {
 .shell {
   width: min(100%, 1600px);
   margin-inline: auto;
-  padding-inline: var(--page-gutter);
+  padding-left: var(--gutter-left);
+  padding-right: var(--gutter-right);
 }
 
 .section-kicker {
@@ -337,4 +352,41 @@ svg {
     opacity: 1;
     transform: none;
   }
+}
+
+/* Shared editorial rhythm and readable text. */
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+.skip-link {
+  position: fixed;
+  z-index: 200;
+  top: calc(var(--safe-area-top) + 1rem);
+  left: var(--gutter-left);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+html.keyboard-navigation .skip-link:focus,
+html:not(.js) .skip-link:focus-visible {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 1rem;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+  opacity: 1;
+  pointer-events: auto;
+  background: var(--ink);
+  color: var(--cream);
+}
+#main-content:focus { outline: none; }
+@media (forced-colors: active) {
+  .project-card, .note-card { border: 1px solid CanvasText; }
 }

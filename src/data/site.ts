@@ -115,7 +115,7 @@ export const featuredProjects: FeaturedProject[] = [
 export const careerEntries: CareerEntry[] = [
   {
     company: "Lumibit Digital",
-    role: "Senior Fullstack Fngineer - Principal Architect",
+    role: "Senior Fullstack Engineer · Principal Architect",
     time: "2024 — Now",
     summary:
       "Building private cloud products used by thousands of BMW engineers: vehicle topology explorers, feature lifecycle tooling, background data pipelines and test-fleet planning systems.",

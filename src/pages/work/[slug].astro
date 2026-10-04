@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import TagList from "@/components/ui/TagList.astro";
+import { CodeBlock } from "@/components/ui/CodeBlock";
 import { projects } from "@/data/projects";
 import { featuredProjects } from "@/data/site";
 
@@ -81,7 +82,7 @@ const Content = detail.Content;
     </div>
   </header>
 
-  <main class="case-main">
+  <main class="case-main" id="main-content" tabindex="-1">
     <div class="shell case-layout">
       <aside class="case-rail">
         <span>Case study</span>
@@ -90,7 +91,7 @@ const Content = detail.Content;
       </aside>
 
       <article class="project-prose">
-        <Content />
+        <Content components={{ pre: CodeBlock }} />
       </article>
     </div>
 
@@ -249,6 +250,7 @@ const Content = detail.Content;
   }
 
   .case-header {
+    padding-top: var(--safe-area-top);
     padding-bottom: clamp(3rem, 7vw, 7rem);
     color: var(--project-tone-fg);
     background: var(--project-tone-bg);
@@ -268,6 +270,7 @@ const Content = detail.Content;
   .case-nav > span {
     justify-self: end;
   }
+  .case-nav > a { display: inline-flex; min-height: 2.75rem; align-items: center; }
 
   .case-home {
     justify-self: start;

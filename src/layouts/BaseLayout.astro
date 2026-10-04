@@ -11,6 +11,8 @@ const {
   title = "Daniel Villalobos — Software engineer",
   description = "Senior software engineer building reliable systems, useful products and interfaces that make complexity feel simple.",
 } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const staging = import.meta.env.SITE_ENV === "staging";
 ---
 
 <!doctype html>
@@ -19,19 +21,46 @@ const {
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
+      content="width=device-width, initial-scale=1, viewport-fit=auto"
     />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {staging && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="preload" href="/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#f2eee3" data-default-color="#f2eee3" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL("/social-card.png", Astro.site)} />
+    <meta property="og:image:alt" content="Daniel Villalobos — software that holds up in the real world" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <ClientRouter />
     <script is:inline>document.documentElement.classList.add("js");</script>
+    <script>
+      let keyboardNavigation = false;
+      const updateInputState = () => {
+        document.documentElement.classList.add("js");
+        document.documentElement.classList.toggle("keyboard-navigation", keyboardNavigation);
+      };
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Tab") {
+          keyboardNavigation = true;
+          updateInputState();
+        }
+      }, { capture: true });
+      document.addEventListener("pointerdown", () => {
+        keyboardNavigation = false;
+        updateInputState();
+      }, { capture: true });
+      document.addEventListener("astro:after-swap", updateInputState);
+      updateInputState();
+    </script>
     <title>{title}</title>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <slot />
 
     <script is:inline>
@@ -56,6 +85,7 @@ const {
             element.setAttribute("data-reveal-ready", "true");
             revealObserver.observe(element);
           });
+          document.addEventListener("astro:before-swap", () => revealObserver.disconnect(), { once: true });
         } else {
           revealElements.forEach((element) =>
             element.classList.add("is-visible"),
@@ -69,7 +99,7 @@ const {
         const themeMeta = document.querySelector('meta[name="theme-color"]');
         const themedSections = document.querySelectorAll("[data-browser-theme]");
 
-        if (themeMeta && themedSections.length > 0) {
+        if (themeMeta && !document.querySelector(".site-header") && themedSections.length > 0 && "IntersectionObserver" in window) {
           const defaultColor =
             themeMeta.getAttribute("data-default-color") ?? "#f2eee3";
           themeMeta.setAttribute("content", defaultColor);
