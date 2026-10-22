@@ -4,14 +4,14 @@ The review site is configured at **https://staging.ponytojas.dev** in Coolify. I
 
 | Setting | Value |
 | --- | --- |
-| Source branch | `improve/site-design` |
+| Source branch | `security/dependencies-runtime-20261021` |
 | Coolify dashboard | `https://admin.ponytojas.dev` |
 | Project UUID | `ngkoow8s8wk4swkc8gkwg88c` |
 | Staging environment UUID | `3z8fgskc4iipaoqlkybywhxj` |
 | Staging application UUID | `byklmsauj3b0shso2zr5shg2` |
-| Build | Nixpacks; `pnpm install --frozen-lockfile`, then `pnpm build` |
+| Build | Repository multi-stage `Dockerfile`; frozen pnpm install, then `pnpm build` |
 | Output | Static `/dist`, served on container port 80 |
-| Build variables | `NIXPACKS_NODE_VERSION=24`, `SITE_ENV=staging` |
+| Build variables | `SITE_ENV=staging`; Node 24 and pnpm 10.34.6 are defined in the Dockerfile |
 | Runtime limits | 256 MiB memory, 0.5 CPU |
 | Automatic deployment | Disabled; deploy this resource explicitly after checks |
 
@@ -59,3 +59,17 @@ The owner must explicitly request production promotion before merging into `main
 ## Dependency review (2026-10-03)
 
 Compatible dependency updates bring Astro to 7.3.5 and address 32 of the 33 advisory entries reported by the original lockfile, including the critical Astro advisory. One high advisory remains in `http-cache-semantics@4.2.0`, a direct Astro development dependency: [GHSA-ch52-4w7c-c8xp](https://github.com/advisories/GHSA-ch52-4w7c-c8xp). The package audit currently lists no patched release. This deployment serves static files through Nginx; it does not run Astro's Node server or HTTP cache in production. Reassess the advisory before enabling server rendering or shared HTTP caching, and update the lockfile when a patch is available.
+
+## Security refresh (2026-10-21)
+
+The staging resource now tracks `security/dependencies-runtime-20261021` and uses the repository Dockerfile, with `is_static=false` in Coolify because the Dockerfile already produces the final static Nginx image. It continues to expose port 80 with its original resource limits and indexing exclusions. Production remains on `main` with its existing deployment configuration.
+
+Astro is updated to 7.4.2, React/React DOM to 19.3.1, the React integration to 7.1.1, the checker to 0.9.12, and Lucide to 1.61.0. TypeScript remains pinned at 5.9.3. The targeted `@tailwindcss/typography>postcss-selector-parser` override selects patched version 7.1.6; generated CSS was byte-identical before and after that override. The frozen install, Astro check, and staging build pass; pnpm audit reports zero advisories.
+
+The Dockerfile pins official Node/Nginx base digests, upgrades available Alpine packages during the build, and copies only generated static files into the runtime image. The refreshed runtime scan reports zero findings, compared with five high and eight medium findings in the existing deployed image. These are point-in-time package scan results, not a guarantee that the application has no vulnerabilities. No automatic rebuild or maintenance job is installed.
+
+Local browser checks cover eight content routes at 320, 390, 768, and 1440 pixels, accessibility at 390/1440 pixels, images, disclosures, the mobile menu, project controls, lightbox, return navigation, and operation without JavaScript. Review artifacts are outside Git under `/home/ubuntu/website-review/security-20261021` and `/home/ubuntu/website-review/security-*`.
+
+Before an explicitly authorized production promotion, merge the reviewed branch and change the production build pack to `dockerfile`, Dockerfile location `/Dockerfile`, and `is_static=false`; preserve port 80, domain, proxy, limits, and production indexing. Ensure `SITE_ENV` is absent or `production`, never `staging`. A merge alone triggers the existing production auto-deploy, so coordinate that switch only with owner approval.
+
+The previous staging settings are backed up in the private host directory `/root/ponytojas-security-20261021`. Staging rollback restores branch `improve/site-design`, build pack `nixpacks`, `is_static=true`, and `/dist`, retaining `SITE_ENV=staging` and noindex exclusions, then explicitly redeploys staging. Do not apply those settings to production.
